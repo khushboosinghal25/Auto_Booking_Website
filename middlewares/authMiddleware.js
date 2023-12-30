@@ -34,3 +34,47 @@ export const isAdmin = async (req,res,next)=>{
        })
     }
  }
+
+ //student
+ export const isStudent = async (req,res,next)=>{
+    try {
+     const user = await studentModel.findById(req.user._id)
+     if(user.role !== 0){
+         return res.status(401).send({
+             success:false,
+             message:'UnAuthorized Access'
+         })
+     } else{
+         next();
+     }
+    } catch (error) {
+       console.log(error)
+       res.status(401).send({
+         success:false,
+         error,
+         message:'Error in student middleware',
+       })
+    }
+ }
+
+ //provider
+ export const isProvider = async (req,res,next)=>{
+    try {
+     const user = await ProviderModel.findById(req.user._id)
+     if(user.role !== 1){
+         return res.status(401).send({
+             success:false,
+             message:'UnAuthorized Access'
+         })
+     } else{
+         next();
+     }
+    } catch (error) {
+       console.log(error)
+       res.status(401).send({
+         success:false,
+         error,
+         message:'Error in provider middleware',
+       })
+    }
+ }

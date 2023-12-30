@@ -9,6 +9,12 @@ import ProviderRegister from './pages/Auth/ProviderRegister';
 import ProviderLogin from './pages/Auth/ProviderLogin';
 import ForgotPassword from './pages/Auth/ForgotPassword';
 import AdminLogin from './pages/Auth/AdminLogin';
+import AdminRoute from './components/Routes/AdminRoute';
+import AdminDashboard from './pages/Admin/AdminDashboard';
+import StudentRoute from './components/Routes/StudentRoute';
+import StudentDashboard from './pages/Student/StudentDashboard';
+import ProviderRoute from './components/Routes/ProviderRoute';
+import ProviderDashboard from './pages/Provider/ProviderDashboard';
 
 function App() {
   return (
@@ -26,6 +32,22 @@ function App() {
       <Route path="/provider-login" element={<ProviderLogin />}/>
       <Route path="/admin-login" element={<AdminLogin />}/>
       <Route path="/forgot-password" element={<ForgotPassword />} />
+
+     <Route path="/dashboard" element={<AdminRoute />} >
+
+      <Route path='admin' element={<AdminDashboard />} />
+
+     </Route>
+
+     <Route path="/dashboard" element={<StudentRoute />}>
+       <Route path="student" element={<StudentDashboard />} />
+     </Route>
+
+     <Route path="/dashboard" element={<ProviderRoute />}>
+      <Route path="provider" element={<ProviderDashboard />} />
+     </Route>
+
+
     </Routes>
      
     </>
