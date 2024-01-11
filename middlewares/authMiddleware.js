@@ -17,7 +17,7 @@ export const requireSignIn = async(req,res,next)=>{
 export const isAdmin = async (req,res,next)=>{
     try {
      const user = await studentModel.findById(req.user._id)
-     if(user.role !== 2){
+     if(user.role !== 1){
          return res.status(401).send({
              success:false,
              message:'UnAuthorized Access'
@@ -61,7 +61,7 @@ export const isAdmin = async (req,res,next)=>{
  export const isProvider = async (req,res,next)=>{
     try {
      const user = await ProviderModel.findById(req.user._id)
-     if(user.role !== 1){
+     if(user.role !== 2){
          return res.status(401).send({
              success:false,
              message:'UnAuthorized Access'

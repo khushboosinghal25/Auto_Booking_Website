@@ -26,6 +26,13 @@ const AdminMenu = () => {
           >
            Bookings
           </NavLink>
+
+          <NavLink
+            to="/dashboard/admin/profile"
+            className="list-group-item list-group-item-action"
+          >
+          Profile
+          </NavLink>
         </div>
       </div>
     </>

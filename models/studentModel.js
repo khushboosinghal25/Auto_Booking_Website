@@ -35,6 +35,14 @@ const studentSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    notification:{
+      type:Array,
+      default:[],
+    },
+    seennotification:{
+      type:Array,
+      default:[],
+    },
   },
   { timestamps: true }
 );

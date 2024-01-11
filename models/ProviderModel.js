@@ -42,7 +42,7 @@ const providerSchema = new mongoose.Schema(
 
     role: {
       type: Number,
-      default: 1,
+      default: 2,
     },
 
     license: {
@@ -50,6 +50,15 @@ const providerSchema = new mongoose.Schema(
       contentType: String,
     
     },
+
+    notification:{
+      type:Array,
+      default:[],
+   },
+   seennotification:{
+      type:Array,
+      default:[],
+   },
   },
   { timestamps: true }
 );

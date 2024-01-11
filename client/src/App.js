@@ -15,6 +15,9 @@ import StudentRoute from './components/Routes/StudentRoute';
 import StudentDashboard from './pages/Student/StudentDashboard';
 import ProviderRoute from './components/Routes/ProviderRoute';
 import ProviderDashboard from './pages/Provider/ProviderDashboard';
+import StudentProfile from './pages/Student/StudentProfile';
+import AdminProfile from './pages/Admin/AdminProfile';
+import ProviderProfile from './pages/Provider/ProviderProfile';
 
 function App() {
   return (
@@ -36,15 +39,18 @@ function App() {
      <Route path="/dashboard" element={<AdminRoute />} >
 
       <Route path='admin' element={<AdminDashboard />} />
+      <Route path="admin/profile" element={<AdminProfile />} />
 
      </Route>
 
      <Route path="/dashboard" element={<StudentRoute />}>
        <Route path="student" element={<StudentDashboard />} />
+       <Route path="student/profile" element={<StudentProfile/>} />
      </Route>
 
      <Route path="/dashboard" element={<ProviderRoute />}>
       <Route path="provider" element={<ProviderDashboard />} />
+      <Route path="provider/provider-profile" element={<ProviderProfile />} />
      </Route>
 
 

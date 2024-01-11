@@ -5,6 +5,8 @@ import {
   providerRegisterController,
   studentLoginController,
   studentRegisterController,
+  updateProfileController,
+  updateProviderProfileController,
 } from "../controllers/authController.js";
 import {
   isAdmin,
@@ -46,4 +48,9 @@ router.get("/student-auth", requireSignIn, isStudent, (req, res) => {
 router.get("/provider-auth", requireSignIn, isProvider, (req, res) => {
   res.status(200).send({ ok: true });
 });
+
+router.put("/profile",requireSignIn,updateProfileController)
+
+router.put("/provider-profile",requireSignIn,updateProviderProfileController)
+
 export default router;

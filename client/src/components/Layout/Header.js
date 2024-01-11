@@ -1,10 +1,13 @@
 import React from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import toast from "react-hot-toast";
 
+import { message, Badge } from "antd";
+
 const Header = () => {
   const [auth, setAuth] = useAuth();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     setAuth({
@@ -118,10 +121,10 @@ const Header = () => {
                         <NavLink
                           to={`/dashboard/${
                             auth?.user?.role === 2
-                              ? "admin"
+                              ? "provider"
                               : auth?.user?.role === 0
                               ? "student"
-                              : "provider"
+                              : "admin"
                           }`}
                           className="dropdown-item"
                         >
@@ -149,11 +152,27 @@ const Header = () => {
                 </>
               )}
 
-              <li className="nav-item">
+              {auth?.user ? (
+               
+                  <Badge
+                    count={auth?.user && auth?.user.notification}
+                    onClick={() => {
+                      navigate("/notification");
+                    }}
+                     className="nav-link active"
+                  >
+                    <i className="fa-solid fa-bell nav-item"></i>
+                  </Badge>
+              
+              ) : (
+                <></>
+              )}
+
+              {/* <li className="nav-item">
                 <NavLink to="/cart" className="nav-link">
                   Cart
                 </NavLink>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

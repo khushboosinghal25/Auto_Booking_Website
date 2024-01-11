@@ -302,4 +302,83 @@ export const providerLoginController = async (req, res) => {
   }
 };
 
+export const updateProfileController = async (req,res) =>{
+  try {
+    const {name,email,password,phone} = req.body;
+    const user = await studentModel.findById(req.user._id);
 
+   
+    if (!password) {
+      return res.status(400).json({ error: "Password is not allowed for update" });
+    }
+    const hashedPassword = password ? await hashPassword(password) : undefined
+
+    const updatedUser = await studentModel.findByIdAndUpdate(
+      req.user._id,
+      {
+        name: name || user.name,
+        password: hashedPassword || user.password,
+        phone:phone || user.phone,
+        email:email || user.email,
+      },
+      {new: true}
+    )
+    res.status(200).send({
+      success: true,
+      message: "Profile updated Successfully",
+      updatedUser,
+    });
+
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while updating profile",
+      error:error.message,
+    });
+  }
+}
+
+
+
+
+export const updateProviderProfileController = async (req,res) =>{
+  try {
+    const {name,email,password,phone,capacity,autonumber} = req.body;
+    const user = await ProviderModel.findById(req.user._id);
+
+   
+    if (!password) {
+      return res.status(400).json({ error: "Password is not allowed for update" });
+    }
+    const hashedPassword = password ? await hashPassword(password) : undefined
+
+    const updatedUser = await ProviderModel.findByIdAndUpdate(
+      req.user._id,
+      {
+        name: name || user.name,
+        password: hashedPassword || user.password,
+        phone:phone || user.phone,
+        email:email || user.email,
+        capacity:capacity || user.capacity,
+        autonumber:autonumber || user.autonumber,
+      },
+      {new: true}
+    )
+    res.status(200).send({
+      success: true,
+      message: "Profile updated Successfully",
+      updatedUser,
+    });
+
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while updating profile",
+      error:error.message,
+    });
+  }
+}
