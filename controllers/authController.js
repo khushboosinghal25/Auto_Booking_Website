@@ -3,7 +3,8 @@ import { comparePassword, hashPassword } from "../helpers/authHelper.js";
 import JWT from "jsonwebtoken";
 import ProviderModel from "../models/ProviderModel.js";
 import fs from "fs";
-
+import PlacesModel from "../models/PlacesModel.js";
+import slugify from "slugify";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -380,5 +381,87 @@ export const updateProviderProfileController = async (req,res) =>{
       message: "Error while updating profile",
       error:error.message,
     });
+  }
+}
+
+
+export const getAllProvidersController = async(req,res)=>{
+  try {
+    const providers = await ProviderModel.find({})
+    res.status(200).send({
+      success:true,
+      message:"Providers data list",
+      data:providers,
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({
+      success:false,
+      error,
+      message:'Error while fetching Providers'
+    })
+  }
+}
+
+export const getAllStudentsController = async(req,res) => {
+  try {
+    const students  = await studentModel.find({});
+    res.status(200).send({
+      success:true,
+      message:"students data list",
+      data:students,
+    }) 
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success:false,
+      error,
+      message:"Error while fetching students"
+    })
+  }
+}
+
+
+export const createPlaceController = async (req,res)=>{
+  try {
+      const {name} = req.body
+      if(!name){
+        return res.status(401).send({message:"Name is required"})
+      }
+      const existingPlace = await PlacesModel.findOne({name})
+      if(existingPlace){
+        res.status(200).send({
+          success:true,
+          message:"Places already exist",
+        })
+      }
+      const place = await new PlacesModel({name,slug:slugify(name)}).save()
+      res.status(201).send({
+        success:true,
+        message:"New Place added",
+        place
+      })
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({
+        success:false,
+        error,
+        message:"Error in Places"
+    })
+  }
+}
+
+
+export const getAllPlacesController = async(req,res) =>{
+  try {
+    const places = await PlacesModel.find({});
+    res.status(200).send({
+      success:true,
+      message:"All Places List",
+      places,
+    })
+    
+  } catch (error) {
+    console.log(error)
   }
 }

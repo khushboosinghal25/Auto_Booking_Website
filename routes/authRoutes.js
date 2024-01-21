@@ -1,6 +1,10 @@
 import express from "express";
 import {
+  createPlaceController,
   forgotPasswordController,
+  getAllPlacesController,
+  getAllProvidersController,
+  getAllStudentsController,
   providerLoginController,
   providerRegisterController,
   studentLoginController,
@@ -52,5 +56,15 @@ router.get("/provider-auth", requireSignIn, isProvider, (req, res) => {
 router.put("/profile",requireSignIn,updateProfileController)
 
 router.put("/provider-profile",requireSignIn,updateProviderProfileController)
+
+//get all autos
+router.get('/getAllProviders',getAllProvidersController)
+
+router.get('/getAllStudents',requireSignIn,isAdmin,getAllStudentsController)
+
+// create places 
+
+router.post("/create-places",requireSignIn,isAdmin,createPlaceController)
+router.get("/getAllPlaces",getAllPlacesController)
 
 export default router;

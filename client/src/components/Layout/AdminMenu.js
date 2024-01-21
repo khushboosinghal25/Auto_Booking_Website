@@ -9,7 +9,7 @@ const AdminMenu = () => {
           <h4>Admin Panel</h4>
 
           <NavLink
-            to="/dashboard/admin/users"
+            to="/dashboard/admin/students"
             className="list-group-item list-group-item-action"
           >
             Users
@@ -32,6 +32,13 @@ const AdminMenu = () => {
             className="list-group-item list-group-item-action"
           >
           Profile
+          </NavLink>
+
+          <NavLink
+            to="/dashboard/admin/places"
+            className="list-group-item list-group-item-action"
+          >
+          Places To Visit
           </NavLink>
         </div>
       </div>

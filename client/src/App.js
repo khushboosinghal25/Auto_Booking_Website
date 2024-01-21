@@ -18,6 +18,10 @@ import ProviderDashboard from './pages/Provider/ProviderDashboard';
 import StudentProfile from './pages/Student/StudentProfile';
 import AdminProfile from './pages/Admin/AdminProfile';
 import ProviderProfile from './pages/Provider/ProviderProfile';
+import Students from './pages/Admin/Students';
+import Providers from './pages/Admin/Providers';
+import Places from './pages/Admin/Places';
+import BookingPage from './pages/BookingPage';
 
 function App() {
   return (
@@ -40,6 +44,9 @@ function App() {
 
       <Route path='admin' element={<AdminDashboard />} />
       <Route path="admin/profile" element={<AdminProfile />} />
+      <Route path="admin/students" element={<Students />} />
+      <Route path="admin/providers" element={<Providers />} />
+      <Route path="admin/places" element={<Places />} />
 
      </Route>
 
@@ -53,6 +60,7 @@ function App() {
       <Route path="provider/provider-profile" element={<ProviderProfile />} />
      </Route>
 
+     <Route path="/booking/:source/:destination/:providerId" element={<BookingPage />}/>
 
     </Routes>
      

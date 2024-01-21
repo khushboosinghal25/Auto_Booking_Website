@@ -3,7 +3,7 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import toast from "react-hot-toast";
 
-import { message, Badge } from "antd";
+import { Badge } from "antd";
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
@@ -155,7 +155,7 @@ const Header = () => {
               {auth?.user ? (
                
                   <Badge
-                    count={auth?.user && auth?.user.notification}
+                    count={auth?.user && auth?.user?.notification?.length}
                     onClick={() => {
                       navigate("/notification");
                     }}
