@@ -135,7 +135,7 @@ const Header = () => {
                         <NavLink
                           onClick={handleLogout}
                           to={
-                            auth?.user?.role === 2
+                            auth?.user?.role === 1
                               ? "/admin-login"
                               : auth?.user?.role === 0
                               ? "/student-login"
@@ -152,21 +152,21 @@ const Header = () => {
                 </>
               )}
 
-              {auth?.user ? (
-               
+              <div style={{ cursor: "pointer" }}>
+                {auth?.user ? (
                   <Badge
                     count={auth?.user && auth?.user?.notification?.length}
                     onClick={() => {
                       navigate("/notification");
                     }}
-                     className="nav-link active"
+                    className="nav-link active"
                   >
                     <i className="fa-solid fa-bell nav-item"></i>
                   </Badge>
-              
-              ) : (
-                <></>
-              )}
+                ) : (
+                  <></>
+                )}
+              </div>
 
               {/* <li className="nav-item">
                 <NavLink to="/cart" className="nav-link">

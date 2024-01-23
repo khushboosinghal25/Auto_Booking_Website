@@ -22,6 +22,7 @@ import Students from './pages/Admin/Students';
 import Providers from './pages/Admin/Providers';
 import Places from './pages/Admin/Places';
 import BookingPage from './pages/BookingPage';
+import NotificationPage from './pages/NotificationPage';
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
      </Route>
 
      <Route path="/booking/:source/:destination/:providerId" element={<BookingPage />}/>
+     <Route path="/notification" element={<NotificationPage />} />
 
     </Routes>
      

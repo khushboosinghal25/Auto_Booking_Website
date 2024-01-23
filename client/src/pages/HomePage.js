@@ -6,7 +6,7 @@ import { Select, Row } from "antd";
 import ProviderList from "../components/Layout/ProviderList";
 import axios from "axios";
 import toast from "react-hot-toast";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -18,7 +18,7 @@ const HomePage = () => {
   const [providers, setProviders] = useState([]);
   const [places, setPlaces] = useState([]);
   const [selectedProvider, setSelectedProvider] = useState(null);
-  const  navigate = useNavigate();
+  const navigate = useNavigate();
   const onProviderSelect = (providerId) => {
     console.log("Selected Provider:", providerId);
     setSelectedProvider(providerId);
@@ -30,21 +30,14 @@ const HomePage = () => {
   }, [auth]);
 
   const handleProceed = () => {
-    if (!source ) {
-      toast.error(
-        "Please select source"
-      );
-    }  else if (!destination ) {
-      toast.error(
-        "Please select destination"
-      );
-    } else if (!selectedProvider ) {
-      toast.error(
-        "Please select provider"
-      );
-    } 
-    else {
-      navigate(`/booking/${source}/${destination}/${selectedProvider}`)
+    if (!source) {
+      toast.error("Please select source");
+    } else if (!destination) {
+      toast.error("Please select destination");
+    } else if (!selectedProvider) {
+      toast.error("Please select provider");
+    } else {
+      navigate(`/booking/${source}/${destination}/${selectedProvider}`);
     }
   };
 
@@ -72,7 +65,6 @@ const HomePage = () => {
             Authorization: auth?.token,
           },
         }
-    
       );
       if (res.data.success) {
         setProviders(res.data.data);

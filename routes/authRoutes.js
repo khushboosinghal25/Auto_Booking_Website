@@ -1,7 +1,10 @@
 import express from "express";
 import {
+  changeAccountStatusController,
   createPlaceController,
+  deleteAllNotificationController,
   forgotPasswordController,
+  getAllNotificationController,
   getAllPlacesController,
   getAllProvidersController,
   getAllStudentsController,
@@ -53,18 +56,35 @@ router.get("/provider-auth", requireSignIn, isProvider, (req, res) => {
   res.status(200).send({ ok: true });
 });
 
-router.put("/profile",requireSignIn,updateProfileController)
+router.put("/profile", requireSignIn, updateProfileController);
 
-router.put("/provider-profile",requireSignIn,updateProviderProfileController)
+router.put("/provider-profile", requireSignIn, updateProviderProfileController);
 
 //get all autos
-router.get('/getAllProviders',getAllProvidersController)
+router.get("/getAllProviders", getAllProvidersController);
 
-router.get('/getAllStudents',requireSignIn,isAdmin,getAllStudentsController)
+router.get("/getAllStudents", requireSignIn, isAdmin, getAllStudentsController);
 
-// create places 
+// create places
 
-router.post("/create-places",requireSignIn,isAdmin,createPlaceController)
-router.get("/getAllPlaces",getAllPlacesController)
+router.post("/create-places", requireSignIn, isAdmin, createPlaceController);
+router.get("/getAllPlaces", getAllPlacesController);
+
+//Notification
+router.post("/getAllNotification", requireSignIn, getAllNotificationController);
+
+router.post(
+  "/deleteAllNotification",
+  requireSignIn,
+  deleteAllNotificationController
+);
+
+//account status
+router.post(
+  "/changeAccountStatus",
+  requireSignIn,
+  isAdmin,
+  changeAccountStatusController
+);
 
 export default router;

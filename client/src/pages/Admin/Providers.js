@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import AdminMenu from "../../components/Layout/AdminMenu";
 import axios from "axios";
-import { Table } from "antd";
+import { Table, message } from "antd";
+import { useAuth } from "../../context/auth";
 
 const Providers = () => {
   const [providers, setProviders] = useState([]);
+  const [auth] = useAuth();
 
   const getProviders = async () => {
     try {
@@ -17,6 +19,29 @@ const Providers = () => {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  //handle account status
+  const handleAccountStatus = async (record, status) => {
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API}/api/v1/auth/changeAccountStatus`,
+        {
+          providerId: record._id,
+          status: status,
+        },
+        {
+          headers: {
+            Authorization: auth?.token,
+          },
+        }
+      );
+      if (res.data.success) {
+        message.success(res.data.message);
+      }
+    } catch (error) {
+      message.error("Something went worng in");
     }
   };
 
@@ -53,7 +78,7 @@ const Providers = () => {
           {record.status === "pending" ? (
             <button
               className="btn btn-success"
-            //   onClick={() => handleAccountStatus(record, "approved")}
+              onClick={() => handleAccountStatus(record, "approved")}
             >
               Approve
             </button>
