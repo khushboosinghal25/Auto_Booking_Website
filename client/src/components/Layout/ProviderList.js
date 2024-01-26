@@ -11,7 +11,10 @@ const ProviderList = ({ provider, onSelect, isSelected }) => {
     <Card
       onClick={handleSelect}
       hoverable
-      style={{ border: isSelected ? "2px solid red" : "2px solid black" }}
+      style={{
+        border: isSelected ? "2px solid red" : "2px solid black",
+        margin: "5px",
+      }}
     >
       <h3>{provider.name}</h3>
       <p>
@@ -23,6 +26,15 @@ const ProviderList = ({ provider, onSelect, isSelected }) => {
       <p>
         <b>Capacity:</b> {provider.capacity}
       </p>
+      {provider?.timings ? (
+        <p>
+          <b>Timings:</b> {provider.timings[0]}-{provider.timings[1]}
+        </p>
+      ) : (
+        <p>
+          <b>Timings Not provided</b>
+        </p>
+      )}
     </Card>
   );
 };

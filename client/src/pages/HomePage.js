@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout/Layout";
 import { useAuth } from "../context/auth";
 import { Select, Row } from "antd";
-// import moment from "moment";
 import ProviderList from "../components/Layout/ProviderList";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -20,12 +19,10 @@ const HomePage = () => {
   const [selectedProvider, setSelectedProvider] = useState(null);
   const navigate = useNavigate();
   const onProviderSelect = (providerId) => {
-    console.log("Selected Provider:", providerId);
     setSelectedProvider(providerId);
   };
 
   useEffect(() => {
-    console.log("Authentication Token: hh", auth?.token);
     // Make API requests using auth.token if needed
   }, [auth]);
 
@@ -57,7 +54,6 @@ const HomePage = () => {
 
   const getUserData = async () => {
     try {
-      console.log("Authentication Token:", auth?.token);
       const res = await axios.get(
         `${process.env.REACT_APP_API}/api/v1/auth/getAllProviders`,
         {

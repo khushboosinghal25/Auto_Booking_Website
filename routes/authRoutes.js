@@ -10,6 +10,7 @@ import {
   getAllStudentsController,
   providerLoginController,
   providerRegisterController,
+  setTimeController,
   studentLoginController,
   studentRegisterController,
   updateProfileController,
@@ -87,4 +88,6 @@ router.post(
   changeAccountStatusController
 );
 
+//set time
+router.post("/settime",requireSignIn,isProvider,setTimeController);
 export default router;

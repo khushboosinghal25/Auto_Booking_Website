@@ -309,6 +309,7 @@ export const providerLoginController = async (req, res) => {
         license: user.license,
         notification: user.notification,
         seennotification: user.seennotification,
+        timings:user.timings,
       },
       token,
     });
@@ -576,6 +577,28 @@ export const changeAccountStatusController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Error in changing status",
+      error,
+    });
+  }
+};
+
+export const setTimeController = async (req, res) => {
+  try {
+    const { userId, timings } = req.body;
+
+    const provider = await ProviderModel.findByIdAndUpdate(userId, { timings });
+
+    await provider.save();
+    res.status(201).send({
+      success: true,
+      message: "Timings updated",
+      data: provider,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in updating time",
       error,
     });
   }

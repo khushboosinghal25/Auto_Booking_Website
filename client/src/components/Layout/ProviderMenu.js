@@ -20,6 +20,13 @@ const ProviderMenu = () => {
           >
             Profile
           </NavLink>
+
+          <NavLink
+            to="/dashboard/provider/set-time"
+            className="list-group-item list-group-item-action"
+          >
+            Set your Availability
+          </NavLink>
         </div>
       </div>
     </>

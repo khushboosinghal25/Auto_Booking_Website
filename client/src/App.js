@@ -23,6 +23,7 @@ import Providers from './pages/Admin/Providers';
 import Places from './pages/Admin/Places';
 import BookingPage from './pages/BookingPage';
 import NotificationPage from './pages/NotificationPage';
+import ProviderSetTime from './pages/ProviderSetTime';
 
 function App() {
   return (
@@ -59,6 +60,8 @@ function App() {
      <Route path="/dashboard" element={<ProviderRoute />}>
       <Route path="provider" element={<ProviderDashboard />} />
       <Route path="provider/provider-profile" element={<ProviderProfile />} />
+      <Route path="provider/set-time" element={<ProviderSetTime />} />
+
      </Route>
 
      <Route path="/booking/:source/:destination/:providerId" element={<BookingPage />}/>
