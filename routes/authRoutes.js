@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  bookAutoController,
   changeAccountStatusController,
   createPlaceController,
   deleteAllNotificationController,
@@ -8,9 +9,13 @@ import {
   getAllPlacesController,
   getAllProvidersController,
   getAllStudentsController,
+  getProviderByIdController,
+  handleAvailibiltiyController,
+  providerBookingController,
   providerLoginController,
   providerRegisterController,
   setTimeController,
+  studentBookingController,
   studentLoginController,
   studentRegisterController,
   updateProfileController,
@@ -90,4 +95,20 @@ router.post(
 
 //set time
 router.post("/settime",requireSignIn,isProvider,setTimeController);
+
+//get single provider info
+router.post("/getProviderById",getProviderByIdController)
+
+//book appointment
+router.post('/book-auto',requireSignIn,bookAutoController)
+
+//booking availibility
+router.post('/handle-availibility',requireSignIn,handleAvailibiltiyController)
+
+// get student bookings
+router.post("/student-bookings",requireSignIn,studentBookingController)
+
+//get provider bookings
+router.post("/provider-bookings",requireSignIn,providerBookingController);
+
 export default router;

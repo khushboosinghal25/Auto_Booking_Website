@@ -9,7 +9,7 @@ const ProviderMenu = () => {
           <h4>Provider Panel</h4>
 
           <NavLink
-            to="/dashboard/provider/bookings"
+            to="/dashboard/provider/provider-bookings"
             className="list-group-item list-group-item-action"
           >
             Bookings

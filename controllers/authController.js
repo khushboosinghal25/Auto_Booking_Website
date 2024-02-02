@@ -6,6 +6,8 @@ import fs from "fs";
 import PlacesModel from "../models/PlacesModel.js";
 import slugify from "slugify";
 import dotenv from "dotenv";
+import BookingModel from "../models/BookingModel.js";
+import moment from "moment";
 
 dotenv.config();
 
@@ -309,7 +311,7 @@ export const providerLoginController = async (req, res) => {
         license: user.license,
         notification: user.notification,
         seennotification: user.seennotification,
-        timings:user.timings,
+        timings: user.timings,
       },
       token,
     });
@@ -603,3 +605,163 @@ export const setTimeController = async (req, res) => {
     });
   }
 };
+
+// get single provider
+
+export const getProviderByIdController = async (req, res) => {
+  try {
+    const provider = await ProviderModel.findOne({ _id: req.body.providerId });
+    res.status(200).send({
+      success: true,
+      message: "Single Provider Info Fetched",
+      data: provider,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "Error in getting single provider info",
+    });
+  }
+};
+
+//book -auto
+
+export const bookAutoController = async (req, res) => {
+  try {
+    req.body.date = moment(req.body.date, "DD-MM-YYYY").toISOString();
+    req.body.time = moment(req.body.time, "HH:mm").toISOString();
+    req.body.status = "pending";
+    const newBooking = new BookingModel(req.body);
+    await newBooking.save();
+
+    const user = await ProviderModel.findOne({
+      _id: req.body.providerInfo._id,
+    });
+    user.notification.push({
+      type: "New Booking Request",
+      message: `A new Booking request from ${req.body.userInfo.name}`,
+      onClickPath: "/dashboard/provider/provider-bookings",
+    });
+    await user.save();
+    res.status(200).send({
+      success: true,
+      message: "Auto Booked Successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "Error while booking auto",
+    });
+  }
+};
+
+export const handleAvailibiltiyController = async (req, res) => {
+  try {
+    const date = moment(req.body.date, "DD-MM-YYYY").toISOString();
+    const fromTime = moment(req.body.time, "HH:mm")
+      .subtract(1, "hours")
+      .toISOString();
+    const toTime = moment(req.body.time, "HH:mm").add(1, "hours").toISOString();
+
+    const providerId = req.body.providerId;
+
+    const provider = await ProviderModel.findOne({ _id: providerId });
+    const providerTimings = provider.timings;
+
+    if (
+      moment(req.body.time, "HH:mm").isBefore(
+        moment(providerTimings[0], "HH:mm")
+      ) ||
+      moment(req.body.time, "HH:mm").isAfter(
+        moment(providerTimings[1], "HH:mm")
+      )
+    ) {
+      return res.status(200).send({
+        message: "Booking not available at this time",
+        success: false,
+      });
+    }
+
+    const bookings = await BookingModel.find({
+      providerId,
+      date,
+      time: {
+        $gte: fromTime,
+        $lte: toTime,
+      },
+    });
+    if (bookings.length >= 6) {
+      return res.status(200).send({
+        message: "Booking not available at this time",
+        success: false,
+      });
+    } else {
+      return res.status(200).send({
+        success: true,
+        message: "Bookings Available",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "Error in Booking",
+    });
+  }
+};
+
+// get all students bookings
+
+export const studentBookingController = async (req,res) =>{
+  try {
+    const userId  = req.body.userId
+  
+    const student = await studentModel.findOne({_id:userId})
+    
+    const bookings = await BookingModel.find({userId:userId})
+
+    res.status(200).send({
+      success:true,
+      message:"my bookings list",
+      bookings,
+    })
+ 
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({
+      success:false,
+      message:"Not able to fetch Bookings",
+      error,
+    })
+  }
+
+}
+
+//get all providers bookings
+
+export const providerBookingController = async(req,res) =>{
+  try {
+
+    const providerId = req.body.providerId
+    const bookings = await BookingModel.find({providerId:providerId})
+
+    res.status(200).send({
+      success:true,
+      message:"My bookings list",
+     bookings,
+    })
+    
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({
+      success:false,
+      message:"Not able to fetch Bookings",
+      error,
+    })
+  }
+}

@@ -9,7 +9,7 @@ const StudentMenu = () => {
           <h4>Student Panel</h4>
 
           <NavLink
-            to="/dashboard/student/bookings"
+            to="/dashboard/student/student-bookings"
             className="list-group-item list-group-item-action"
           >
             Bookings

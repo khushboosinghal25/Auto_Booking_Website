@@ -24,6 +24,8 @@ import Places from './pages/Admin/Places';
 import BookingPage from './pages/BookingPage';
 import NotificationPage from './pages/NotificationPage';
 import ProviderSetTime from './pages/ProviderSetTime';
+import ProviderBookings from './pages/Provider/ProviderBookings';
+import StudentBookings from './pages/Student/StudentBookings';
 
 function App() {
   return (
@@ -55,12 +57,14 @@ function App() {
      <Route path="/dashboard" element={<StudentRoute />}>
        <Route path="student" element={<StudentDashboard />} />
        <Route path="student/profile" element={<StudentProfile/>} />
+       <Route path="student/student-bookings" element={<StudentBookings />} />
      </Route>
 
      <Route path="/dashboard" element={<ProviderRoute />}>
       <Route path="provider" element={<ProviderDashboard />} />
       <Route path="provider/provider-profile" element={<ProviderProfile />} />
       <Route path="provider/set-time" element={<ProviderSetTime />} />
+      <Route path="provider/provider-bookings" element={<ProviderBookings />} />
 
      </Route>
 

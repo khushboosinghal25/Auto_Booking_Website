@@ -5,6 +5,7 @@ import morgan from "morgan";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import cors from "cors";
+import bodyParser from "body-parser";
 
 dotenv.config();
 
@@ -15,9 +16,12 @@ const app = express();
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
-app.options('*', cors());
+app.options("*", cors());
+// Increase the limit for JSON and URL-encoded data
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
-app.use('/api/v1/auth', authRoutes);
+app.use("/api/v1/auth", authRoutes);
 
 app.get("/", (req, res) => {
   res.send("<h1>Welcome to MERN STack Project</h1>");
