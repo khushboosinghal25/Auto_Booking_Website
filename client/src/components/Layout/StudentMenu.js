@@ -6,11 +6,11 @@ const StudentMenu = () => {
     <>
       <div className="text-center">
         <div className="list-group">
-          <h4>Student Panel</h4>
+          <h4 className="list-group-item list-group-item-action active">Student Panel</h4>
 
           <NavLink
             to="/dashboard/student/student-bookings"
-            className="list-group-item list-group-item-action"
+            className="list-group-item list-group-item-action "
           >
             Bookings
           </NavLink>

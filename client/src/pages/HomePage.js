@@ -6,9 +6,10 @@ import ProviderList from "../components/Layout/ProviderList";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-
+import ImageComponent from './ImageComponent.js';
+import AddSe from './AddSe.js';
+import Stats from "./Stats.js";
 const { Option } = Select;
-
 const HomePage = () => {
   const [auth] = useAuth();
 
@@ -23,7 +24,6 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    // Make API requests using auth.token if needed
   }, [auth]);
 
   const handleProceed = () => {
@@ -75,7 +75,6 @@ const HomePage = () => {
   useEffect(() => {
     getAllPlaces();
     getUserData();
-    // eslint-disable-next-line
   }, []);
 
   const onChangeSource = (value) => {
@@ -98,13 +97,13 @@ const HomePage = () => {
     (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
   return (
-    <Layout>
-      <h1>HomePage</h1>
-      <div className="text-center m-3 p-3 d-flex justify-content-center">
-        <div>
-          <div className="left h-full text label">Select Source</div>
-          <div className="right h-full text value">
+    <>
+      <Layout>
+        <div className="text-center d-flex justify-content-evenly search-container">
+          <div className="select-source">
+            <p className="select-sr">Select Source</p>
             <Select
+              className="select-box"
               showSearch
               placeholder="Select Source"
               optionFilterProp="children"
@@ -120,41 +119,43 @@ const HomePage = () => {
                 ))}
             </Select>
           </div>
+          <div className="select-destination">
+            <p className="select-sr">Select Destination</p>
+            <Select
+              className="select-box"
+              showSearch
+              placeholder="Select Destination"
+              optionFilterProp="children"
+              onChange={onChangeDest}
+              onSearch={onSearchDest}
+              filterOption={filterOption}
+            >
+              {places &&
+                places.map((place) => (
+                  <Option key={`destination-${place.name}`} value={place.name}>
+                    {place.name}
+                  </Option>
+                ))}
+            </Select>
+          </div>
+          <button onClick={handleProceed} className="btn btn-success">Book Auto</button>
         </div>
-
-        <div>
-          <div>Select Destination</div>
-          <Select
-            showSearch
-            placeholder="Select Destination"
-            optionFilterProp="children"
-            onChange={onChangeDest}
-            onSearch={onSearchDest}
-            filterOption={filterOption}
-          >
-            {places &&
-              places.map((place) => (
-                <Option key={`destination-${place.name}`} value={place.name}>
-                  {place.name}
-                </Option>
-              ))}
-          </Select>
-        </div>
-      </div>
-
-      <Row>
-        {providers &&
-          providers.map((provider) => (
-            <ProviderList
-              key={provider._id}
-              provider={provider}
-              onSelect={() => onProviderSelect(provider._id)}
-              isSelected={selectedProvider === provider._id}
-            />
-          ))}
-      </Row>
-      <button onClick={handleProceed}>Proceed</button>
-    </Layout>
+        <AddSe></AddSe>
+        <Row>
+          {providers &&
+            providers.slice(0,7).map((provider) => (
+              <ProviderList
+                key={provider._id}
+                provider={provider}
+                onSelect={() => onProviderSelect(provider._id)}
+                isSelected={selectedProvider === provider._id}
+              />
+            ))}
+        </Row>
+        <Stats></Stats>
+        <ImageComponent></ImageComponent>
+      </Layout>
+    </>
   );
 };
 
