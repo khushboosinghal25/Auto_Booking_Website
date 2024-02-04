@@ -6,8 +6,8 @@ import ProviderList from "../components/Layout/ProviderList";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import ImageComponent from './ImageComponent.js';
-import AddSe from './AddSe.js';
+import ImageComponent from "./ImageComponent.js";
+import AddSe from "./AddSe.js";
 import Stats from "./Stats.js";
 const { Option } = Select;
 const HomePage = () => {
@@ -23,8 +23,7 @@ const HomePage = () => {
     setSelectedProvider(providerId);
   };
 
-  useEffect(() => {
-  }, [auth]);
+  useEffect(() => {}, [auth]);
 
   const handleProceed = () => {
     if (!source) {
@@ -81,16 +80,22 @@ const HomePage = () => {
     setSource(value);
   };
 
-  const onSearchSource = (value) => {
-    setSource(value);
-  };
-
   const onChangeDest = (value) => {
     setDestination(value);
   };
 
+  const onSearchSource = (value) => {
+    const filteredPlaces = places.filter((place) =>
+      place.name.toLowerCase().includes(value.toLowerCase())
+    );
+    setPlaces(filteredPlaces);
+  };
+
   const onSearchDest = (value) => {
-    setDestination(value);
+    const filteredPlaces = places.filter((place) =>
+      place.name.toLowerCase().includes(value.toLowerCase())
+    );
+    setPlaces(filteredPlaces);
   };
 
   const filterOption = (input, option) =>
@@ -138,19 +143,32 @@ const HomePage = () => {
                 ))}
             </Select>
           </div>
-          <button onClick={handleProceed} className="btn btn-success">Book Auto</button>
+          <button onClick={handleProceed} className="btn btn-success">
+            Book Auto
+          </button>
         </div>
         <AddSe></AddSe>
-        <Row>
-          {providers &&
-            providers.slice(0,7).map((provider) => (
-              <ProviderList
-                key={provider._id}
-                provider={provider}
-                onSelect={() => onProviderSelect(provider._id)}
-                isSelected={selectedProvider === provider._id}
-              />
-            ))}
+        <Row justify="center">
+          {providers && providers.length > 0 ? (
+            providers
+              .slice(0, 7)
+              .map((provider) => (
+                <ProviderList
+                  key={provider._id}
+                  provider={provider}
+                  onSelect={() => onProviderSelect(provider._id)}
+                  isSelected={selectedProvider === provider._id}
+                />
+              ))
+          ) : (
+            <div>
+              {providers ? (
+                <h2>Loading providers. Please wait...</h2>
+              ) : (
+                <h2>No provider Available Currently</h2>
+              )}
+            </div>
+          )}
         </Row>
         <Stats></Stats>
         <ImageComponent></ImageComponent>

@@ -158,12 +158,12 @@ const BookingPage = () => {
           <DatePicker
             className="m-2"
             format="DD-MM-YYYY"
-            onChange={(value) => setDate(moment(value).format("DD-MM-YYYY"))}
+            onChange={(value) => setDate(value?.format("DD-MM-YYYY"))}
           />
           <TimePicker
             format="HH:mm"
             className="m-2"
-            onChange={(value) => setTime(value.format("HH:mm"))}
+            onChange={(value) => setTime(value?.format("HH:mm"))}
           />
           <button className="btn btn-primary mt-2" onClick={handleAvailability}>
             Check Availability
