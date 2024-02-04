@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import Layout from '../../components/Layout/Layout'
 import axios from 'axios'
-import { useNavigate,useLocation } from 'react-router-dom'
+import { useNavigate,useLocation, Link } from 'react-router-dom'
 import toast from "react-hot-toast"
 import { useAuth } from '../../context/auth' 
 
@@ -80,6 +80,7 @@ const ProviderLogin = () => {
                 </div>
                 <br/>
                 <button type="submit" className="btn btn-primary btn-block justify-center py-64">Login</button>
+                <p className="mt-3">Don't have an account? <Link to="/provider-register">Create an Account</Link></p>
                 
               </form>
             </div>

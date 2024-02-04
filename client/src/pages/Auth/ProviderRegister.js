@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProviderRegister = () => {
   const [name, setName] = useState("");
@@ -36,7 +36,7 @@ const ProviderRegister = () => {
       formData.append("license", license);
 
       const res = await axios.post(
-       ` ${process.env.REACT_APP_API}/api/v1/auth/provider-register`,
+        ` ${process.env.REACT_APP_API}/api/v1/auth/provider-register`,
         formData
       );
       if (res.data.success) {
@@ -110,7 +110,6 @@ const ProviderRegister = () => {
                           </div>
                         </div>
 
-                        
                         <div className="d-flex flex-row align-items-center mb-4">
                           <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                           <div className="form-outline flex-fill mb-0">
@@ -191,6 +190,10 @@ const ProviderRegister = () => {
                             Register
                           </button>
                         </div>
+                        <p className="mt-3">
+                          Already have an account{" "}
+                          <Link to="/provider-login">Please Login</Link>
+                        </p>
                       </form>
                     </div>
                     <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">

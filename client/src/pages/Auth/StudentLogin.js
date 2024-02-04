@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Layout from '../../components/Layout/Layout';
 import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import toast from "react-hot-toast";
 import { useAuth } from '../../context/auth'; 
 
@@ -57,6 +57,7 @@ const StudentLogin = () => {
                                     <input type="password" name="password" id="form1Example23" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" placeholder="Your Password" />
                                 </div>
                                 <button type="submit" className="btn btn-primary btn-block">Login</button>
+                                <p className="mt-3">Don't have an account? <Link to="/student-register">Create an Account</Link></p>
                             </form>
                         </div>
                         <div className="col-md-6 col-lg-6 col-xl-6">
