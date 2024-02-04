@@ -45,44 +45,50 @@ const ProviderLogin = () => {
 
   return (
     <Layout>
-        <div className="form-container ">
-        <form onSubmit={handleSubmit}>
-          <h4 className="title">PROVIDER LOGIN FORM</h4>
+        <main className="vh-100 bg-white">
+        <div className="container py-5 h-100">
+          <div className="row d-flex align-items-center justify-content-center h-100">
+            <div className="col-md-6 col-lg-6 col-xl-5 offset-xl-1 bg-white p-5 rounded">
+              <form onSubmit={handleSubmit}>
+                <h1 className="mb-4">Provider Login</h1>
+                <div className="form-group">
+                  <label htmlFor="form1Example13">Email address</label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="form1Example13"
+                    className="form-control"
+                    placeholder="Your Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
 
-          <div className="mb-3">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="form-control"
-              id="exampleInputEmail1"
-              placeholder="Enter Your Email "
-              required
-            />
+                <div className="form-group">
+                  <label htmlFor="form1Example23">Password</label>
+                  <input
+                    type="password"
+                    name="password"
+                    id="form1Example23"
+                    className="form-control"
+                    placeholder="Your Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </div>
+                <br/>
+                <button type="submit" className="btn btn-primary btn-block justify-center py-64">Login</button>
+                
+              </form>
+            </div>
+            <div className="col-md-6 col-lg-6 col-xl-6">
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" className="img-fluid" alt='' />
+            </div>
           </div>
-          <div className="mb-3">
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="form-control"
-              id="exampleInputPassword1"
-              placeholder="Enter Your Password"
-              required
-            />
-          </div>
-
-        <div className="mb-3">
-        <button type="button" className="btn btn-primary" onClick={() => {navigate('/forgot-password')}}> 
-            Forgot Password
-          </button>
         </div>
-
-          <button type="submit" className="btn btn-primary">
-            LOGIN
-          </button>
-        </form>
-      </div>
+      </main>
     </Layout>
   )
 }
