@@ -2,6 +2,7 @@ import express from "express";
 import {
   bookAutoController,
   changeAccountStatusController,
+  confirmEmailController,
   createPlaceController,
   deleteAllNotificationController,
   forgotPasswordController,
@@ -111,4 +112,6 @@ router.post("/student-bookings",requireSignIn,studentBookingController)
 //get provider bookings
 router.post("/provider-bookings",requireSignIn,providerBookingController);
 
+//confirm email
+router.get("/confirm/:token",confirmEmailController);
 export default router;

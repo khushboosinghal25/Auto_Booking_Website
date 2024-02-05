@@ -8,6 +8,9 @@ import slugify from "slugify";
 import dotenv from "dotenv";
 import BookingModel from "../models/BookingModel.js";
 import moment from "moment";
+import Token from "../models/Token.js";
+import  crypto from "crypto"
+import verifmail from "../utils.js";
 
 dotenv.config();
 
@@ -15,61 +18,71 @@ export const studentRegisterController = async (req, res) => {
   try {
     const { name, email, password, phone, gender, answer } = req.body;
 
-    if (!name) {
-      return res.send({ message: "Name is Required" });
-    }
-
-    if (!email) {
-      return res.send({ message: "Email is Required" });
-    }
-
-    if (!password) {
-      return res.send({ message: "Password is Required" });
-    }
-
-    if (!phone) {
-      return res.send({ message: "Phone no is Required" });
-    }
-
-    if (!gender) {
-      return res.send({ message: "Gender is Required" });
-    }
-    if (!answer) {
-      return res.send({ message: "Answer is Required" });
+    if (!name || !email || !password || !phone || !gender || !answer) {
+      return res.status(400).json({ message: "All fields are required" });
     }
 
     const existingUser = await studentModel.findOne({ email });
     if (existingUser) {
-      return res.status(200).send({
+      return res.status(200).json({
         success: false,
-        message: "Already Register please login",
+        message: "Already registered, please login",
       });
     }
 
     const hashedPassword = await hashPassword(password);
 
-    const user = new studentModel({
+    // Create a new student
+    const newUser = await studentModel.create({
       name,
       email,
       phone,
       gender,
       password: hashedPassword,
       answer,
-    }).save();
-    res.status(201).send({
+    });
+
+    // Generate verification token
+    const token = new Token({
+      userId: newUser._id,
+      token: crypto.randomBytes(16).toString("hex"),
+    });
+
+    // Save the token
+    await token.save();
+
+    // Send verification email
+    const link = `http://localhost:8080/api/v1/auth/confirm/${token.token}`;
+    await verifmail(email, link);
+
+    return res.status(201).json({
       success: true,
-      message: "User Register Successfully",
-      user,
+      message: "User registered successfully. Verification email sent.",
+      user: newUser,
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).send({
+    console.error(error);
+    return res.status(500).json({
       success: false,
-      message: "Error in Registration",
+      message: "Error in registration",
       error,
     });
   }
 };
+
+
+export const confirmEmailController = async(req,res)=>{
+    try {
+      const token = await Token.findOne({
+        token: decodeURIComponent(req.params.token),
+      })
+      await studentModel.updateOne({_id:token.userId},{$set:{verified:true}})
+      await Token.findByIdAndDelete(token._id);
+      res.send("Email verified successfully You can now Login");
+    } catch (error) {
+      res.status(400).send("An error occured");
+    }
+}
 
 export const studentLoginController = async (req, res) => {
   try {
@@ -88,6 +101,13 @@ export const studentLoginController = async (req, res) => {
         success: false,
         message: "Email is not registered",
       });
+    }
+
+    if(!user.verified){
+      return res.status.send({
+        success:false,
+        message:"You have to verify your account"
+      })
     }
 
     const match = await comparePassword(password, user.password);
@@ -717,51 +737,47 @@ export const handleAvailibiltiyController = async (req, res) => {
 
 // get all students bookings
 
-export const studentBookingController = async (req,res) =>{
+export const studentBookingController = async (req, res) => {
   try {
-    const userId  = req.body.userId
-  
-    const student = await studentModel.findOne({_id:userId})
-    
-    const bookings = await BookingModel.find({userId:userId})
+    const userId = req.body.userId;
+
+    const student = await studentModel.findOne({ _id: userId });
+
+    const bookings = await BookingModel.find({ userId: userId });
 
     res.status(200).send({
-      success:true,
-      message:"my bookings list",
+      success: true,
+      message: "my bookings list",
       bookings,
-    })
- 
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).send({
-      success:false,
-      message:"Not able to fetch Bookings",
+      success: false,
+      message: "Not able to fetch Bookings",
       error,
-    })
+    });
   }
-
-}
+};
 
 //get all providers bookings
 
-export const providerBookingController = async(req,res) =>{
+export const providerBookingController = async (req, res) => {
   try {
-
-    const providerId = req.body.providerId
-    const bookings = await BookingModel.find({providerId:providerId})
+    const providerId = req.body.providerId;
+    const bookings = await BookingModel.find({ providerId: providerId });
 
     res.status(200).send({
-      success:true,
-      message:"My bookings list",
-     bookings,
-    })
-    
+      success: true,
+      message: "My bookings list",
+      bookings,
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).send({
-      success:false,
-      message:"Not able to fetch Bookings",
+      success: false,
+      message: "Not able to fetch Bookings",
       error,
-    })
+    });
   }
-}
+};

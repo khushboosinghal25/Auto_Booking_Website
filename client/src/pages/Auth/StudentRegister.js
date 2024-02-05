@@ -26,6 +26,7 @@ const StudentRegister = () => {
         { name, email, password, phone, gender, answer }
       );
       if (res.data.success) {
+        alert("Please check your email for verification");
         toast.success(res.data.message);
         navigate("/student-login");
       }
