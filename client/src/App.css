@@ -362,3 +362,28 @@ p {
 .notif-tabs {
     padding: 20px;
 }
+
+.pricing-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 50px;
+}
+
+.p-f-i {
+    height: 100%;
+    font-size: 1.25rem;
+}
+
+.p-f-i>input {
+    padding: 5px;
+    margin: 5px;
+    border-radius: 10px;
+    border: 2px solid #92c83e;
+}
+
+.select-box-p {
+    border-radius: 10px;
+    padding: 2px;
+    border: 1px solid #7a7979;
+}
