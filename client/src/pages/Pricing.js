@@ -1,114 +1,116 @@
-import React, { useRef, useState } from 'react'
-import Layout from '../components/Layout/Layout'
+import React, { useEffect, useState } from "react";
+import Layout from "../components/Layout/Layout";
+import { Select } from "antd";
+import axios from "axios";
+import toast from "react-hot-toast";
+import placesData from "./places.json";
+const { Option } = Select;
+
 const Pricing = () => {
-    const [flag, setFlag] = useState(0);
+  const [flag, setFlag] = useState(0);
+  const [places, setPlaces] = useState([]);
+  const [startLocation, setStartLocation] = useState("");
+  const [finalLocation, setFinalLocation] = useState("");
 
-    const handleClick = () => {
-        setFlag((prev) => prev + 1);
+  const handleClick = () => {
+    setFlag((prev) => prev + 1);
+  };
+
+  const getAllPlaces = async () => {
+    try {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API}/api/v1/auth/getAllPlaces`
+      );
+      if (data?.success) {
+        setPlaces(data?.places);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong in displaying all places");
     }
+  };
 
-    const rows = ["Bus Stand", "Railway Station", "College Main Gate", "PAP Chowk", "Nakodar Chowk", "Mandir"];
-    const columns = [...rows];
+  useEffect(() => {
+    getAllPlaces();
+    //eslint-disable-next-line
+  }, []);
 
-    function generateRandomArray(rows, columns) {
-        const randomArray = {};
+  const handleOptionChange1 = (value) => {
+    setStartLocation(value);
+  };
 
-        for (const row of rows) {
-            randomArray[row] = {};
-        }
-        randomArray["Bus Stand"]["Bus Stand"] = 0;
-        randomArray["Bus Stand"]["Railway Station"] = 50;
-        randomArray["Bus Stand"]["College Main Gate"] = 100;
-        randomArray["Bus Stand"]["PAP Chowk"] = 200;
-        randomArray["Bus Stand"]["Nakodar Chowk"] = 300;
-        randomArray["Bus Stand"]["Mandir"] = 400;
+  const handleOptionChange2 = (value) => {
+    setFinalLocation(value);
+  };
 
-        randomArray["Railway Station"]["Bus Stand"] = 50;
-        randomArray["Railway Station"]["Railway Station"] = 0;
-        randomArray["Railway Station"]["College Main Gate"] = 100;
-        randomArray["Railway Station"]["PAP Chowk"] = 200;
-        randomArray["Railway Station"]["Nakodar Chowk"] = 300;
-        randomArray["Railway Station"]["Mandir"] = 400;
+  const generateRandomArray = (places) => {
+    const randomArray = {};
 
-        randomArray["College Main Gate"]["Bus Stand"] = 50;
-        randomArray["College Main Gate"]["Railway Station"] = 100;
-        randomArray["College Main Gate"]["College Main Gate"] = 0;
-        randomArray["College Main Gate"]["PAP Chowk"] = 200;
-        randomArray["College Main Gate"]["Nakodar Chowk"] = 300;
-        randomArray["College Main Gate"]["Mandir"] = 400;
+    places.forEach((place) => {
+      randomArray[place.name] = place.distances;
+    });
 
-        randomArray["PAP Chowk"]["Bus Stand"] = 50;
-        randomArray["PAP Chowk"]["Railway Station"] = 70;
-        randomArray["PAP Chowk"]["College Main Gate"] = 100;
-        randomArray["PAP Chowk"]["PAP Chowk"] = 0;
-        randomArray["PAP Chowk"]["Nakodar Chowk"] = 300;
-        randomArray["PAP Chowk"]["Mandir"] = 400;
+    return randomArray;
+  };
 
-        randomArray["Nakodar Chowk"]["Bus Stand"] = 50;
-        randomArray["Nakodar Chowk"]["Railway Station"] = 30;
-        randomArray["Nakodar Chowk"]["College Main Gate"] = 100;
-        randomArray["Nakodar Chowk"]["PAP Chowk"] = 200;
-        randomArray["Nakodar Chowk"]["Nakodar Chowk"] = 0;
-        randomArray["Nakodar Chowk"]["Mandir"] = 400;
+  const randomArray = generateRandomArray(placesData.places);
 
-        randomArray["Mandir"]["Bus Stand"] = 50;
-        randomArray["Mandir"]["Railway Station"] = 20;
-        randomArray["Mandir"]["College Main Gate"] = 100;
-        randomArray["Mandir"]["PAP Chowk"] = 600;
-        randomArray["Mandir"]["Nakodar Chowk"] = 500;
-        randomArray["Mandir"]["Mandir"] = 0;
+  return (
+    <Layout>
+      <div className="container my-2">
+        <div className="pricing-form">
+          <div className="select-source">
+            <p className="select-sr">Select Source</p>
+            <Select
+              className="select-box"
+              showSearch
+              placeholder="Select Source"
+              optionFilterProp="children"
+              onChange={handleOptionChange1}
+            >
+              {places &&
+                places.map((place) => (
+                  <Option key={`source-${place.name}`} value={place.name}>
+                    {place.name}
+                  </Option>
+                ))}
+            </Select>
+          </div>
+          <div className="select-destination">
+            <p className="select-sr">Select Destination</p>
+            <Select
+              className="select-box"
+              showSearch
+              placeholder="Select Destination"
+              optionFilterProp="children"
+              onChange={handleOptionChange2}
+            >
+              {places &&
+                places.map((place) => (
+                  <Option key={`destination-${place.name}`} value={place.name}>
+                    {place.name}
+                  </Option>
+                ))}
+            </Select>
+          </div>
+          <button
+            type="submit"
+            className="btn btn-success my-1"
+            onClick={handleClick}
+          >
+            Check Price
+          </button>
+        </div>
+        <div className="my-3 text-center">
+          {flag !== 0 ? (
+            <p>Price: {randomArray[startLocation][finalLocation]}</p>
+          ) : (
+            <p>Search Something...</p>
+          )}
+        </div>
+      </div>
+    </Layout>
+  );
+};
 
-        return randomArray;
-    }
-
-
-    const randomArray = generateRandomArray(rows, columns);
-
-    const [startLocation, setStartLocation] = useState('');
-    const [finalLocation, setFinalLocation] = useState('');
-
-
-    const handleOptionChange1 = (event) => {
-        setStartLocation(event.target.value);
-    };
-
-    const handleOptionChange2 = (event) => {
-        setFinalLocation(event.target.value);
-    };
-    return (
-        <Layout>
-            <div className='container my-2'>
-                <div className="pricing-form">
-                    <div className="p-f-i">
-                        <select className='my-2 select-box-p' id="startLocation" name="startLocation" value={startLocation} onChange={handleOptionChange1}>
-                            <option value="Select Source">Select Source</option>
-                            <option value="Bus Stand">Bus Stand</option>
-                            <option value="Railway Station">Railway Station</option>
-                            <option value="College Main Gate">College Main Gate</option>
-                            <option value="PAP Chowk">PAP Chowk</option>
-                            <option value="Nakodar Chowk">Nakodar Chowk</option>
-                            <option value="Mandir">Mandir</option>
-                        </select>
-                    </div>
-                    <div className="p-f-i">
-                        <select className='my-2 select-box-p' id="finalLocation" name="finalLocation" value={finalLocation} onChange={handleOptionChange2}>
-                            <option value="Select Destination">Select Destination</option>
-                            <option value="Bus Stand">Bus Stand</option>
-                            <option value="Railway Station">Railway Station</option>
-                            <option value="College Main Gate">College Main Gate</option>
-                            <option value="PAP Chowk">PAP Chowk</option>
-                            <option value="Nakodar Chowk">Nakodar Chowk</option>
-                            <option value="Mandir">Mandir</option>
-                        </select>
-                    </div>
-                    <button type='submit' className='btn btn-primary my-1' onClick={handleClick}>Check Price</button>
-                </div>
-                <div className="my-3 text-center">
-                    {flag !== 0 ? <p>Price: {randomArray[startLocation][finalLocation]}</p> : <p>Search Something...</p>}
-                </div>
-            </div>
-
-        </Layout>
-    )
-}
 export default Pricing;
