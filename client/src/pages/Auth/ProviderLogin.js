@@ -81,7 +81,9 @@ const ProviderLogin = () => {
                 <br/>
                 <button type="submit" className="btn btn-primary btn-block justify-center py-64">Login</button>
                 <p className="mt-3">Don't have an account? <Link to="/provider-register">Create an Account</Link></p>
-                
+                <p className="mt-3" style={{textDecoration:'none'  }}>{" "}
+                  <Link to="/forgot-password">Forgot Password</Link>
+                </p>
               </form>
             </div>
             <div className="col-md-6 col-lg-6 col-xl-6">

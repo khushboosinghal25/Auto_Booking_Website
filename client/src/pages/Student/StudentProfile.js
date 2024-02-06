@@ -110,7 +110,7 @@ const StudentProfile = () => {
                   />
                 </div>
 
-                <button type="submit" className="btn btn-primary form-button">
+                <button type="submit" className="btn btn-success form-button">
                   UPDATE
                 </button>
               </form>

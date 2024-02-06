@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Layout from '../../components/Layout/Layout';
 import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../context/auth';
 
@@ -77,7 +77,10 @@ const AdminLogin = () => {
                 </div>
                 <br/>
                 <button type="submit" className="btn btn-primary btn-block justify-center py-64">Login</button>
-                
+                <br/>
+                <p className="mt-3">{" "}
+                  <Link to="/forgot-password">Forgot Password</Link>
+                </p>
               </form>
             </div>
             <div className="col-md-6 col-lg-6 col-xl-6">
