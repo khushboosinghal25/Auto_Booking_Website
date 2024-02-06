@@ -1,0 +1,71 @@
+{
+    "places": [
+      {
+        "name": "Bus Stand",
+        "distances": {
+          "Bus Stand": 0,
+          "Railway Station": 50,
+          "College Main Gate": 100,
+          "PAP Chowk": 200,
+          "Nakodar Chowk": 300,
+          "Mandir": 400
+        }
+      },
+      {
+        "name": "Railway Station",
+        "distances": {
+          "Bus Stand": 50,
+          "Railway Station": 0,
+          "College Main Gate": 100,
+          "PAP Chowk": 200,
+          "Nakodar Chowk": 300,
+          "Mandir": 400
+        }
+      },
+      {
+        "name": "College Main Gate",
+        "distances": {
+          "Bus Stand": 100,
+          "Railway Station": 100,
+          "College Main Gate": 0,
+          "PAP Chowk": 200,
+          "Nakodar Chowk": 300,
+          "Mandir": 400
+        }
+      },
+      {
+        "name": "PAP Chowk",
+        "distances": {
+          "Bus Stand": 200,
+          "Railway Station": 200,
+          "College Main Gate": 200,
+          "PAP Chowk": 0,
+          "Nakodar Chowk": 300,
+          "Mandir": 400
+        }
+      },
+      {
+        "name": "Nakodar Chowk",
+        "distances": {
+          "Bus Stand": 300,
+          "Railway Station": 300,
+          "College Main Gate": 300,
+          "PAP Chowk": 300,
+          "Nakodar Chowk": 0,
+          "Mandir": 400
+        }
+      },
+      {
+        "name": "Mandir",
+        "distances": {
+          "Bus Stand": 400,
+          "Railway Station": 400,
+          "College Main Gate": 400,
+          "PAP Chowk": 400,
+          "Nakodar Chowk": 400,
+          "Mandir": 0
+        }
+      }
+    ]
+  }
+  

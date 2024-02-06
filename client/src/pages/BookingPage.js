@@ -4,7 +4,7 @@ import Layout from "../components/Layout/Layout";
 import axios from "axios";
 import { useAuth } from "../context/auth";
 import { DatePicker, TimePicker, message } from "antd";
-import moment from "moment";
+import priceData from "./places.json";
 
 const BookingPage = () => {
   const { source, destination, providerId } = useParams();
@@ -12,6 +12,7 @@ const BookingPage = () => {
   const [date, setDate] = useState();
   const [time, setTime] = useState();
   const [isAvailable, setIsAvailable] = useState();
+  const [price, setPrice] = useState();
   const [auth] = useAuth();
   const getUserData = async () => {
     try {
@@ -56,7 +57,7 @@ const BookingPage = () => {
         setIsAvailable(true);
         message.success(res.data.message);
       } else {
-        setIsAvailable(false)
+        setIsAvailable(false);
         message.error(res.data.message);
       }
     } catch (error) {
@@ -101,6 +102,7 @@ const BookingPage = () => {
             time: time,
             source: source,
             destination: destination,
+            price: price,
           },
           {
             headers: {
@@ -126,12 +128,31 @@ const BookingPage = () => {
     getUserData();
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    const getPrice = (source, destination) => {
+      const sourceData = priceData.places.find(
+        (place) => place.name === source
+      );
+
+      if (sourceData) {
+        setPrice(sourceData.distances[destination]);
+        return sourceData.distances[destination];
+      } else {
+        return null;
+      }
+    };
+
+    getPrice(source, destination);
+  }, [source, destination]);
+
   return (
     <Layout>
       <h1>Booking Page</h1>
 
       <p>Source: {source}</p>
       <p>Destination: {destination}</p>
+      <p>Provider ID: {providerId}</p>
       <div className="container">
         {provider !== undefined ? (
           <div>

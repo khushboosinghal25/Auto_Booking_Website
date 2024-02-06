@@ -39,7 +39,7 @@ export const isAdmin = async (req,res,next)=>{
  export const isStudent = async (req,res,next)=>{
     try {
      const user = await studentModel.findById(req.user._id)
-     if(user.role !== 0){
+     if(user?.role !== 0){
          return res.status(401).send({
              success:false,
              message:'UnAuthorized Access'
