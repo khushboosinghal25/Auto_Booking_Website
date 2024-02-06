@@ -152,7 +152,7 @@ const BookingPage = () => {
 
       <p>Source: {source}</p>
       <p>Destination: {destination}</p>
-      <p>Provider ID: {providerId}</p>
+      <p>Price: {price}</p>
       <div className="container">
         {provider !== undefined ? (
           <div>
