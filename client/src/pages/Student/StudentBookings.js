@@ -14,14 +14,13 @@ const StudentBookings = () => {
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_API}/api/v1/auth/student-bookings`,
-               {
-                userId:auth?.user._id,
-               },
+        {
+          userId: auth?.user._id,
+        },
         {
           headers: {
             Authorization: auth?.token,
           },
-         
         }
       );
       if (res.data.success) {
@@ -42,35 +41,35 @@ const StudentBookings = () => {
       dataIndex: "_id",
     },
     {
-        title: "Date",
-        dataIndex: "date",
-        render: (text, record) => (
-          <span>
-            {moment(record.date).format("DD-MM-YYYY")} &nbsp;
-          </span>
-        ),
-      },
-      {
-           title:"Provider Name",
-           dataIndex: "providerInfo",
-           render: (providerInfo) => providerInfo ? providerInfo.name : 'N/A',
-      },
-      {
-        title: "Time",
-        dataIndex: "time",
-        render: (text, record) => (
-          <span>
-            {moment(record.time).format("HH:mm")} &nbsp;
-          </span>
-        ),
-      },
-    {
-        title:"Source",
-        dataIndex:"source",
+      title: "Date",
+      dataIndex: "date",
+      render: (text, record) => (
+        <span>{moment(record.date).format("DD-MM-YYYY")} &nbsp;</span>
+      ),
     },
     {
-        title:"Destination",
-        dataIndex:"destination",
+      title: "Provider Name",
+      dataIndex: "providerInfo",
+      render: (providerInfo) => (providerInfo ? providerInfo.name : "N/A"),
+    },
+    {
+      title: "Time",
+      dataIndex: "time",
+      render: (text, record) => (
+        <span>{moment(record.time).format("HH:mm")} &nbsp;</span>
+      ),
+    },
+    {
+      title: "Source",
+      dataIndex: "source",
+    },
+    {
+      title: "Destination",
+      dataIndex: "destination",
+    },
+    {
+      title: "Amount",
+      dataIndex: "price",
     },
     {
       title: "Status",
