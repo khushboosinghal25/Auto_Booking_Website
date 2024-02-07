@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  blockUserController,
   bookAutoController,
   changeAccountStatusController,
   confirmEmailController,
@@ -94,24 +95,31 @@ router.post(
   changeAccountStatusController
 );
 
+//block user
+router.post("/block-user", requireSignIn, isAdmin, blockUserController);
+
 //set time
-router.post("/settime",requireSignIn,isProvider,setTimeController);
+router.post("/settime", requireSignIn, isProvider, setTimeController);
 
 //get single provider info
-router.post("/getProviderById",getProviderByIdController)
+router.post("/getProviderById", getProviderByIdController);
 
 //book appointment
-router.post('/book-auto',requireSignIn,bookAutoController)
+router.post("/book-auto", requireSignIn, bookAutoController);
 
 //booking availibility
-router.post('/handle-availibility',requireSignIn,handleAvailibiltiyController)
+router.post(
+  "/handle-availibility",
+  requireSignIn,
+  handleAvailibiltiyController
+);
 
 // get student bookings
-router.post("/student-bookings",requireSignIn,studentBookingController)
+router.post("/student-bookings", requireSignIn, studentBookingController);
 
 //get provider bookings
-router.post("/provider-bookings",requireSignIn,providerBookingController);
+router.post("/provider-bookings", requireSignIn, providerBookingController);
 
 //confirm email
-router.get("/confirm/:token",confirmEmailController);
+router.get("/confirm/:token", confirmEmailController);
 export default router;

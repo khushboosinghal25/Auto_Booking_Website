@@ -27,6 +27,7 @@ import ProviderSetTime from './pages/ProviderSetTime';
 import ProviderBookings from './pages/Provider/ProviderBookings';
 import StudentBookings from './pages/Student/StudentBookings';
 import Pricing from './pages/Pricing';
+import BlockedUsers from './pages/Admin/BlockedUsers';
 
 function App() {
   return (
@@ -53,7 +54,7 @@ function App() {
           <Route path="admin/students" element={<Students />} />
           <Route path="admin/providers" element={<Providers />} />
           <Route path="admin/places" element={<Places />} />
-
+           <Route path="admin/blocked-users" element={<BlockedUsers />} />
         </Route>
 
         <Route path="/dashboard" element={<StudentRoute />}>
@@ -67,7 +68,6 @@ function App() {
           <Route path="provider/provider-profile" element={<ProviderProfile />} />
           <Route path="provider/set-time" element={<ProviderSetTime />} />
           <Route path="provider/provider-bookings" element={<ProviderBookings />} />
-
         </Route>
 
         <Route path="/booking/:source/:destination/:providerId" element={<BookingPage />} />

@@ -35,18 +35,22 @@ const studentSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    notification:{
-      type:Array,
-      default:[],
+    notification: {
+      type: Array,
+      default: [],
     },
-    seennotification:{
-      type:Array,
-      default:[],
+    seennotification: {
+      type: Array,
+      default: [],
     },
-    verified:{
-      type:Boolean,
-      default:false,
-    }
+    verified: {
+      type: Boolean,
+      default: false,
+    },
+    status: {
+      type: String,
+      default: "pending",
+    },
   },
   { timestamps: true }
 );

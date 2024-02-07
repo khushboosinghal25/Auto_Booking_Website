@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import AdminMenu from "../../components/Layout/AdminMenu";
-import { Table } from "antd";
+import { Table, message } from "antd";
 import axios from "axios";
+import { useAuth } from "../../context/auth";
+import toast from "react-hot-toast";
 
 const Students = () => {
   const [students, setStudents] = useState([]);
+  const [auth] = useAuth();
 
   const getStudents = async () => {
     try {
@@ -24,6 +27,29 @@ const Students = () => {
   useEffect(() => {
     getStudents();
   }, []);
+
+   const blockUser = async(record,verified,status)=>{
+        try {
+            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/block-user`,{
+                userId:record._id,
+                verified:verified,
+                status:status,
+            },{
+              headers:{
+                Authorization:auth?.token
+              }
+            })
+    
+               if(res.data.success){
+                message.success(res.data.message);
+                toast.success("User is blocked");
+               }
+
+        } catch (error) {
+          console.log("Error in blocking user")
+        }
+   }
+
   const columns = [
     {
       title: "Name",
@@ -42,7 +68,7 @@ const Students = () => {
       dataIndex: "actions",
       render: (text, record) => (
         <div className="d-flex">
-          <button className="btn btn-danger">Block</button>
+          <button className="btn btn-danger" onClick={()=>blockUser(record,false,"blocked")}>Block</button>
         </div>
       ),
     },

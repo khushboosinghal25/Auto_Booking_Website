@@ -9,7 +9,7 @@ import dotenv from "dotenv";
 import BookingModel from "../models/BookingModel.js";
 import moment from "moment";
 import Token from "../models/Token.js";
-import  crypto from "crypto"
+import crypto from "crypto";
 import verifmail from "../utils.js";
 
 dotenv.config();
@@ -70,19 +70,21 @@ export const studentRegisterController = async (req, res) => {
   }
 };
 
-
-export const confirmEmailController = async(req,res)=>{
-    try {
-      const token = await Token.findOne({
-        token: decodeURIComponent(req.params.token),
-      })
-      await studentModel.updateOne({_id:token.userId},{$set:{verified:true}})
-      await Token.findByIdAndDelete(token._id);
-      res.send("Email verified successfully You can now Login");
-    } catch (error) {
-      res.status(400).send("An error occured");
-    }
-}
+export const confirmEmailController = async (req, res) => {
+  try {
+    const token = await Token.findOne({
+      token: decodeURIComponent(req.params.token),
+    });
+    await studentModel.updateOne(
+      { _id: token.userId },
+      { $set: { verified: true, status: "verified" } }
+    );
+    await Token.findByIdAndDelete(token._id);
+    res.send("Email verified successfully You can now Login");
+  } catch (error) {
+    res.status(400).send("An error occured");
+  }
+};
 
 export const studentLoginController = async (req, res) => {
   try {
@@ -103,11 +105,11 @@ export const studentLoginController = async (req, res) => {
       });
     }
 
-    if(!user.verified && user.role == 0){
+    if (!user.verified && user.role == 0) {
       return res.status(401).send({
-        success:false,
-        message:"You have to verify your account"
-      })
+        success: false,
+        message: "You have to verify your account",
+      });
     }
 
     const match = await comparePassword(password, user.password);
@@ -259,7 +261,7 @@ export const providerRegisterController = async (req, res) => {
 
     const adminUser = await studentModel.findOne({ role: 1 });
     const notification = adminUser.notification;
-     notification.push({
+    notification.push({
       type: "Provider registered",
       message: `${user.name} has registered as a service provider`,
       // data: {
@@ -600,6 +602,38 @@ export const changeAccountStatusController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Error in changing status",
+      error,
+    });
+  }
+};
+
+// block user
+export const blockUserController = async (req, res) => {
+  try {
+    const { userId, verified, status } = req.body;
+
+    const user = await studentModel.findByIdAndUpdate(userId, {
+      verified,
+      status,
+    });
+    if (!user) {
+      return res.status(404).send({
+        sucess: false,
+        message: "User not found",
+      });
+    }
+
+    await user.save();
+    res.status(200).send({
+      sucess: true,
+      message: "User blocked successfully",
+      data: user,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while blocking user",
       error,
     });
   }

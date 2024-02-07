@@ -21,10 +21,10 @@ const AdminMenu = () => {
             Service Providers
           </NavLink>
           <NavLink
-            to="/dashboard/admin/bookings"
+            to="/dashboard/admin/blocked-users"
             className="list-group-item list-group-item-action"
           >
-           Bookings
+           Blocked Users
           </NavLink>
 
           <NavLink
