@@ -103,8 +103,8 @@ export const studentLoginController = async (req, res) => {
       });
     }
 
-    if(!user.verified){
-      return res.status.send({
+    if(!user.verified && user.role == 0){
+      return res.status(401).send({
         success:false,
         message:"You have to verify your account"
       })
@@ -259,14 +259,14 @@ export const providerRegisterController = async (req, res) => {
 
     const adminUser = await studentModel.findOne({ role: 1 });
     const notification = adminUser.notification;
-    notification.push({
+     notification.push({
       type: "Provider registered",
       message: `${user.name} has registered as a service provider`,
-      data: {
-        providerId: user._id,
-        name: user.name,
-        onClickPath: "/dashboard/admin/providers",
-      },
+      // data: {
+      //   providerId: user._id,
+      //   name: user.name,
+      // },
+      onClickPath: "/dashboard/admin/providers",
     });
     await studentModel.findByIdAndUpdate(adminUser._id, { notification });
 
@@ -584,8 +584,9 @@ export const changeAccountStatusController = async (req, res) => {
     const notification = provider.notification;
     notification.push({
       type: "Provider-account-request-updated",
-      message: `Your Request to provide Auto Rickshaw Has ${status}`,
-      onClickPath: "/notification",
+      message: `Your Request to provide Auto Rickshaw Has ${status} 
+             You can set your availibility timing to start getting bookings`,
+      onClickPath: "/dashboard/provider/set-time",
     });
 
     await provider.save();
