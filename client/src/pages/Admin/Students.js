@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import AdminMenu from "../../components/Layout/AdminMenu";
-import { Table, message } from "antd";
+import { Table, message, Modal } from "antd";
 import axios from "axios";
 import { useAuth } from "../../context/auth";
 import toast from "react-hot-toast";
@@ -28,27 +28,38 @@ const Students = () => {
     getStudents();
   }, []);
 
-   const blockUser = async(record,verified,status)=>{
+  const blockUser = async (record, verified, status) => {
+    Modal.confirm({
+      title: `Do you really want to block ${record.name}?`,
+      onOk: async () => {
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/block-user`,{
-                userId:record._id,
-                verified:verified,
-                status:status,
-            },{
-              headers:{
-                Authorization:auth?.token
-              }
-            })
-    
-               if(res.data.success){
-                message.success(res.data.message);
-                toast.success("User is blocked");
-               }
+          const res = await axios.post(
+            `${process.env.REACT_APP_API}/api/v1/auth/block-user`,
+            {
+              userId: record._id,
+              verified: verified,
+              status: status,
+            },
+            {
+              headers: {
+                Authorization: auth?.token,
+              },
+            }
+          );
 
+          if (res.data.success) {
+            message.success(res.data.message);
+            toast.success(`${record.name} is blocked`);
+          }
         } catch (error) {
-          console.log("Error in blocking user")
+          console.log("Error in blocking user");
         }
-   }
+      },
+      onCancel() {
+        console.log("Block operation canceled");
+      },
+    });
+  };
 
   const columns = [
     {
@@ -68,7 +79,12 @@ const Students = () => {
       dataIndex: "actions",
       render: (text, record) => (
         <div className="d-flex">
-          <button className="btn btn-danger" onClick={()=>blockUser(record,false,"blocked")}>Block</button>
+          <button
+            className="btn btn-danger"
+            onClick={() => blockUser(record, false, "blocked")}
+          >
+            Block
+          </button>
         </div>
       ),
     },

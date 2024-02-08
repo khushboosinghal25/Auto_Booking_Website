@@ -10,8 +10,7 @@ import BookingModel from "../models/BookingModel.js";
 import moment from "moment";
 import Token from "../models/Token.js";
 import crypto from "crypto";
-import verifmail from "../utils.js";
-
+import { sendEmail, verifmail } from "../utils.js";
 dotenv.config();
 
 export const studentRegisterController = async (req, res) => {
@@ -102,6 +101,14 @@ export const studentLoginController = async (req, res) => {
       return res.status(404).send({
         success: false,
         message: "Email is not registered",
+      });
+    }
+
+    if (user.status == "blocked") {
+      await sendEmail(user.email, "Your account is blocked by admin");
+      return res.status(500).send({
+        success: false,
+        data: "Your account is blocked by admin",
       });
     }
 
@@ -443,7 +450,7 @@ export const getAllProvidersController = async (req, res) => {
 
 export const getAllStudentsController = async (req, res) => {
   try {
-    const students = await studentModel.find({});
+    const students = await studentModel.find({ role: 0, status: "verified" });
     res.status(200).send({
       success: true,
       message: "students data list",
@@ -458,6 +465,26 @@ export const getAllStudentsController = async (req, res) => {
     });
   }
 };
+
+export const getAllBlockedController = async (req, res) => {
+  try {
+    const students = await studentModel.find({ role: 0, status: "blocked" });
+    res.status(200).send({
+      success: true,
+      message: "students data list",
+      data: students,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(401).send({
+      success: false,
+      error,
+      message: "Error in getting Blocked Users",
+    });
+  }
+};
+
+//places cntrls
 
 export const createPlaceController = async (req, res) => {
   try {
@@ -495,6 +522,56 @@ export const getAllPlacesController = async (req, res) => {
       success: true,
       message: "All Places List",
       places,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deletePlaceController = async (req, res) => {
+  try {
+    const placeId = req.params.id;
+    const deletePlace = await PlacesModel.findByIdAndDelete(placeId);
+    if (!deletePlace) {
+      return res.status(404).send({
+        success: false,
+        message: "Place not found",
+      });
+    }
+    res.status(200).send({
+      success: true,
+      message: "Place deleted successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in deleting place",
+      error,
+    });
+  }
+};
+
+export const updatePlaceController = async (req, res) => {
+  try {
+    const newName = req.body.name;
+    const placeId = req.params.id;
+    const updatePlace = await PlacesModel.findByIdAndUpdate(
+      placeId,
+      { name: newName },
+      { new: true }
+    );
+
+    if (!updatePlace) {
+      return res.status(404).send({
+        success: false,
+        message: "Place not found",
+      });
+    }
+
+    res.status(200).send({
+      success: true,
+      message: "Place name updated successfully",
     });
   } catch (error) {
     console.log(error);
@@ -638,6 +715,40 @@ export const blockUserController = async (req, res) => {
     });
   }
 };
+
+// unblock user
+export const unblockUserController = async (req, res) => {
+  try {
+    const { userId, verified, status } = req.body;
+
+    const user = await studentModel.findByIdAndUpdate(userId, {
+      verified,
+      status,
+    },  {new:true});
+    if (!user) {
+      return res.status(404).send({
+        sucess: false,
+        message: "User not found",
+      });
+    }
+
+    await user.save();
+    res.status(200).send({
+      sucess: true,
+      message: "User unblocked successfully",
+      data: user,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while unblocking user",
+      error,
+    });
+  }
+};
+
+//set time provider
 
 export const setTimeController = async (req, res) => {
   try {

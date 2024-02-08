@@ -6,7 +6,9 @@ import {
   confirmEmailController,
   createPlaceController,
   deleteAllNotificationController,
+  deletePlaceController,
   forgotPasswordController,
+  getAllBlockedController,
   getAllNotificationController,
   getAllPlacesController,
   getAllProvidersController,
@@ -20,6 +22,8 @@ import {
   studentBookingController,
   studentLoginController,
   studentRegisterController,
+  unblockUserController,
+  updatePlaceController,
   updateProfileController,
   updateProviderProfileController,
 } from "../controllers/authController.js";
@@ -73,10 +77,20 @@ router.get("/getAllProviders", getAllProvidersController);
 
 router.get("/getAllStudents", requireSignIn, isAdmin, getAllStudentsController);
 
+router.get("/getAllBlocked", requireSignIn, isAdmin, getAllBlockedController);
+
 // create places
 
 router.post("/create-places", requireSignIn, isAdmin, createPlaceController);
 router.get("/getAllPlaces", getAllPlacesController);
+
+router.delete(
+  "/deletePlace/:id",
+  requireSignIn,
+  isAdmin,
+  deletePlaceController
+);
+router.put("/updatePlace/:id", requireSignIn, isAdmin, updatePlaceController);
 
 //Notification
 router.post("/getAllNotification", requireSignIn, getAllNotificationController);
@@ -97,6 +111,8 @@ router.post(
 
 //block user
 router.post("/block-user", requireSignIn, isAdmin, blockUserController);
+
+router.post("/unblock-user", requireSignIn, isAdmin, unblockUserController);
 
 //set time
 router.post("/settime", requireSignIn, isProvider, setTimeController);

@@ -4,6 +4,8 @@ import AdminMenu from "../../components/Layout/AdminMenu";
 import PlacesForm from "../../components/Form/PlacesForm";
 import toast from "react-hot-toast";
 import axios from "axios";
+import EditPlace from "../../components/Form/EditPlace";
+
 const Places = () => {
   const [name, setName] = useState("");
   const [places, setPlaces] = useState([]);
@@ -41,23 +43,28 @@ const Places = () => {
       toast.error("Something went wrong in displaying all places");
     }
   };
-  useEffect(() => {
-    getAllPlaces();
-  }, []);
 
-  const editPlace = async (id) => {
-    try {
-    } catch (error) {
-      console.log("Error while Editing Place");
-    }
-  };
 
   const deletePlace = async (id) => {
     try {
+      const { data } = await axios.delete(
+        `${process.env.REACT_APP_API}/api/v1/auth/deletePlace/${id}`
+      );
+
+      if (data?.success) {
+        toast.success("Place deleted successfully");
+        getAllPlaces();
+      } else {
+        toast.error(data.message);
+      }
     } catch (error) {
       console.log("Error while deleting ");
     }
   };
+
+  useEffect(() => {
+    getAllPlaces();
+  }, []);
 
   return (
     <Layout>
@@ -89,12 +96,8 @@ const Places = () => {
                       <tr>
                         <td key={c._id}>{c.name}</td>
                         <td>
-                          <button
-                            className="btn btn-primary ms-2"
-                            onClick={() => editPlace(c._id)}
-                          >
-                            Edit
-                          </button>
+                          <EditPlace name={c.name} id={c._id} />
+
                           <button
                             className="btn btn-danger ms-2"
                             onClick={() => deletePlace(c._id)}
