@@ -27,6 +27,7 @@ import {
   studentLoginController,
   studentRegisterController,
   unblockUserController,
+  updateBookingStatusController,
   updatePlaceController,
   updateProfileController,
   updateProviderProfileController,
@@ -151,6 +152,9 @@ router.get("/getAllBookings",requireSignIn,isAdmin,getAllBookingsController);
 // cancel booking
 
 router.post("/cancel-booking",requireSignIn,isStudent,cancelBookingController);
+
+//update booking status
+router.post("/update-booking-status",requireSignIn,isProvider,updateBookingStatusController);
 
 //confirm email
 router.get("/confirm/:token", confirmEmailController);

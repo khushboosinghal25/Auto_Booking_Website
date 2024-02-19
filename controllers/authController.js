@@ -1183,3 +1183,44 @@ export const cancelBookingController = async(req,res) =>{
     })
   }
 }
+
+
+export const updateBookingStatusController  = async(req,res) =>{
+  try {
+    const {bookingId,status} = req.body;
+    const booking = await BookingModel.findById(bookingId);
+
+    const updatedBooking = await BookingModel.findByIdAndUpdate(bookingId,{status},{new:true})
+
+    if(!updatedBooking){
+      return res.status(404).send({
+        success:false,
+        message:"Booking not found",
+      })
+    }
+    
+    const user = await studentModel.findOne({
+      _id: booking.userId,
+    });
+    user.notification.push({
+      type: "Booking request updated ",
+      message: `Your status of booking is ${status}`,
+      onClickPath: "/dashboard/student/student-bookings",
+    });
+    await user.save();
+
+    res.status(200).send({
+      success:true,
+      message:"Booking status updated successfully",
+      updatedBooking,
+    });
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success:false,
+      message:"Error in updatring status",
+      error,
+    })
+  }
+}

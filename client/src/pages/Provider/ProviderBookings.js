@@ -2,13 +2,18 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import ProviderMenu from "../../components/Layout/ProviderMenu";
 import { useAuth } from "../../context/auth";
-import { Table } from "antd";
+import { Table, Select, message, Modal } from "antd";
 import axios from "axios";
 import moment from "moment";
+
+const { Option } = Select;
 
 const ProviderBookings = () => {
   const [auth, setAuth] = useAuth();
   const [bookings, setBookings] = useState([]);
+  const [selectedBooking, setSelectedBooking] = useState(null);
+  const [newStatus, setNewStatus] = useState(null);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   const getBookings = async () => {
     try {
@@ -34,6 +39,39 @@ const ProviderBookings = () => {
   useEffect(() => {
     getBookings();
   }, [auth]);
+
+  const handleStatusChange = (bookingId, status) => {
+    setSelectedBooking(bookingId);
+    setNewStatus(status);
+    setShowConfirmationModal(true);
+  };
+
+  const confirmStatusChange = async () => {
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API}/api/v1/auth/update-booking-status`,
+        {
+          bookingId: selectedBooking,
+          status: newStatus,
+        },
+        {
+          headers: {
+            Authorization: auth?.token,
+          },
+        }
+      );
+      if (res.data.success) {
+        message.success("Booking status updated successfully.");
+        getBookings();
+      } else {
+        message.error("Failed to update booking status.");
+      }
+    } catch (error) {
+      console.log(error);
+      message.error("Something went wrong while updating booking status.");
+    }
+    setShowConfirmationModal(false);
+  };
 
   const columns = [
     {
@@ -75,6 +113,20 @@ const ProviderBookings = () => {
       title: "Status",
       dataIndex: "status",
     },
+    {
+      title: "Actions",
+      render: (_, record) => (
+        <Select
+          defaultValue={record.status}
+          style={{ width: 120 }}
+          onChange={(value) => handleStatusChange(record._id, value)}
+        >
+          <Option value="pending">Pending</Option>
+          <Option value="booked">Booked</Option>
+          <Option value="completed">Completed</Option>
+        </Select>
+      ),
+    },
   ];
 
   return (
@@ -92,6 +144,16 @@ const ProviderBookings = () => {
           </div>
         </div>
       </div>
+      <Modal
+        title="Confirmation"
+        visible={showConfirmationModal}
+        onOk={confirmStatusChange}
+        onCancel={() => setShowConfirmationModal(false)}
+        okText="Confirm"
+        cancelText="Cancel"
+      >
+        <p>Are you sure you want to change the status?</p>
+      </Modal>
     </Layout>
   );
 };
