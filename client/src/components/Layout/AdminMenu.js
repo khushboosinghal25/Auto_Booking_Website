@@ -40,6 +40,13 @@ const AdminMenu = () => {
           >
           Places To Visit
           </NavLink>
+
+          <NavLink
+            to="/dashboard/admin/bookings"
+            className="list-group-item list-group-item-action"
+          >
+          All Bookings
+          </NavLink>
         </div>
       </div>
     </>

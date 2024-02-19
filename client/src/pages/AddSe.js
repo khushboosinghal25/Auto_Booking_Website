@@ -6,7 +6,7 @@ function AddSe() {
     return (
         <div className='addSe'>
             <img src={img_url1} className='img1' alt="auto-img" />
-            <p>Let's Book Your Auto !!!</p>
+            {/* <p>Let's Book Your Auto !!!</p> */}
         </div>
     )
 }

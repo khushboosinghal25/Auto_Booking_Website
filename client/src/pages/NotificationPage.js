@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "../components/Layout/Layout";
 import { useAuth } from "../context/auth";
-import { Tabs, message, notification } from "antd";
+import { Tabs, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -83,7 +83,7 @@ const NotificationPage = () => {
 
   return (
     <Layout>
-      <h4 className="p-3 notific-head">Notifications Tab</h4>
+      <h4 className="p-3 notific-head">Notifications</h4>
       <Tabs className="notif-tabs">
         <Tabs.TabPane tab="UNREAD" key={0}>
           <div className="d-flex justify-content-end">

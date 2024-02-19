@@ -28,6 +28,7 @@ import ProviderBookings from './pages/Provider/ProviderBookings';
 import StudentBookings from './pages/Student/StudentBookings';
 import Pricing from './pages/Pricing';
 import BlockedUsers from './pages/Admin/BlockedUsers';
+import Bookings from './pages/Admin/Bookings';
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
           <Route path="admin/providers" element={<Providers />} />
           <Route path="admin/places" element={<Places />} />
            <Route path="admin/blocked-users" element={<BlockedUsers />} />
+           <Route path="admin/bookings" element={<Bookings />} />
         </Route>
 
         <Route path="/dashboard" element={<StudentRoute />}>
@@ -70,7 +72,7 @@ function App() {
           <Route path="provider/provider-bookings" element={<ProviderBookings />} />
         </Route>
 
-        <Route path="/booking/:source/:destination/:providerId" element={<BookingPage />} />
+        <Route path="/booking/:source/:destination/:providerId/:date/:time" element={<BookingPage />} />
         <Route path="/notification" element={<NotificationPage />} />
 
       </Routes>

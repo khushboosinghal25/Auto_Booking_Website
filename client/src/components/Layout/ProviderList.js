@@ -23,9 +23,16 @@ const ProviderList = ({ provider, onSelect, isSelected }) => {
       <p>
         <b>Email Id:</b> {provider.email}
       </p>
-      <p>
-        <b>Capacity:</b> {provider.capacity}
-      </p>
+      {provider?.finalrating !== 0 ? (
+        <p>
+          <b>Ratings:</b> {provider?.finalrating}
+        </p>
+      ) : (
+        <p>
+          <b>Ratings: Unrated</b>
+        </p>
+      )}
+
       {provider?.timings ? (
         <p>
           <b>Timings:</b> {provider.timings[0]}-{provider.timings[1]}

@@ -9,15 +9,18 @@ import {
   deletePlaceController,
   forgotPasswordController,
   getAllBlockedController,
+  getAllBookingsController,
   getAllNotificationController,
   getAllPlacesController,
   getAllProvidersController,
   getAllStudentsController,
   getProviderByIdController,
+  getSelectedProvidersController,
   handleAvailibiltiyController,
   providerBookingController,
   providerLoginController,
   providerRegisterController,
+  setProviderRatingController,
   setTimeController,
   studentBookingController,
   studentLoginController,
@@ -74,6 +77,8 @@ router.put("/provider-profile", requireSignIn, updateProviderProfileController);
 
 //get all autos
 router.get("/getAllProviders", getAllProvidersController);
+
+router.get("/getSelectedProviders",getSelectedProvidersController);
 
 router.get("/getAllStudents", requireSignIn, isAdmin, getAllStudentsController);
 
@@ -133,8 +138,14 @@ router.post(
 // get student bookings
 router.post("/student-bookings", requireSignIn, studentBookingController);
 
+// rate provider 
+router.post("/rate-provider",requireSignIn,isStudent,setProviderRatingController)
+
 //get provider bookings
 router.post("/provider-bookings", requireSignIn, providerBookingController);
+
+// get all bookings 
+router.get("/getAllBookings",requireSignIn,isAdmin,getAllBookingsController);
 
 //confirm email
 router.get("/confirm/:token", confirmEmailController);

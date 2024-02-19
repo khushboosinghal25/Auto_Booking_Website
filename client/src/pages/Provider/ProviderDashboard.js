@@ -17,6 +17,7 @@ const ProviderDashboard = () => {
               <h4>Provider Name:{auth?.user?.name}</h4>
               <h4>Provider Email :{auth?.user?.email}</h4>
               <h4>Provider Contact : {auth?.user?.phone}</h4>
+              <h4>Provider Ratings : {auth?.user?.finalrating}</h4>
               {auth?.user?.timings ? (
                 <h4>
                   {" "}

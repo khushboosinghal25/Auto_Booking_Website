@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout/Layout";
 import { useAuth } from "../context/auth";
-import { Select, Row } from "antd";
+import { Select, Row, DatePicker, TimePicker } from "antd";
 import ProviderList from "../components/Layout/ProviderList";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -15,6 +15,9 @@ const HomePage = () => {
 
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
+  const [date, setDate] = useState();
+  const [time, setTime] = useState();
+
   const [providers, setProviders] = useState([]);
   const [places, setPlaces] = useState([]);
   const [selectedProvider, setSelectedProvider] = useState(null);
@@ -30,10 +33,20 @@ const HomePage = () => {
       toast.error("Please select source");
     } else if (!destination) {
       toast.error("Please select destination");
+    } else if (!time) {
+      toast.error("Please select time");
+    } else if (!date) {
+      toast.error("Please select date");
+    }  else if (source === destination) {
+      alert("Source and destination cannot be the same");
+    } else if (source !== "College Main Gate" && destination !== "College Main Gate") {
+      alert("This website is for college use only");
     } else if (!selectedProvider) {
       toast.error("Please select provider");
-    } else {
-      navigate(`/booking/${source}/${destination}/${selectedProvider}`);
+    }else {
+      navigate(
+        `/booking/${source}/${destination}/${selectedProvider}/${date}/${time}`
+      );
     }
   };
 
@@ -54,10 +67,16 @@ const HomePage = () => {
   const getUserData = async () => {
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API}/api/v1/auth/getAllProviders`,
+        `${process.env.REACT_APP_API}/api/v1/auth/getSelectedProviders`,
         {
           headers: {
             Authorization: auth?.token,
+          },
+          params: {
+            source,
+            destination,
+            date,
+            time,
           },
         }
       );
@@ -74,7 +93,7 @@ const HomePage = () => {
   useEffect(() => {
     getAllPlaces();
     getUserData();
-  }, []);
+  }, [source, destination, date, time]);
 
   const onChangeSource = (value) => {
     setSource(value);
@@ -143,6 +162,24 @@ const HomePage = () => {
                 ))}
             </Select>
           </div>
+
+          <div className="select-destination">
+            <p className="select-sr">Select Date</p>
+            <DatePicker
+              className="m-2"
+              format="DD-MM-YYYY"
+              onChange={(value) => setDate(value?.format("DD-MM-YYYY"))}
+            />
+          </div>
+
+          <div className="select-destination">
+            <p className="select-sr">Select Time</p>
+            <TimePicker
+              format="HH:mm"
+              className="m-2"
+              onChange={(value) => setTime(value?.format("HH:mm"))}
+            />
+          </div>
           <button onClick={handleProceed} className="btn btn-success">
             Book Auto
           </button>
@@ -150,26 +187,30 @@ const HomePage = () => {
         <AddSe></AddSe>
         <Row justify="center">
           {providers && providers.length > 0 ? (
-            providers
-              .slice(0, 7)
-              .map((provider) => (
-                <ProviderList
-                  key={provider._id}
-                  provider={provider}
-                  onSelect={() => onProviderSelect(provider._id)}
-                  isSelected={selectedProvider === provider._id}
-                />
-              ))
+            <div className="providers-container">
+              <h3 className="providers-header">Our Service Providers </h3>
+              <div className="providers-list">
+                {providers.slice(0, 7).map((provider) => (
+                  <ProviderList
+                    key={provider._id}
+                    provider={provider}
+                    onSelect={() => onProviderSelect(provider._id)}
+                    isSelected={selectedProvider === provider._id}
+                  />
+                ))}
+              </div>
+            </div>
           ) : (
-            <div>
+            <div className="no-providers">
               {providers ? (
-                <h2>Loading providers. Please wait...</h2>
+                <h2>No provider available for this time</h2>
               ) : (
-                <h2>No provider Available Currently</h2>
+                <h2>No providers available currently</h2>
               )}
             </div>
           )}
         </Row>
+
         <Stats></Stats>
         <ImageComponent></ImageComponent>
       </Layout>

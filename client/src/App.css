@@ -221,27 +221,18 @@ p {
 
 @keyframes name1 {
     0% {
-        transform: translateX(0px);
-    }
-
-    50% {
-        transform: translateX(1100px);
-    }
-
-    25%,
-    75% {
-        transform: translateX(550px);
+        left:0;
     }
 
     100% {
-        transform: translateX(0px);
+        left:900px;
     }
 }
 
 .img1 {
     position: relative;
     height: 100%;
-    animation: name1 4s linear infinite;
+    animation: name1 5s infinite ;
 }
 
 @keyframes name2 {
@@ -387,3 +378,26 @@ p {
     padding: 2px;
     border: 1px solid #7a7979;
 }
+
+
+
+.providers-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .providers-header {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .providers-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .no-providers {
+    text-align: center;
+    padding: 20px;
+  }

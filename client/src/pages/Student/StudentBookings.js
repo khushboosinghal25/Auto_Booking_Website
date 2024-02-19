@@ -2,13 +2,17 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import StudentMenu from "../../components/Layout/StudentMenu";
 import { useAuth } from "../../context/auth";
-import { Table } from "antd";
+import { Table, Button, Modal } from "antd";
 import axios from "axios";
 import moment from "moment";
+import StarRating from "../../components/StarRating";
 
 const StudentBookings = () => {
   const [auth, setAuth] = useAuth();
   const [bookings, setBookings] = useState([]);
+  const [showRatingModal, setShowRatingModal] = useState(false);
+  const [selectedBooking, setSelectedBooking] = useState(null);
+  const [rating, setRating] = useState(0);
 
   const getBookings = async () => {
     try {
@@ -75,7 +79,60 @@ const StudentBookings = () => {
       title: "Status",
       dataIndex: "status",
     },
+    {
+      title: "Actions",
+      render: (_, record) =>
+        record.status === "completed" ? (
+          <Button
+            onClick={() => handleRateProvider(record)}
+            className="btn btn-primary"
+          >
+            Rate Provider
+          </Button>
+        ) : record.status === "pending" ? (
+          <Button
+            onClick={() => cancelBooking(record)}
+            className="btn btn-danger"
+          >
+            Cancel Booking
+          </Button>
+        ) : null,
+    },
   ];
+
+  const handleRateProvider = (booking) => {
+    setSelectedBooking(booking);
+    setShowRatingModal(true);
+  };
+
+  const handleRatingChange = (value) => {
+    setRating(value);
+  };
+
+  const handleRatingSubmit = async () => {
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API}/api/v1/auth/rate-provider`,
+        {
+          bookingId: selectedBooking._id,
+          rating: rating,
+        },
+        {
+          headers: {
+            Authorization: auth?.token,
+          },
+        }
+      );
+      if (res.data.success) {
+        setShowRatingModal(false);
+        getBookings();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const cancelBooking = async () => {};
 
   return (
     <Layout>
@@ -92,6 +149,21 @@ const StudentBookings = () => {
           </div>
         </div>
       </div>
+      <Modal
+        title="Rate Provider"
+        visible={showRatingModal} // Control the visibility of the modal
+        onCancel={() => setShowRatingModal(false)} // Handle cancel action
+        footer={[
+          <Button key="cancel" onClick={() => setShowRatingModal(false)}>
+            Cancel
+          </Button>,
+          <Button key="submit" type="primary" onClick={handleRatingSubmit}>
+            Submit Rating
+          </Button>,
+        ]}
+      >
+        <StarRating value={rating} onChange={handleRatingChange} />
+      </Modal>
     </Layout>
   );
 };

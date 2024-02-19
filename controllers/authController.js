@@ -341,6 +341,7 @@ export const providerLoginController = async (req, res) => {
         notification: user.notification,
         seennotification: user.seennotification,
         timings: user.timings,
+        finalrating: user.finalrating,
       },
       token,
     });
@@ -438,6 +439,127 @@ export const getAllProvidersController = async (req, res) => {
       message: "Providers data list",
       data: providers,
     });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "Error while fetching Providers",
+    });
+  }
+};
+
+export const getSelectedProvidersController = async (req, res) => {
+  try {
+    const { source, destination, date, time } = req.query;
+
+    if (!source || !destination || !date || !time) {
+      const allProviders = await ProviderModel.find({ status: "approved" });
+      return res.json({ success: true, data: allProviders });
+    }
+
+    const filteredProviders = await ProviderModel.find({
+      status: "approved",
+      timings: {
+        $gte: moment(time, "HH:mm").format("HH:mm"),
+        $lte: moment(time, "HH:mm").add(1, "hours").format("HH:mm"),
+      },
+    });
+
+    const ndate = moment(date, "DD-MM-YYYY").toISOString();
+    const nfromTime = moment(time, "HH:mm").subtract(1, "hours").toISOString();
+    const ntoTime = moment(time, "HH:mm").add(1, "hours").toISOString();
+
+    const prevBookingsConditions = {
+      source,
+      date: ndate,
+      time: { $gte: nfromTime, $lte: ntoTime },
+    };
+
+    const diffBookingsConditions = {
+      date: ndate,
+      time: { $gte: nfromTime, $lte: ntoTime },
+    };
+
+    const prevBookings = await BookingModel.find(prevBookingsConditions);
+    const diffprevBookings = await BookingModel.find(diffBookingsConditions);
+
+    if (destination === "College Main Gate") {
+      const filteredProvidersList = filteredProviders.filter((provider) => {
+        const hasPreviousBookings = prevBookings.some((booking) => {
+          const isSameProvider =
+            booking.providerId.toString() === provider._id.toString();
+          const isSameDateTime =
+            booking.date === ndate &&
+            booking.time >= nfromTime &&
+            booking.time <= ntoTime;
+          const isSameSource = booking.source === source;
+          return isSameProvider && isSameDateTime && isSameSource;
+        });
+
+        const hasNoBookings = !prevBookings.some(
+          (booking) => booking.providerId.toString() === provider._id.toString()
+        );
+
+        // Exclude providers with bookings at the same date and time but different source
+        const hasDifferentSourceBookings = diffprevBookings.some((booking) => {
+          const isSameProvider =
+            booking.providerId.toString() === provider._id.toString();
+          const isDifferentSource = booking.source !== source;
+          return isSameProvider && isDifferentSource;
+        });
+
+        return (
+          (hasPreviousBookings || hasNoBookings) && !hasDifferentSourceBookings
+        );
+      });
+
+      return res.json({ success: true, data: filteredProvidersList });
+    } else if (source === "College Main Gate") {
+      // Group destinations when source is "College Main Gate"
+      const groups = {
+        1: ["Maqsudan", "Bus Stand", "Railway Station"],
+        2: ["Maqsudan", "PAP Chowk"],
+        3: ["Maqsudan", "Devi Talab Mandir", "Jyoti Chowk"],
+        4: ["Bidhipur", "Kartarpur"],
+      };
+
+      // Find the destination group of the selected destination
+      const destinationGroup = Object.keys(groups).find((group) =>
+        groups[group].includes(destination)
+      );
+
+      // Filter providers based on previous bookings and destination groups
+      const filteredProviders = await ProviderModel.find({
+        status: "approved",
+        timings: {
+          $gte: moment(time, "HH:mm").format("HH:mm"),
+          $lte: moment(time, "HH:mm").add(1, "hours").format("HH:mm"),
+        },
+      });
+
+      // Filter based on previous bookings and destination groups
+      const filteredProvidersList = filteredProviders.filter((provider) => {
+        // Check if there are any previous bookings for this provider
+        const hasPreviousBookings = prevBookings.some(
+          (booking) => booking.providerId.toString() === provider._id.toString()
+        );
+
+        // Check if the destination is in the same group as the selected destination
+        const previousBookingInSameGroup = prevBookings.some((booking) => {
+          const bookingDestinationGroup = Object.keys(groups).find((group) =>
+            groups[group].includes(booking.destination)
+          );
+          return bookingDestinationGroup === destinationGroup;
+        });
+
+        return !hasPreviousBookings || previousBookingInSameGroup;
+      });
+
+      return res.json({ success: true, data: filteredProvidersList });
+    }
+
+    res.json({ success: true, data: [] });
   } catch (error) {
     console.log(error);
     res.status(500).send({
@@ -721,10 +843,14 @@ export const unblockUserController = async (req, res) => {
   try {
     const { userId, verified, status } = req.body;
 
-    const user = await studentModel.findByIdAndUpdate(userId, {
-      verified,
-      status,
-    },  {new:true});
+    const user = await studentModel.findByIdAndUpdate(
+      userId,
+      {
+        verified,
+        status,
+      },
+      { new: true }
+    );
     if (!user) {
       return res.status(404).send({
         sucess: false,
@@ -796,8 +922,8 @@ export const getProviderByIdController = async (req, res) => {
 
 export const bookAutoController = async (req, res) => {
   try {
-    req.body.date = moment(req.body.date, "DD-MM-YYYY").toISOString();
-    req.body.time = moment(req.body.time, "HH:mm").toISOString();
+    // req.body.date = moment(req.body.date, "DD-MM-YYYY").toISOString();
+    // req.body.time = moment(req.body.time, "HH:mm").toISOString();
     req.body.status = "pending";
     const newBooking = new BookingModel(req.body);
     await newBooking.save();
@@ -923,6 +1049,80 @@ export const providerBookingController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Not able to fetch Bookings",
+      error,
+    });
+  }
+};
+
+// get all bookings
+
+export const getAllBookingsController = async(req,res) =>{
+  try {
+    const bookings = await BookingModel.find({});
+    res.status(200).send({
+      success:true,
+      message:"All bookings list",
+      data:bookings,
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success:false,
+      message:"Error in getting all bookings",
+      error,
+    })
+  }
+}
+
+// set provider rating
+
+export const setProviderRatingController = async (req, res) => {
+  try {
+    const { bookingId, rating } = req.body;
+    const booking = await BookingModel.findById(bookingId);
+
+    if (!booking) {
+      return res.status(404).send({
+        success: false,
+        message: "Booking not found",
+      });
+    }
+
+    if (booking?.rated === true) {
+      return res.status(404).send({
+        success: true,
+        message: "You have already rated the provider for this booking ",
+      });
+    }
+
+    const provider = await ProviderModel.findById(booking.providerId);
+    if (!provider) {
+      return res.status(404).send({
+        success: false,
+        message: "Provider not found",
+      });
+    }
+
+    provider.ratings.push(rating);
+
+    const averageRating =
+      provider.ratings.reduce((total, rating) => total + rating, 0) /
+      provider.ratings.length;
+    provider.finalrating = averageRating;
+
+    await provider.save();
+    booking.rated = true;
+    await booking.save();
+
+    return res.status(200).send({
+      success: true,
+      message: "Rating submitted successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Rating cant set properly",
       error,
     });
   }

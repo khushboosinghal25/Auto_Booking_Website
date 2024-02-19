@@ -48,24 +48,30 @@ const providerSchema = new mongoose.Schema(
     license: {
       data: Buffer,
       contentType: String,
-    
     },
 
-    notification:{
-      type:Array,
-      default:[],
-   },
-   seennotification:{
-      type:Array,
-      default:[],
-   },
-   status:{
-    type:String,
-    default:"pending",
-   },
-   timings:{
-    type:Object,
-   }
+    notification: {
+      type: Array,
+      default: [],
+    },
+    seennotification: {
+      type: Array,
+      default: [],
+    },
+    status: {
+      type: String,
+      default: "pending",
+    },
+    timings: {
+      type: Object,
+    },
+    ratings: {
+      type: [Number],
+    },
+    finalrating: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

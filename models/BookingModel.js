@@ -15,7 +15,7 @@ const bookingSchema = mongoose.Schema(
       required: true,
     },
     userInfo: {
-      type: String,
+      type: mongoose.Schema.Types.Mixed,
       required: true,
     },
     source: {
@@ -42,6 +42,10 @@ const bookingSchema = mongoose.Schema(
     price: {
       type: Number,
       required: true,
+    },
+    rated:{
+      type:Boolean,
+      default:false,
     },
   },
   { timestamps: true }
