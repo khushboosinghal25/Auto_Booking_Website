@@ -880,20 +880,34 @@ export const setTimeController = async (req, res) => {
   try {
     const { userId, timings } = req.body;
 
-    const provider = await ProviderModel.findByIdAndUpdate(userId, { timings });
+    // Ensure that timings is an array
+    if (!Array.isArray(timings) || timings.length !== 2) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid timings format",
+      });
+    }
 
-    await provider.save();
-    res.status(201).send({
+    const provider = await ProviderModel.findByIdAndUpdate(userId, { timings }, { new: true });
+
+    if (!provider) {
+      return res.status(404).json({
+        success: false,
+        message: "Provider not found",
+      });
+    }
+
+    return res.status(201).json({
       success: true,
       message: "Timings updated",
       data: provider,
     });
   } catch (error) {
     console.log(error);
-    res.status(500).send({
+    return res.status(500).json({
       success: false,
       message: "Error in updating time",
-      error,
+      error: error.message,
     });
   }
 };
@@ -1102,6 +1116,7 @@ export const setProviderRatingController = async (req, res) => {
         message: "Provider not found",
       });
     }
+    booking.rating = rating;
 
     provider.ratings.push(rating);
 
@@ -1127,3 +1142,44 @@ export const setProviderRatingController = async (req, res) => {
     });
   }
 };
+
+//cancel booking
+
+export const cancelBookingController = async(req,res) =>{
+  try {
+      const bookingId = req.body.bookingId;
+     const booking = await BookingModel.findById(bookingId);
+    
+     if(!booking){
+      return res.status(404).json({
+        success:false,
+        message:"Booking not found",
+      })
+     }
+
+     const providerId = booking.providerId;
+
+     const user = await ProviderModel.findOne({
+      _id: providerId,
+    });
+    user.notification.push({
+      type: "Cancelled booking",
+      message: `${booking.source} to ${booking.destination} booking is cancelled by ${booking.userInfo.name}`,
+      onClickPath: "",
+    });
+    await user.save();
+    await BookingModel.findByIdAndDelete(bookingId);
+    res.status(200).send({
+      success:true,
+      message:"Booking cancelled successfully",
+    });
+    
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success:false,
+      message:"Error in cancelling booking",
+      error,
+    })
+  }
+}

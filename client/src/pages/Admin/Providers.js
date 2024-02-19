@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import AdminMenu from "../../components/Layout/AdminMenu";
 import axios from "axios";
-import { Table, message } from "antd";
+import { Modal, Table, message } from "antd";
 import { useAuth } from "../../context/auth";
 
 const Providers = () => {
@@ -24,25 +24,34 @@ const Providers = () => {
 
   //handle account status
   const handleAccountStatus = async (record, status) => {
-    try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_API}/api/v1/auth/changeAccountStatus`,
-        {
-          providerId: record._id,
-          status: status,
-        },
-        {
-          headers: {
-            Authorization: auth?.token,
-          },
+    Modal.confirm({
+      title: `Do you really want to change status of ${record.name}?`,
+      onOk: async () =>{
+        try {
+          const res = await axios.post(
+            `${process.env.REACT_APP_API}/api/v1/auth/changeAccountStatus`,
+            {
+              providerId: record._id,
+              status: status,
+            },
+            {
+              headers: {
+                Authorization: auth?.token,
+              },
+            }
+          );
+          if (res.data.success) {
+            message.success(res.data.message);
+          }
+        } catch (error) {
+          message.error("Something went worng in");
         }
-      );
-      if (res.data.success) {
-        message.success(res.data.message);
-      }
-    } catch (error) {
-      message.error("Something went worng in");
-    }
+      },
+      onCancel() {
+        console.log(" operation canceled");
+      },
+    })
+    
   };
 
   useEffect(() => {
@@ -83,7 +92,9 @@ const Providers = () => {
               Approve
             </button>
           ) : (
-            <button className="btn btn-danger">Reject</button>
+            <button className="btn btn-danger"
+            onClick={()=> handleAccountStatus(record,"pending")}
+            >Reject</button>
           )}
         </div>
       ),

@@ -2,6 +2,7 @@ import express from "express";
 import {
   blockUserController,
   bookAutoController,
+  cancelBookingController,
   changeAccountStatusController,
   confirmEmailController,
   createPlaceController,
@@ -146,6 +147,10 @@ router.post("/provider-bookings", requireSignIn, providerBookingController);
 
 // get all bookings 
 router.get("/getAllBookings",requireSignIn,isAdmin,getAllBookingsController);
+
+// cancel booking
+
+router.post("/cancel-booking",requireSignIn,isStudent,cancelBookingController);
 
 //confirm email
 router.get("/confirm/:token", confirmEmailController);

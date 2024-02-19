@@ -8,7 +8,7 @@ import moment from "moment";
 import StarRating from "../../components/StarRating";
 
 const StudentBookings = () => {
-  const [auth, setAuth] = useAuth();
+  const [auth] = useAuth();
   const [bookings, setBookings] = useState([]);
   const [showRatingModal, setShowRatingModal] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
@@ -81,22 +81,37 @@ const StudentBookings = () => {
     },
     {
       title: "Actions",
-      render: (_, record) =>
-        record.status === "completed" ? (
-          <Button
-            onClick={() => handleRateProvider(record)}
-            className="btn btn-primary"
-          >
-            Rate Provider
-          </Button>
-        ) : record.status === "pending" ? (
-          <Button
-            onClick={() => cancelBooking(record)}
-            className="btn btn-danger"
-          >
-            Cancel Booking
-          </Button>
-        ) : null,
+      render: (_, record) => {
+        if (record.status === "completed" && record.rating) {
+          return (
+            <StarRating
+              value={record.rating}
+              disabled
+              onChange={() => alert("You have already rated this provider.")}
+            />
+          );
+        } else if (record.status === "completed") {
+          return (
+            <Button
+              onClick={() => handleRateProvider(record)}
+              className="btn btn-primary"
+            >
+              Rate Provider
+            </Button>
+          );
+        } else if (record.status === "pending") {
+          return (
+            <Button
+              onClick={() => cancelBooking(record)}
+              className="btn btn-danger"
+            >
+              Cancel Booking
+            </Button>
+          );
+        } else {
+          return null;
+        }
+      },
     },
   ];
 
@@ -132,7 +147,35 @@ const StudentBookings = () => {
     }
   };
 
-  const cancelBooking = async () => {};
+  const cancelBooking = async (booking) => {
+    Modal.confirm({
+      title: `Do you really want to cancel this booking?`,
+      onOk: async () =>{
+        try {
+          const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/cancel-booking`,{
+            bookingId:booking._id,
+          },{
+            headers:{
+          Authorization: auth?.token,
+            }
+          })
+          if(res.data.success){
+            getBookings();
+          }
+          else{
+            console.log("Failed to cancel booking")
+          }
+    
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      onCancel() {
+        console.log(" operation canceled");
+      },
+    })
+    
+  };
 
   return (
     <Layout>
@@ -151,8 +194,8 @@ const StudentBookings = () => {
       </div>
       <Modal
         title="Rate Provider"
-        visible={showRatingModal} // Control the visibility of the modal
-        onCancel={() => setShowRatingModal(false)} // Handle cancel action
+        visible={showRatingModal} 
+        onCancel={() => setShowRatingModal(false)} 
         footer={[
           <Button key="cancel" onClick={() => setShowRatingModal(false)}>
             Cancel

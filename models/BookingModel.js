@@ -47,6 +47,9 @@ const bookingSchema = mongoose.Schema(
       type:Boolean,
       default:false,
     },
+    rating:{
+      type:Number,
+    }
   },
   { timestamps: true }
 );
