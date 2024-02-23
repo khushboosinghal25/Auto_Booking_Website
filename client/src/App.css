@@ -213,26 +213,23 @@ p {
     width: 1300px;
     background-color: rgb(164, 236, 164);
     height: 200px;
-    margin-top: 0;
-    margin-left: 100px;
-    margin-right: 100px;
-    margin-bottom: 50px;
-}
-
-@keyframes name1 {
-    0% {
-        left:0;
-    }
-
-    100% {
-        left:900px;
-    }
+    margin: 0 auto 50px; /* Center the container */
+    overflow: hidden; /* Ensure the image doesn't overflow */
 }
 
 .img1 {
     position: relative;
     height: 100%;
-    animation: name1 5s infinite ;
+    animation: moveRight 8s linear infinite; /* Adjust the duration and timing function as needed */
+}
+
+@keyframes moveRight {
+    0% {
+        left: -100%; /* Start the image off the left edge of the container */
+    }
+    100% {
+        left: 100%; /* Move the image to the right edge of the container */
+    }
 }
 
 @keyframes name2 {
