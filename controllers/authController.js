@@ -462,7 +462,7 @@ export const getSelectedProvidersController = async (req, res) => {
       status: "approved",
       timings: {
         $gte: moment(time, "HH:mm").format("HH:mm"),
-        $lte: moment(time, "HH:mm").add(1, "hours").format("HH:mm"),
+        $lte: moment(time, "HH:mm").format("HH:mm"),
       },
     });
 
@@ -537,6 +537,7 @@ export const getSelectedProvidersController = async (req, res) => {
           $lte: moment(time, "HH:mm").add(1, "hours").format("HH:mm"),
         },
       });
+      
 
       // Filter based on previous bookings and destination groups
       const filteredProvidersList = filteredProviders.filter((provider) => {
@@ -553,7 +554,15 @@ export const getSelectedProvidersController = async (req, res) => {
           return bookingDestinationGroup === destinationGroup;
         });
 
-        return !hasPreviousBookings || previousBookingInSameGroup;
+         // Exclude providers with bookings at the same date and time but destination is "College \"
+         const hasDifferentSourceBookings = diffprevBookings.some((booking) => {
+          const isSameProvider =
+            booking.providerId.toString() === provider._id.toString();
+          const isDifferentSource = booking.destination === "College Main Gate";
+          return isSameProvider && isDifferentSource;
+        });
+
+        return (!hasPreviousBookings || previousBookingInSameGroup) && !hasDifferentSourceBookings;
       });
 
       return res.json({ success: true, data: filteredProvidersList });
