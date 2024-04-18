@@ -28,7 +28,7 @@ const StudentBookings = () => {
         }
       );
       if (res.data.success) {
-        setBookings(res.data.bookings);
+        setBookings(res.data.bookings.reverse());
       }
     } catch (error) {
       console.log(error);
@@ -109,7 +109,11 @@ const StudentBookings = () => {
             </Button>
           );
         } else {
-          return null;
+          return(
+            <Button>
+              Chat with provider
+            </Button>
+          )
         }
       },
     },
@@ -186,7 +190,7 @@ const StudentBookings = () => {
           </div>
           <div className="col-md-9">
             <div className="form-container ">
-              <h1>Student Bookings</h1>
+              <h1 className="d-flex text-center justify-center">Student Bookings</h1>
               <Table columns={columns} dataSource={bookings} />
             </div>
           </div>

@@ -73,7 +73,7 @@ const ProviderProfile = () => {
           <div className="col-md-9">
             <div className="form-container ">
               <form onSubmit={handleSubmit}>
-                <h4 className="title">USER PROFILE</h4>
+                <h1 className="title text-center">Provider Profile</h1>
                 <div className="mb-3">
                   <input
                     type="text"

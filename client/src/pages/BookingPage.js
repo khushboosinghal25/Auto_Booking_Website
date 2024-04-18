@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Layout from "../components/Layout/Layout";
 import axios from "axios";
 import { useAuth } from "../context/auth";
@@ -13,6 +13,9 @@ const BookingPage = () => {
   const [provider, setProvider] = useState([]);
   const [price, setPrice] = useState();
   const [auth] = useAuth();
+  const [bookingInProgress, setBookingInProgress] = useState(false);
+  const [bookingConfirmed, setBookingConfirmed] = useState(false); // State to track booking confirmation
+  const navigate = useNavigate();
 
   const getUserData = async () => {
     try {
@@ -36,7 +39,10 @@ const BookingPage = () => {
   };
 
   const handleBooking = async () => {
+    if (bookingInProgress || bookingConfirmed) return;
+
     try {
+      setBookingInProgress(true);
       const { _id, name, email, phone, autoNumber, capacity, status, timings } =
         provider;
       const res = await axios.post(
@@ -69,12 +75,14 @@ const BookingPage = () => {
       );
       if (res.data.success) {
         message.success(res.data.message);
+        setBookingConfirmed(true); // Set booking confirmed
       } else {
-        // Handle unsuccessful booking
         message.error(res.data.message);
       }
     } catch (error) {
       message.error("An error occurred while booking.");
+    } finally {
+      setBookingInProgress(false);
     }
   };
 
@@ -126,9 +134,21 @@ const BookingPage = () => {
         )}
 
         <div className="booking-actions">
-          <button className="btn btn-dark mt-2" onClick={handleBooking}>
-            Book Now
-          </button>
+          {bookingConfirmed ? (
+            <button className="btn btn-success mt-2"
+            onClick={() => navigate('/dashboard/student/student-bookings')}
+            >
+              Check Details
+            </button>
+          ) : (
+            <button
+              className="btn btn-dark mt-2"
+              onClick={handleBooking}
+              disabled={bookingInProgress}
+            >
+              {bookingInProgress ? "Booking in Progress..." : "Book Now"}
+            </button>
+          )}
         </div>
       </div>
     </Layout>

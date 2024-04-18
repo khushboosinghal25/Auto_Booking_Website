@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <div className="container " style={{ zIndex: 1 }}>
+    <div className="container footer-container">
       <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
         <p className="col-md-4 mb-0 text-body-secondary">
           © NITJ Auto Booking, 2024
@@ -63,11 +63,11 @@ function Footer() {
             </Link>
           </li>
 
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link to="/features" className="nav-link px-2 text-body-secondary">
               Features
             </Link>
-          </li>
+          </li> */}
 
           <li className="nav-item">
             <Link to="/about" className="nav-link px-2 text-body-secondary">

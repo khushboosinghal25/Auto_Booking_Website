@@ -62,7 +62,7 @@ const ProviderSetTime = () => {
           </div>
           <div className="col-md-9">
             <div className="form-container">
-              <h4 className="title">Availability Time Settings</h4>
+              <h1 className="title">Availability Timings</h1>
               <Form
                 layout="vertical"
                 onFinish={handleFinish}

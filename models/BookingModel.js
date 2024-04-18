@@ -49,7 +49,7 @@ const bookingSchema = mongoose.Schema(
     },
     rating:{
       type:Number,
-    }
+    },
   },
   { timestamps: true }
 );

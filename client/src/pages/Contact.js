@@ -37,7 +37,7 @@ function Contact() {
                         </li>
                         <li>
                             <i className="fas fa-paper-plane"></i>
-                            <span>Email:</span> <a href="mailto:khushboos.it.21@nitj.ac.in">info@autobookingWebsite.com</a>
+                            <span>Email:</span> <a href="mailto:nitjautobooking@gmail.com">nitjautobooking@gmail.com</a>
                         </li>
                         <li>
                             <i className="fas fa-globe"></i>

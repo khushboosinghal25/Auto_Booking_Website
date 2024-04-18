@@ -29,7 +29,7 @@ const ProviderBookings = () => {
         }
       );
       if (res.data.success) {
-        setBookings(res.data.bookings);
+        setBookings(res.data.bookings.reverse());
       }
     } catch (error) {
       console.log(error);
@@ -138,7 +138,7 @@ const ProviderBookings = () => {
           </div>
           <div className="col-md-9">
             <div className="form-container ">
-              <h1>Provider Bookings</h1>
+              <h1 className="text-center">Provider Bookings</h1>
               <Table columns={columns} dataSource={bookings} />
             </div>
           </div>

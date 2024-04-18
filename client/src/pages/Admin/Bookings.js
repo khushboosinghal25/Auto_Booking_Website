@@ -15,7 +15,7 @@ const Bookings = () => {
         `${process.env.REACT_APP_API}/api/v1/auth/getAllBookings`
       );
       if (res.data.success) {
-        setBookings(res.data.data);
+        setBookings(res.data.data.reverse());
       }
     } catch (error) {
       console.log(error);

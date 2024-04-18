@@ -19,9 +19,13 @@ const Header = () => {
     toast.success("Logout Successfully");
   };
 
+  const getInitial = () => {
+    return auth?.user?.name ? auth?.user.name.charAt(0).toUpperCase() : "";
+  };
+
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg px-5 bg-body-tertiary">
         <div className="container-fluid">
           <NavLink className="navbar-brand" to="/">
             NITJ Auto Booking Website
@@ -106,16 +110,47 @@ const Header = () => {
                 </>
               ) : (
                 <>
-                  <li className="nav-item dropdown">
-                    <NavLink
-                      className="nav-link dropdown-toggle"
-                      href="#"
+                  <div style={{ cursor: "pointer" , margin: "3px 10px", position: "relative"}}>
+                    {auth?.user ? (
+                      <Badge
+                        count={auth?.user && auth?.user?.notification?.length}
+                        onClick={() => {
+                          navigate("/notification");
+                        }}
+                        className="nav-link active"
+                      >
+                        <i className="fa-solid fa-bell nav-item"></i>
+                      </Badge>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+
+                  <li className="nav-item" style={{ cursor: "pointer" , margin: "0 10px", position: "relative"}} >
+                    <Link
+                      className="nav-link active"
+                      aria-current="page"
+                      to={`/dashboard/${
+                        auth?.user?.role === 2
+                          ? "provider"
+                          : auth?.user?.role === 0
+                          ? "student"
+                          : "admin"
+                      }`}
+                    >
+                      Dashboard
+                    </Link>
+                  </li>
+
+                  <li className="nav-item dropdown " style={{ cursor: "pointer" , margin: "0 10px", position: "relative"}} >
+                    <div
+                      className="circle-badge"
                       role="button"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      {auth?.user?.name}
-                    </NavLink>
+                      {getInitial()}
+                    </div>
                     <ul className="dropdown-menu">
                       <li>
                         <NavLink
@@ -125,10 +160,10 @@ const Header = () => {
                               : auth?.user?.role === 0
                               ? "student"
                               : "admin"
-                          }`}
+                          }/profile`}
                           className="dropdown-item"
                         >
-                          Dashboard
+                          Profile
                         </NavLink>
                       </li>
                       <li>
@@ -151,28 +186,6 @@ const Header = () => {
                   </li>
                 </>
               )}
-
-              <div style={{ cursor: "pointer" }}>
-                {auth?.user ? (
-                  <Badge
-                    count={auth?.user && auth?.user?.notification?.length}
-                    onClick={() => {
-                      navigate("/notification");
-                    }}
-                    className="nav-link active"
-                  >
-                    <i className="fa-solid fa-bell nav-item"></i>
-                  </Badge>
-                ) : (
-                  <></>
-                )}
-              </div>
-
-              {/* <li className="nav-item">
-                <NavLink to="/cart" className="nav-link">
-                  Cart
-                </NavLink>
-              </li> */}
             </ul>
           </div>
         </div>

@@ -50,7 +50,7 @@ const StudentLogin = () => {
           <div className="row d-flex align-items-center justify-content-center h-100">
             <div className="col-md-6 col-lg-6 col-xl-5 offset-xl-1 bg-white p-5 ">
               <form onSubmit={handleSubmit}>
-                <h1 className="mb-10">Student Login</h1>
+                <h1 className="mb-10 text-center">Student Login</h1>
                 <div className="form-group">
                   <input
                     type="email"
