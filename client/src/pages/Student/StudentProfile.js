@@ -62,7 +62,7 @@ const StudentProfile = () => {
       <div className="p-3 m-3 profile-container">
         <div className="row">
           <div className="col-md-3">
-            <StudentMenu />
+           
           </div>
           <div className="col-md-9 profile-box">
             <div className="form-container rs-form-container card">

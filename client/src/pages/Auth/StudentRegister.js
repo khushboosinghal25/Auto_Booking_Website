@@ -11,7 +11,61 @@ const StudentRegister = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [answer, setAnswer] = useState("");
+  const [errors, setErrors] = useState({}); 
+  const [showPassword,setShowPassword] = useState(false);
   const navigate = useNavigate();
+
+  const validateForm = () => {
+    let isValid = true;
+    const errorsCopy = {};
+
+    if (!name.trim()) {
+      errorsCopy.name = "Name is required";
+      isValid = false;
+    }
+  
+    if (!email.trim()) {
+      errorsCopy.email = "Email is required";
+      isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      errorsCopy.email = "Email is invalid";
+      isValid = false;
+    } else {
+      const validDomains = ["nitj.ac.in"]; 
+      const domain = email.split("@")[1];
+      if (!validDomains.includes(domain)) {
+        errorsCopy.email = "Use your official email id";
+        isValid = false;
+      }
+    }
+  
+    if (!phone.trim()) {
+      errorsCopy.phone = "Phone number is required";
+      isValid = false;
+    } else if (!/^\d{10}$/.test(phone)) {
+      errorsCopy.phone = "Phone number must be 10 digits long";
+      isValid = false;
+    }
+
+    if (!password.trim()) {
+      errorsCopy.password = "Password is required";
+      isValid = false;
+    }
+ 
+    if (!gender) {
+      errorsCopy.gender = "Gender is required";
+      isValid = false;
+    }
+  
+    if (!answer.trim()) {
+      errorsCopy.answer = "Answer is required";
+      isValid = false;
+    }
+  
+    setErrors(errorsCopy);
+    return isValid;
+  };
+  
 
   const handleGenderChange = (e) => {
     setGender(e.target.value);
@@ -20,6 +74,9 @@ const StudentRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+  const isValid = validateForm();
+
+  if (isValid) {
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_API}/api/v1/auth/student-register`,
@@ -34,7 +91,12 @@ const StudentRegister = () => {
       console.log(error);
       toast.error("Something went wrong");
     }
+  }
   };
+
+  const togglePasswordVisibility = () =>{
+    setShowPassword(!showPassword)
+  }
 
   return (
     <Layout>
@@ -62,6 +124,7 @@ const StudentRegister = () => {
                               value={name}
                               onChange={(e) => setName(e.target.value)}
                             />
+                            {errors.name && <div className="text-danger">{errors.name}</div>}
                           </div>
                         </div>
 
@@ -77,6 +140,7 @@ const StudentRegister = () => {
                               value={email}
                               onChange={(e) => setEmail(e.target.value)}
                             />
+                            {errors.email && <div className="text-danger">{errors.email}</div>}
                           </div>
                         </div>
 
@@ -92,14 +156,15 @@ const StudentRegister = () => {
                               value={phone}
                               onChange={(e) => setPhone(e.target.value)}
                             />
+                            {errors.phone && <div className="text-danger">{errors.phone}</div>}
                           </div>
                         </div>
 
                         <div className="d-flex flex-row align-items-center mb-4">
                           <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
-                          <div className="form-outline flex-fill mb-0">
+                          <div className="form-outline flex-fill position-relative mb-0">
                             <input
-                              type="password"
+                              type={showPassword ? "text" : "password"} // Toggle input type
                               name="password"
                               id="password"
                               className="form-control"
@@ -107,6 +172,12 @@ const StudentRegister = () => {
                               value={password}
                               onChange={(e) => setPassword(e.target.value)}
                             />
+                            <i
+                              className={`fas ${showPassword ? "fa-eye-slash" : "fa-eye"} password-icon position-absolute end-0 top-50 translate-middle-y`}
+                              onClick={togglePasswordVisibility}
+                              style={{ cursor: "pointer" }}
+                            ></i>
+                            {errors.password && <div className="text-danger">{errors.password}</div>}
                           </div>
                         </div>
 
@@ -129,6 +200,7 @@ const StudentRegister = () => {
                                 value="male"
                                 onChange={handleGenderChange}
                               />
+                           
                               <label
                                 className="form-check-label"
                                 htmlFor="male"
@@ -145,6 +217,7 @@ const StudentRegister = () => {
                                 value="female"
                                 onChange={handleGenderChange}
                               />
+
                               <label
                                 className="form-check-label"
                                 htmlFor="female"
@@ -153,6 +226,7 @@ const StudentRegister = () => {
                               </label>
                             </div>
                           </div>
+                          {errors.gender && <div className="text-danger">{errors.gender}</div>}
                         </div>
 
                         <div className="mb-4">
@@ -168,6 +242,7 @@ const StudentRegister = () => {
                                 value={answer}
                                 onChange={(e) => setAnswer(e.target.value)}
                               />
+                              {errors.answer && <div className="text-danger">{errors.answer}</div>}
                             </div>
                           </div>
                         </div>

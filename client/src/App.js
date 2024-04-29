@@ -47,6 +47,7 @@ function App() {
         <Route path="/provider-login" element={<ProviderLogin />} />
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="student/profile" element={<StudentProfile />} />
 
         <Route path="/dashboard" element={<AdminRoute />} >
 
@@ -61,7 +62,7 @@ function App() {
 
         <Route path="/dashboard" element={<StudentRoute />}>
           <Route path="student" element={<StudentDashboard />} />
-          <Route path="student/profile" element={<StudentProfile />} />
+        
           <Route path="student/student-bookings" element={<StudentBookings />} />
         </Route>
 

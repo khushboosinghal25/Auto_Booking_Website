@@ -132,9 +132,9 @@ const Header = () => {
                       aria-current="page"
                       to={`/dashboard/${
                         auth?.user?.role === 2
-                          ? "provider"
+                          ? "provider/provider-bookings"
                           : auth?.user?.role === 0
-                          ? "student"
+                          ? "student/student-bookings"
                           : "admin"
                       }`}
                     >
@@ -154,7 +154,7 @@ const Header = () => {
                     <ul className="dropdown-menu">
                       <li>
                         <NavLink
-                          to={`/dashboard/${
+                          to={`/${
                             auth?.user?.role === 2
                               ? "provider"
                               : auth?.user?.role === 0

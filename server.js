@@ -6,6 +6,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import cors from "cors";
 import bodyParser from "body-parser";
+import { startBookingScheduler } from "./bookingScheduler.js";
 
 dotenv.config();
 
@@ -22,6 +23,8 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 app.use("/api/v1/auth", authRoutes);
+
+startBookingScheduler();
 
 app.get("/", (req, res) => {
   res.send("<h1>Welcome to MERN STack Project</h1>");

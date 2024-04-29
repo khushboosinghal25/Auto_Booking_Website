@@ -77,6 +77,9 @@ const ProviderBookings = () => {
     {
       title: "Booking ID",
       dataIndex: "_id",
+      render: (text,record) => (
+        <span>{text.slice(-3)}</span>
+      )
     },
     {
       title: "Date",
@@ -109,10 +112,7 @@ const ProviderBookings = () => {
       title: "Amount",
       dataIndex: "price",
     },
-    {
-      title: "Status",
-      dataIndex: "status",
-    },
+    
     {
       title: "Actions",
       render: (_, record) => (

@@ -43,6 +43,9 @@ const StudentBookings = () => {
     {
       title: "Booking ID",
       dataIndex: "_id",
+      render: (text,record) => (
+        <span>{text.slice(-3)}</span>
+      )
     },
     {
       title: "Date",
@@ -185,15 +188,12 @@ const StudentBookings = () => {
     <Layout>
       <div className="container-fluid p-3 m-3">
         <div className="row">
-          <div className="col-md-3">
-            <StudentMenu />
-          </div>
-          <div className="col-md-9">
+        
             <div className="form-container ">
-              <h1 className="d-flex text-center justify-center">Student Bookings</h1>
+              <h1 className="d-flex text-center justify-center">Your Bookings</h1>
               <Table columns={columns} dataSource={bookings} />
             </div>
-          </div>
+          
         </div>
       </div>
       <Modal
