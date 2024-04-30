@@ -45,12 +45,12 @@ const StudentLogin = () => {
 
   return (
     <Layout>
-      <section className="vh-100 bg-slate-500">
+      <section className="bg-slate-500">
         <div className="container py-5 h-100">
           <div className="row d-flex align-items-center justify-content-center h-100">
-            <div className="col-md-6 col-lg-6 col-xl-5 offset-xl-1 bg-white p-5 ">
+            <div className="col-md-6 col-lg-6 col-xl-5 offset-xl-1 bg-white p-5 " >
               <form onSubmit={handleSubmit}>
-                <h1 className="mb-10 text-center">Student Login</h1>
+                <h1 className=" h1 fw-bold mb-5 mx-0 mx-md-4 mt-4">Student Login</h1>
                 <div className="form-group">
                   <input
                     type="email"

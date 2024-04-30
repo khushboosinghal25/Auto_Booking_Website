@@ -37,15 +37,22 @@ const ForgotPassword = () => {
 
   return (
     <Layout>
-      <section className="bg-gray-500">
+      <section className="vh-80" >
         <div className="container py-5">
-          <div className="row justify-content-center">
-            <div className="col-md-6">
+          <div className="row justify-content-center" >
+            <div className="col-md-6" >
               <div className="card">
                 <div className="card-body">
-                  <h1 className="card-title mb-4 px-5 text-red">Change Password</h1>
+                  
                   <form onSubmit={handleSubmit}>
+                    <div>
+
+                  <i className="fa-solid fa-person fa-2xl"></i>                  
+                  <h1 className="card-title mb-4  px-4 ">Reset account password</h1>
+                    </div>
                     <div className="mb-3">
+                    <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
+
                       <label htmlFor="email" className="form-label">
                         Your email
                       </label>
@@ -60,6 +67,8 @@ const ForgotPassword = () => {
                       />
                     </div>
                     <div className="mb-3">
+                    <i className="fas fa-question-circle fa-lg me-3 fa-fw"></i>
+
                     <label htmlFor="favourite sports" className="form-label">
                         Favourite Sports
                       </label>
@@ -73,7 +82,9 @@ const ForgotPassword = () => {
                         required
                       />
                     </div>
-                    <div className="mb-3">
+                    <div className="mb-3 ">
+                    <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
+
                       <label htmlFor="password" className="form-label">
                         New Password
                       </label>
@@ -89,7 +100,7 @@ const ForgotPassword = () => {
                     </div>
                     
                     <div class="form-group">
-                <button class="btn btn-success float-right"
+                <button class="btn btn-primary float-right"
                         type="submit">
                      Update
                 </button>

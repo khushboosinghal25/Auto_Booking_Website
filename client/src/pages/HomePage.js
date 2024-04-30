@@ -122,11 +122,11 @@ const HomePage = () => {
 
   return (
     <>
-      <Layout>
-        <div className="text-center d-flex justify-content-evenly search-container">
-          <div className="select-source">
-            <p className="select-sr">Select Source</p>
-            <Select
+      <Layout hoverable>
+        <div className="text-center d-flex justify-content-evenly search-container" >
+          <div className=" select-source">
+            <p className="electrified-title select-sr fw-500 hoverable">Select Source</p>
+            <Select 
               className="select-box"
               showSearch
               placeholder="Select Source"
@@ -144,7 +144,7 @@ const HomePage = () => {
             </Select>
           </div>
           <div className="select-destination">
-            <p className="select-sr">Select Destination</p>
+            <p className="electrified-title fw-500 select-sr ">Select Destination</p>
             <Select
               className="select-box"
               showSearch
@@ -163,34 +163,35 @@ const HomePage = () => {
             </Select>
           </div>
 
-          <div className="select-destination">
-            <p className="select-sr">Select Date</p>
+          <div className=" select-destination">
+            <p className="electrified-title fw-500 select-sr">Select Date</p>
             <DatePicker
-              className="m-2"
+              className="m-0 "
               format="DD-MM-YYYY"
               onChange={(value) => setDate(value?.format("DD-MM-YYYY"))}
             />
           </div>
 
           <div className="select-destination">
-            <p className="select-sr">Select Time</p>
+            <p className="electrified-title fw-500 select-sr ">Select Time</p>
             <TimePicker
               format="HH:mm"
-              className="m-2"
+              className="m-0"
               onChange={(value) => setTime(value?.format("HH:mm"))}
             />
           </div>
-          <button onClick={handleProceed} className="btn btn-success">
-            Book Auto
+          <button onClick={handleProceed} className="btn btn-success p-4 m-2  ">
+            Book 
           </button>
         </div>
-        <AddSe></AddSe>
+    <AddSe />
+
         <Row justify="center">
           {providers && providers.length > 0 ? (
             <div className="providers-container">
-              <h3 className="providers-header">Our Service Providers </h3>
-              <div className="providers-list">
-                {providers.slice(0, 7).map((provider) => (
+<h3 className="electrified-title font-48 mar-bot-50 fw-500 black"> Service Providers</h3>
+              <div className="electrified-title fw-500 providers-list d-flex justify-content-between ">
+                {providers.slice(0, 6).map((provider) => (
                   <ProviderList
                     key={provider._id}
                     provider={provider}
@@ -211,8 +212,8 @@ const HomePage = () => {
           )}
         </Row>
 
-        <Stats></Stats>
-        <ImageComponent></ImageComponent>
+        <Stats/>
+        <ImageComponent/>
       </Layout>
     </>
   );

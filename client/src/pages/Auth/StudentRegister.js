@@ -100,11 +100,11 @@ const StudentRegister = () => {
 
   return (
     <Layout>
-      <section className="vh-100" style={{ backgroundColor: "#eee" }}>
-        <div className="container h-100">
-          <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col-lg-12 col-xl-11">
-              <div className="card text-black" style={{ borderRadius: "25px" }}>
+      <section className="m-1 " >
+        <div className="container">
+          <div className="row d-flex justify-content-center align-items-center">
+            <div>
+              <div className="card text-black">
                 <div className="card-body p-md-5">
                   <div className="row justify-content-center">
                     <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
@@ -247,19 +247,19 @@ const StudentRegister = () => {
                           </div>
                         </div>
 
-                        <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                        <div className="d-flex  mx-4 mb-3 mb-lg-4 justify-content-between">
                           <button
                             type="submit"
                             className="btn btn-primary btn-lg"
                           >
                             Register
                           </button>
+                      <p className="mt-3">
+                          Already have an account?{" "}
+                          <Link to="/student-login">Login</Link>
+                        </p>
                         </div> 
                       </form>
-                      <p className="mt-3">
-                          Already have an account{" "}
-                          <Link to="/student-login">Please Login</Link>
-                        </p>
                     </div>
                     <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
                       <img

@@ -28,7 +28,7 @@ const AdminMenu = () => {
           </NavLink>
 
           <NavLink
-            to="/dashboard/admin/profile"
+            to="/admin/profile"
             className="list-group-item list-group-item-action"
           >
           Profile
