@@ -15,7 +15,7 @@ const ProviderMenu = () => {
             Bookings
           </NavLink>
           <NavLink
-            to="/dashboard/provider/provider-profile"
+            to="/provider/profile"
             className="list-group-item list-group-item-action"
           >
             Profile

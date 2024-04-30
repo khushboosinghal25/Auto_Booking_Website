@@ -113,9 +113,9 @@ const StudentBookings = () => {
           );
         } else {
           return(
-            <Button>
-              Chat with provider
-            </Button>
+            <h6>
+             Get Ready for your ride 
+            </h6>
           )
         }
       },

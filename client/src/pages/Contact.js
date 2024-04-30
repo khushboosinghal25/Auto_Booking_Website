@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Layout from '../components/Layout/Layout';
-import rightImg from './styles/right_img.png'
+import rightImg from './styles/right_img.jpeg'
 import arrowIcon from './styles/arrow_icon.png'
 import './styles/ContactStyles.css'
 function Contact() {
@@ -17,7 +17,7 @@ function Contact() {
                 <input type="email" name="email" placeholder="Your email" className="contact-inputs" required />
                 <textarea name="message" className="contact-inputs" placeholder="Your message" required></textarea>
                 <input type="hidden" name="redirect" value="https://web3forms.com/success" />
-                <button type="submit">Submit <img src={arrowIcon} alt="" /></button>
+                <button className='buttonSubmit' type="submit">Submit <img src={arrowIcon} alt="" /></button>
             </form>
             <div className="contact-right">
                 <img src={rightImg }alt="" />

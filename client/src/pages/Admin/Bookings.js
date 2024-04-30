@@ -33,6 +33,9 @@ const Bookings = () => {
     {
         title: "Booking ID",
         dataIndex: "_id",
+        render: (text,record) => (
+          <span>{text.slice(-3)}</span>
+        )
       },
  
       {

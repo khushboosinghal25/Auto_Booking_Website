@@ -9,7 +9,7 @@ function Stats() {
                     <div class="flex-column-center statistics-row-mb">
                         <object type="image/svg+xml" class="cities-covered-img" data="https://s3-ap-southeast-1.amazonaws.com/ola-prod-website/cts-covered.svg" name="cities-covered"></object>
                         <div class="desktop-only">
-                            <p class="title-1 fw-500 font-40 lh-48 text-center">250+</p>
+                            <p class="title-1 fw-500 font-40 lh-48 text-center">50+</p>
                             <p class="title-2 font-28 lh-32 fw-500 text-center">Spots covered</p>
                             {/* <p class="title-3 font-16 fw-400 lh-24 text-center">Across India, Australia, New Zealand and the UK</p> */}
                         </div>

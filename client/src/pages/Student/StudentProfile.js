@@ -60,13 +60,11 @@ const StudentProfile = () => {
   return (
     <Layout>
       <div className="p-3 m-3 profile-container">
-        <div className="row">
-          <div className="col-md-3">
-           
-          </div>
-          <div className="col-md-9 profile-box">
+        <div className="row d-flex justify-content-center mt-5">
+          
+          <div className="col-md-4 profile-box">
             <div className="form-container rs-form-container card">
-              <h4 className="title">USER PROFILE</h4>
+              <h4 className="title text-center">YOUR PROFILE</h4>
               <form onSubmit={handleSubmit}>
                 <div className="mb-3 input-mb3">
                   <input
@@ -110,7 +108,7 @@ const StudentProfile = () => {
                   />
                 </div>
 
-                <button type="submit" className="btn btn-success form-button">
+                <button type="submit" className="btn btn-success form-button float-end">
                   UPDATE
                 </button>
               </form>
