@@ -3,17 +3,17 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <div className="container footer-container">
-      <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <div className="container footer-container" >
+      <footer className="d-flex flex-wrap justify-content-between align-items-center mb-0" style={{ bottom: 0, backgroundColor: '#ffffff', padding: '10px 20px' }}>
         <p className="col-md-4 mb-0 text-body-secondary">
           © NITJ Auto Booking, 2024
         </p>
 
         <Link
           to="/"
-          className="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
+          className="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis "
         >
-          <svg className="bi me-2 svg-c" width="60" height="60">
+          <svg className=" svg-c" width="60" height="60">
             <svg
               stroke="currentColor"
               fill="currentColor"

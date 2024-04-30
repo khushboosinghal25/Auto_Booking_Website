@@ -49,10 +49,12 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="student/profile" element={<StudentProfile />} />
 
+        <Route path="admin/profile" element={<AdminProfile />} />
+
         <Route path="/dashboard" element={<AdminRoute />} >
 
           <Route path='admin' element={<AdminDashboard />} />
-          <Route path="admin/profile" element={<AdminProfile />} />
+         
           <Route path="admin/students" element={<Students />} />
           <Route path="admin/providers" element={<Providers />} />
           <Route path="admin/places" element={<Places />} />

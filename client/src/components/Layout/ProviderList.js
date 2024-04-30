@@ -12,8 +12,8 @@ const ProviderList = ({ provider, onSelect, isSelected }) => {
       onClick={handleSelect}
       hoverable
       style={{
-        border: isSelected ? "2px solid red" : "2px solid black",
-        margin: "5px",
+        border: isSelected ? "2px solid rgb(64, 131, 172)" : "2px solid rgb(164, 131, 172)",
+        margin: "7px",
       }}
     >
       <h3>{provider.name}</h3>

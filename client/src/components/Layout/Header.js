@@ -25,7 +25,8 @@ const Header = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg px-5 bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg px-5 bg-body-tertiary 
+" >
         <div className="container-fluid">
           <NavLink className="navbar-brand" to="/">
             NITJ Auto Booking Website

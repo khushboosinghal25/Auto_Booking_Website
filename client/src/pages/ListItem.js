@@ -13,7 +13,7 @@ const ListItem = ({ title, image }) => {
                             <h5 class="card-title">{title}</h5>
                             <p class="card-text rs-card-text">
                                 <a href="https://www.github.com" className='btn btn-primary rs-card-text-link'>Github</a>
-                                <a href="https://www.github.com" className='btn btn-primary rs-card-text-link'>LinkedIn</a>
+                                <a href="https://www.linkedin.com" className='btn btn-primary rs-card-text-link'>LinkedIn</a>
                             </p>
                         </div>
                     </div>

@@ -45,7 +45,7 @@ const ProviderLogin = () => {
 
   return (
     <Layout>
-        <main className="vh-100 bg-white">
+        <main className=" bg-white">
         <div className="container py-5 h-100">
           <div className="row d-flex align-items-center justify-content-center h-100">
             <div className="col-md-6 col-lg-6 col-xl-5 offset-xl-1 bg-white p-5 rounded">

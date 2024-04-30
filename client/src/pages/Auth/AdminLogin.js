@@ -42,10 +42,10 @@ const AdminLogin = () => {
 
   return (
     <Layout >
-      <section className="vh-100 bg-white">
+      <section  >
         <div className="container py-5 h-100">
           <div className="row d-flex align-items-center justify-content-center h-100">
-            <div className="col-md-6 col-lg-6 col-xl-5 offset-xl-1 bg-white p-5 rounded">
+            <div className="col-md-6 col-lg-6 col-xl-5 offset-xl-1  p-5 rounded">
               <form onSubmit={handleSubmit}>
                 <h1 className="mb-4 mt-10">Admin Login</h1>
                 <div className="form-group mb-10">
