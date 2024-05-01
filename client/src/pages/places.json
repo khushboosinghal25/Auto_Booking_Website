@@ -72,19 +72,19 @@
       {
         "name":"Kartarpur",
         "distances":{
-          "College Main Gate":30
+          "College Main Gate":20
         }
       },
       {
         "name":"Bidhipur",
         "distances":{
-          "College Main Gate":20
+          "College Main Gate":10
         }
       },
       {
         "name":"Maqsudan",
         "distances":{
-          "College Main Gate":30
+          "College Main Gate":20
         }
       }
     ]

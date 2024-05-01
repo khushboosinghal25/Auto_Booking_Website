@@ -181,7 +181,7 @@ const HomePage = () => {
             />
           </div>
           <button onClick={handleProceed} className="btn btn-success p-4 m-2  ">
-            Book 
+            Book Now 
           </button>
         </div>
     <AddSe />

@@ -70,10 +70,10 @@ const ProviderProfile = () => {
           <div className="col-md-3">
             <ProviderMenu />
           </div>
-          <div className="col-md-9">
+          <div className="col-md-5">
             <div className="form-container ">
               <form onSubmit={handleSubmit}>
-                <h1 className="title text-center">Provider Profile</h1>
+                <h1 className="title text-center">Your Profile</h1>
                 <div className="mb-3">
                   <input
                     type="text"
@@ -138,7 +138,7 @@ const ProviderProfile = () => {
                   />
                 </div>
 
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-success float-end">
                   UPDATE
                 </button>
               </form>

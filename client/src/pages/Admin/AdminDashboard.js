@@ -28,4 +28,17 @@ const AdminDashboard = () => {
   );
 };
 
+            <div className="col-md-9">
+            <div className=" w-75 p-3 justify-center">
+                <h1>Welcome to your Dashboard</h1>
+            </div>
+            </div>
+         </div>
+       </div>
+
+   </Layout>
+  )
+}
+
+
 export default AdminDashboard;

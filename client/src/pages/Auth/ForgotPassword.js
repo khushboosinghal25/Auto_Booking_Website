@@ -47,7 +47,7 @@ const ForgotPassword = () => {
                   <form onSubmit={handleSubmit}>
                     <div>
 
-                  <i className="fa-solid fa-person fa-2xl"></i>                  
+                                  
                   <h1 className="card-title mb-4  px-4 ">Reset account password</h1>
                     </div>
                     <div className="mb-3">
@@ -100,7 +100,7 @@ const ForgotPassword = () => {
                     </div>
                     
                     <div class="form-group">
-                <button class="btn btn-primary float-right"
+                <button class="btn btn-success float-end"
                         type="submit">
                      Update
                 </button>
