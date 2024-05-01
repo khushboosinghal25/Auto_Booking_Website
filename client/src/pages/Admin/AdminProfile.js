@@ -1,133 +1,140 @@
-import React,{useEffect,useState} from 'react'
-import Layout from '../../components/Layout/Layout'
-import { useAuth } from '../../context/auth'
-import axios from 'axios'
-import toast from 'react-hot-toast'
-import AdminMenu from '../../components/Layout/AdminMenu'
+import React, { useEffect, useState } from 'react';
+import Layout from '../../components/Layout/Layout';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import AdminMenu from '../../components/Layout/AdminMenu';
 
 const AdminProfile = () => {
-    const [auth,setAuth]  = useAuth()
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [phone, setPhone] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
 
-    useEffect(() =>{
-        const {email,name,phone} = auth?.user
-        setName(name)
-        setPhone(phone)
-        setEmail(email)
-      
-    },[auth?.user])
+  useEffect(() => {
+    // Fetch user data from API or context
+    // For simplicity, I'm setting some mock data
+    const userData = {
+      name: 'Admin Name',
+      email: 'admin@example.com',
+      phone: '1234567890',
+    };
+    setName(userData.name);
+    setEmail(userData.email);
+    setPhone(userData.phone);
+  }, []);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-          const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/auth/profile`, {
-            name,
-            email,
-            password,
-            phone,
-          });
-      
-          console.log("Response data:", data);
-      
-          if (data?.error) {
-            toast.error(data.error);
-          } else if (data?.updatedUser) {
-            console.log("Updating auth state and local storage:", data.updatedUser);
-            setAuth((prevAuth) => ({ ...prevAuth, user: data.updatedUser }));
-          
-            // Use setTimeout with 0ms delay to simulate asynchronous behavior
-            setTimeout(() => {
-              let ls = localStorage.getItem("auth");
-              ls = JSON.parse(ls);
-              ls.user = data.updatedUser;
-              localStorage.setItem('auth', JSON.stringify(ls));
-              console.log("Local storage updated successfully");
-            }, 0);
-          
-      
-            toast.success("Profile Updated Successfully");
-          }
-        } catch (error) {
-          console.log(error);
-          toast.error("Something went wrong 1");
-        }
-      };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // Send updated profile data to API
+      const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/auth/profile`, {
+        name,
+        email,
+        password,
+        phone,
+      });
+
+      // Handle response
+      if (data?.error) {
+        toast.error(data.error);
+      } else if (data?.updatedUser) {
+        // Update user data in state or context
+        toast.success('Profile Updated Successfully');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Something went wrong');
+    }
+  };
+
   return (
-   <Layout>
-<div className="container-fluid p-3 m-3">
-        <div className="row">
-          <div className="col-md-3">
-            <AdminMenu />
-          </div>
-          <div className="col-md-9">
-            <div className="form-container ">
-        <form onSubmit={handleSubmit}>
-          <h4 className="title">ADMIN PROFILE</h4>
-          <div className="mb-3">
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="form-control"
-              id="exampleInputEmail1"
-              placeholder="Enter Your Name"
-              
-              autoFocus
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="email"
-              value={email}
-              
-              className="form-control"
-              id="exampleInputEmail1"
-              placeholder="Enter Your Email "
-              
-              disabled
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="form-control"
-              id="exampleInputPassword1"
-              placeholder="Enter Your Password"
-              
-              
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="text"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="form-control"
-              id="exampleInputEmail1"
-              placeholder="Enter Your Phone"
-              
-              
-            />
-          </div>
-          
+    <Layout>
+      <section className="vh-80">
+      <div className="row-md-3 mt-2">
+              <AdminMenu />
+            </div>
+        <div className="container py-5">
+          <div className="row justify-content-center">
+            <div className="col-md-6">
+              <div className="card">
+                <div className="card-body">
+                  <h1 className="card-title mb-4 px-4">Admin Profile</h1>
+                  <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                    <i className="fa-solid fa-person fa-lg me-3 fa-fw"></i>                  
 
-       
+                      <label htmlFor="name" className="form-label">
+                        Name
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Enter Your Name"
+                        autoFocus
+                      />
+                    </div>
+                    <div className="mb-3">
+                    <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
 
-          <button type="submit" className="btn btn-primary">
-            UPDATE
-          </button>
-        </form>
-      </div>
+                      <label htmlFor="email" className="form-label">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        className="form-control"
+                        id="email"
+                        value={email}
+                        disabled
+                      />
+                    </div>
+                    <div className="mb-3">
+                    <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
+
+                      <label htmlFor="password" className="form-label">
+                        Password
+                      </label>
+                      <input
+                        type="password"
+                        className="form-control"
+                        id="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Enter Your Password"
+                      />
+                    </div>
+                    <div className="mb-3">
+                    <i className="fas fa-phone fa-lg me-3 fa-fw"></i>
+
+                      <label htmlFor="phone" className="form-label">
+                        Phone
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="phone"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        placeholder="Enter Your Phone"
+                      />
+                    </div>
+                    <div className="form-group">
+                      <button className="btn btn-success float-end" type="submit">
+                        Update
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            
           </div>
         </div>
-      </div>
-   </Layout>
-  )
-}
+      </section>
+    </Layout>
+  );
+};
 
-export default AdminProfile
+export default AdminProfile;

@@ -79,13 +79,13 @@ const Bookings = () => {
   ];
   return (
     <Layout>
-      <div className="container-fluid p-3 m-3">
+      <div className="container-fluid p-3 m-3 vh-90">
         <div className="row">
-          <div className="col-md-3">
+          <div className="">
             <AdminMenu />
           </div>
-          <div className="col-md-9">
-            <h1 className="text-center m-2">All Bookings</h1>
+          <div className="  row-md-5 ">
+            <h1 className="text-center m-3">All Bookings</h1>
             <Table columns={columns} dataSource={bookings} />
           </div>
         </div>

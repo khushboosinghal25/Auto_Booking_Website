@@ -70,10 +70,10 @@ const Places = () => {
     <Layout>
       <div className="container-fluid p-3 m-3">
         <div className="row">
-          <div className="col-md-3">
+          <div className="row-md-3">
             <AdminMenu />
           </div>
-          <div className="col-md-9">
+          <div className="row-md-9">
             <h1>Manage Places </h1>
             <div className="p-3 w-50">
               <PlacesForm
