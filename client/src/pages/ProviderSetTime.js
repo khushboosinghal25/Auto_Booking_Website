@@ -60,9 +60,10 @@ const ProviderSetTime = () => {
           <div className="col-md-3">
             <ProviderMenu />
           </div>
-          <div className="col-md-9">
-            <div className="form-container">
-              <h1 className="title">Availability Timings</h1>
+          <div className="col-md-5 ">
+          <h1 className="title mr-5 mt-3">Set Availability Timings</h1>
+            <div className="form-container justify-center p-5 mt-5">
+              
               <Form
                 layout="vertical"
                 onFinish={handleFinish}
@@ -71,21 +72,23 @@ const ProviderSetTime = () => {
                   endTime: timings[1],
                 }}
               >
-                <Form.Item label="Start Time" name="startTime" required>
+                <div className="center d-flex justify-center mr-4 ml-4">
+                  
+                <Form.Item label="Start Time" name="startTime" required style={{ marginRight: '100px' }}>
                   <TimePicker
                     format="HH:mm"
                     onChange={(time) => setTimings([time, timings[1]])}
                   />
                 </Form.Item>
-
+       
                 <Form.Item label="End Time" name="endTime" required>
                   <TimePicker
                     format="HH:mm"
                     onChange={(time) => setTimings([timings[0], time])}
                   />
                 </Form.Item>
-
-                <button type="submit" className="btn btn-primary">
+                </div>
+                <button type="submit" className="btn btn-success float-end ">
                   UPDATE
                 </button>
               </Form>

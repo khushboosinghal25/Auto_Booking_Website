@@ -49,7 +49,7 @@ const AdminProfile = () => {
 
   return (
     <Layout>
-      <section className="vh-80">
+      <section className="vh-60">
       <div className="row-md-3 mt-2">
               <AdminMenu />
             </div>
