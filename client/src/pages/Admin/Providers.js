@@ -104,10 +104,10 @@ const Providers = () => {
     <Layout>
       <div className="container-fluid p-3 m-3">
         <div className="row">
-          <div className="col-md-3">
+          <div className="row-md-3">
             <AdminMenu />
           </div>
-          <div className="col-md-9">
+          <div className="row-md-9">
             <h1 className="text-center m-2">Providers List</h1>
             <Table columns={columns} dataSource={providers} />
           </div>

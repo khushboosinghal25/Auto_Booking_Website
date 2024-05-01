@@ -93,12 +93,19 @@ const Students = () => {
     <Layout>
       <div className="container-fluid p-3 m-3">
         <div className="row">
-          <div className="col-md-3">
+          <div className="row-md-3 mt-5">
             <AdminMenu />
           </div>
-          <div className="col-md-9">
-            <h1 className="text-center m-2">Students List</h1>
-            <Table columns={columns} dataSource={students} />
+          <div className="row-md-5">
+            <h1 className="text-center m-2 text-slate-900 ">Students List</h1> {/* Applied text-slate-700 class */}
+            <div style={{ padding: '10px' }}> 
+              <Table
+                columns={columns}
+                dataSource={students}
+                bordered  
+                style={{ backgroundColor: '#fff' }}  
+              />
+            </div>
           </div>
         </div>
       </div>
