@@ -26,7 +26,7 @@ const Providers = () => {
   const handleAccountStatus = async (record, status) => {
     Modal.confirm({
       title: `Do you really want to change status of ${record.name}?`,
-      onOk: async () =>{
+      onOk: async () => {
         try {
           const res = await axios.post(
             `${process.env.REACT_APP_API}/api/v1/auth/changeAccountStatus`,
@@ -44,14 +44,37 @@ const Providers = () => {
             message.success(res.data.message);
           }
         } catch (error) {
-          message.error("Something went worng in");
+          message.error("Something went wrong");
         }
       },
       onCancel() {
-        console.log(" operation canceled");
+        console.log("operation canceled");
       },
-    })
-    
+    });
+  };
+
+  const downloadLicense = async (providerId, filename) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API}/api/v1/auth/downloadLicense/${providerId}`,
+        {
+          responseType: "blob",
+        }
+      );
+      const blob = new Blob([response.data], { type: "application/pdf" });
+      const url = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", filename);
+
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Error downloading license:", error);
+    }
   };
 
   useEffect(() => {
@@ -92,14 +115,36 @@ const Providers = () => {
               Approve
             </button>
           ) : (
-            <button className="btn btn-danger"
-            onClick={()=> handleAccountStatus(record,"pending")}
-            >Reject</button>
+            <button
+              className="btn btn-danger"
+              onClick={() => handleAccountStatus(record, "pending")}
+            >
+              Reject
+            </button>
+          )}
+        </div>
+      ),
+    },
+    {
+      title: "License",
+      dataIndex: "license",
+      render: (text, record) => (
+        <div className="d-flex">
+          {record.license && (
+            <button
+              className="btn btn-primary"
+              onClick={() =>
+                downloadLicense(record._id, record.license.filename)
+              }
+            >
+              Check License
+            </button>
           )}
         </div>
       ),
     },
   ];
+
   return (
     <Layout>
       <div className="container-fluid p-3 m-3">
