@@ -33,7 +33,8 @@
           "Devi Talab Mandir": 50,
           "Bidhipur":20,
           "Kartarpur":30,
-          "Maqsudan":30
+          "Maqsudan":30,
+          "MBD Mall":50
         }
       },
       {
@@ -61,12 +62,7 @@
       {
         "name": "Devi Talab Mandir",
         "distances": {
-          "Bus Stand": 400,
-          "Railway Station": 400,
-          "College Main Gate": 50,
-          "PAP Chowk": 400,
-          "Nakodar Chowk": 400,
-          "Mandir": 0
+          "College Main Gate": 50
         }
       },
       {
@@ -85,6 +81,11 @@
         "name":"Maqsudan",
         "distances":{
           "College Main Gate":20
+        }
+      },{
+        "name":"MBD Mall",
+        "distances":{
+          "College Main Gate":50
         }
       }
     ]

@@ -13,10 +13,63 @@ const ProviderRegister = () => {
   const [autonumber, setAutoNumber] = useState("");
   const [capacity, setCapacity] = useState("");
   const [answer, setAnswer] = useState("");
+  const [errors,setErrors] = useState({});
   const [license, setLicense] = useState(null);
   const [showPassword,setShowPassword] = useState(false);
-
   const navigate = useNavigate();
+
+
+  const validateForm = () => {
+    let isValid = true;
+    const errorsCopy = {};
+
+    if (!name.trim()) {
+      errorsCopy.name = "Name is required";
+      isValid = false;
+    }
+  
+    if (!email.trim()) {
+      errorsCopy.email = "Email is required";
+      isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      errorsCopy.email = "Email is invalid";
+      isValid = false;
+    }
+  
+    if (!phone.trim()) {
+      errorsCopy.phone = "Phone number is required";
+      isValid = false;
+    } else if (!/^\d{10}$/.test(phone)) {
+      errorsCopy.phone = "Phone number must be 10 digits long";
+      isValid = false;
+    }
+
+    if (!password.trim()) {
+      errorsCopy.password = "Password is required";
+      isValid = false;
+    }
+ 
+    if (!autonumber) {
+      errorsCopy.autonumber = "Auto Number is required";
+      isValid = false;
+    }
+    if(!capacity){
+      errorsCopy.capacity = "Capacity is required";
+      isValid = false;
+    }
+  
+    if (!answer.trim()) {
+      errorsCopy.answer = "Answer is required";
+      isValid = false;
+    }
+
+    if(!license){
+      errorsCopy.license = "License is required";
+    }
+  
+    setErrors(errorsCopy);
+    return isValid;
+  };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -28,30 +81,34 @@ const ProviderRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("email", email);
-      formData.append("password", password);
-      formData.append("phone", phone);
-      formData.append("autonumber", autonumber);
-      formData.append("capacity", capacity);
-      formData.append("answer", answer);
-      formData.append("license", license);
+    const isValid = validateForm();
 
-      const res = await axios.post(
-        ` ${process.env.REACT_APP_API}/api/v1/auth/provider-register`,
-        formData
-      );
-      if (res.data.success) {
-        toast.success(res.data.message);
-        navigate("/provider-login");
-      } else {
-        console.log(res.data.message);
+    if(isValid){
+      try {
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("email", email);
+        formData.append("password", password);
+        formData.append("phone", phone);
+        formData.append("autonumber", autonumber);
+        formData.append("capacity", capacity);
+        formData.append("answer", answer);
+        formData.append("license", license);
+  
+        const res = await axios.post(
+          ` ${process.env.REACT_APP_API}/api/v1/auth/provider-register`,
+          formData
+        );
+        if (res.data.success) {
+          toast.success(res.data.message);
+          navigate("/provider-login");
+        } else {
+          console.log(res.data.message);
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Something went wrong n");
       }
-    } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong n");
     }
   };
 
@@ -81,6 +138,7 @@ const ProviderRegister = () => {
                               value={name}
                               onChange={(e) => setName(e.target.value)}
                             />
+                              {errors.name && <div className="text-danger">{errors.name}</div>}
                           </div>
                         </div>
 
@@ -96,6 +154,7 @@ const ProviderRegister = () => {
                               value={email}
                               onChange={(e) => setEmail(e.target.value)}
                             />
+                              {errors.email && <div className="text-danger">{errors.email}</div>}
                           </div>
                         </div>
 
@@ -111,6 +170,7 @@ const ProviderRegister = () => {
                               value={phone}
                               onChange={(e) => setPhone(e.target.value)}
                             />
+                              {errors.phone && <div className="text-danger">{errors.phone}</div>}
                           </div>
                         </div>
 
@@ -126,6 +186,7 @@ const ProviderRegister = () => {
                               value={capacity}
                               onChange={(e) => setCapacity(e.target.value)}
                             />
+                              {errors.capacity && <div className="text-danger">{errors.capacity}</div>}
                           </div>
                         </div>
                         <div className="d-flex flex-row align-items-center mb-4">
@@ -140,6 +201,7 @@ const ProviderRegister = () => {
                               value={autonumber}
                               onChange={(e) => setAutoNumber(e.target.value)}
                             />
+                              {errors.autonumber && <div className="text-danger">{errors.autonumber}</div>}
                           </div>
                         </div>
                         <div className="d-flex flex-row align-items-center mb-4">
@@ -159,6 +221,7 @@ const ProviderRegister = () => {
                               onClick={togglePasswordVisibility}
                               style={{ cursor: "pointer" }}
                             ></i>
+                              {errors.password && <div className="text-danger">{errors.password}</div>}
                           </div>
                         </div>
 
@@ -175,6 +238,7 @@ const ProviderRegister = () => {
                                 value={answer}
                                 onChange={(e) => setAnswer(e.target.value)}
                               />
+                                {errors.answer && <div className="text-danger">{errors.answer}</div>}
                             </div>
                           </div>
                         </div>
@@ -189,6 +253,7 @@ const ProviderRegister = () => {
                               className="form-control"
                               hidden
                             />
+                              {errors.license && <div className="text-danger">{errors.license}</div>}
                           </label>
                         </div>
                         <div className="d-flex  mx-4 mb-3 mb-lg-4 justify-content-between">

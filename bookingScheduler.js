@@ -15,10 +15,10 @@ export const startBookingScheduler = () => {
       }).populate('userId providerId');
 
       for (const booking of upcomingBookings) {
-        const bookingDateTime = moment(`${booking.date} ${booking.time}`, 'YYYY-MM-DD HH:mm:ss');
+        const bookingDateTime = moment(booking.date); // Convert date string to moment object
         const timeDifference = bookingDateTime.diff(notificationTime, 'minutes');
 
-        if (timeDifference === 0) {
+        if (timeDifference <= 30 && timeDifference > 0) { // Check if within 30 minutes and positive
           await sendNotificationEmail(booking.userInfo.email, booking.providerInfo.email, booking);
         }
       }

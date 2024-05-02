@@ -62,7 +62,6 @@ export const sendEmails = async(to,subject,message) =>{
         });
 
         //send emails
-
         let info = await transporter.sendMail({
             from: process.env.USER,
             to:to,
@@ -78,7 +77,7 @@ export const sendEmails = async(to,subject,message) =>{
 
 export const sendNotificationEmail = async(userEmail,providerEmail,bookingDetails) =>{
     const subject = ' Your Upcoming Auto Ride Alert';
-    const message = `You have a ride scheduled from ${bookingDetails.source} to ${bookingDetails.destination} at ${bookingDetails.time}. `;
+    const message = `You have a ride scheduled from ${bookingDetails.source} to ${bookingDetails.destination} after 30 minutes. `;
 
     try {
         await sendEmails(userEmail,subject,message);

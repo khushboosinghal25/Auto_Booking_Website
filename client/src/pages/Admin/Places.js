@@ -5,6 +5,7 @@ import PlacesForm from "../../components/Form/PlacesForm";
 import toast from "react-hot-toast";
 import axios from "axios";
 import EditPlace from "../../components/Form/EditPlace";
+import rightImg from "../styles/places.jpg";
 
 const Places = () => {
   const [name, setName] = useState("");
@@ -30,6 +31,7 @@ const Places = () => {
       toast.error("Something went wrong in input form");
     }
   };
+
   const getAllPlaces = async () => {
     try {
       const { data } = await axios.get(
@@ -43,7 +45,6 @@ const Places = () => {
       toast.error("Something went wrong in displaying all places");
     }
   };
-
 
   const deletePlace = async (id) => {
     try {
@@ -68,63 +69,44 @@ const Places = () => {
 
   return (
     <Layout>
-
-      <div className="container-fluid p-3 m-3  ">
+      <div className="container-fluid p-3 m-3">
+        <div className="row-md-3">
+          <AdminMenu />
+        </div>
         <div className="row">
-          <div className="row-md-3">
-
-            <AdminMenu />
-          </div>
-        <div className="row">
-          
-          <div className="col-md-9">
+          <div className="row-md-6">
+            <div className="p-3">
+              <PlacesForm
+                handleSubmit={handleSubmit}
+                value={name}
+                setValue={setName}
+              />
+            </div>
             <div className="row">
-              <div className="col-md-7">
-                <div className="w-100"> 
-                  <div className="p-3">
-                    <PlacesForm
-                      handleSubmit={handleSubmit}
-                      value={name}
-                      setValue={setName}
-                    />
+              {places.map((place) => (
+                <div className="col-md-3 mb-3" key={place._id}>
+                  <div className="card">
+                    <div className="card-body">
+                      <h5 className="card-title">{place.name}</h5>
+                      <div className="d-flex justify-content-between align-items-center">
+                        <EditPlace name={place.name} id={place._id} />
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => deletePlace(place._id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                  <table className="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {places?.map((c) => (
-                        <tr key={c._id}> 
-                          <td>{c.name}</td>
-                          <td>
-                            <EditPlace name={c.name} id={c._id} />
-                            <button
-                              className="btn btn-danger ms-2"
-                              onClick={() => deletePlace(c._id)}
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
                 </div>
-              </div>
-              <div className="col-md-5">
-                {/* Add your image here */}
-                <img src="path_to_your_image" alt="Image" className="img-fluid" />
-              </div>
+              ))}
             </div>
           </div>
-          
         </div>
       </div>
     </Layout>
   );
 };
 
-export default Places; 
+export default Places;

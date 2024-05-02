@@ -55,7 +55,7 @@ router.post("/forgot-password", forgotPasswordController);
 router.post("/admin-login", studentLoginController);
 
 router.post("/provider-register", formidable(), providerRegisterController);
-router.get("/downloadLicense/:providerId",licenseController)
+router.get("/downloadLicense/:providerId", licenseController);
 
 router.post("/provider-login", providerLoginController);
 
@@ -82,7 +82,7 @@ router.put("/provider-profile", requireSignIn, updateProviderProfileController);
 //get all autos
 router.get("/getAllProviders", getAllProvidersController);
 
-router.get("/getSelectedProviders",getSelectedProvidersController);
+router.get("/getSelectedProviders", getSelectedProvidersController);
 
 router.get("/getAllStudents", requireSignIn, isAdmin, getAllStudentsController);
 
@@ -142,21 +142,36 @@ router.post(
 // get student bookings
 router.post("/student-bookings", requireSignIn, studentBookingController);
 
-// rate provider 
-router.post("/rate-provider",requireSignIn,isStudent,setProviderRatingController)
+// rate provider
+router.post(
+  "/rate-provider",
+  requireSignIn,
+  isStudent,
+  setProviderRatingController
+);
 
 //get provider bookings
 router.post("/provider-bookings", requireSignIn, providerBookingController);
 
-// get all bookings 
-router.get("/getAllBookings",requireSignIn,isAdmin,getAllBookingsController);
+// get all bookings
+router.get("/getAllBookings", requireSignIn, isAdmin, getAllBookingsController);
 
 // cancel booking
 
-router.post("/cancel-booking",requireSignIn,isStudent,cancelBookingController);
+router.post(
+  "/cancel-booking",
+  requireSignIn,
+  isStudent,
+  cancelBookingController
+);
 
 //update booking status
-router.post("/update-booking-status",requireSignIn,isProvider,updateBookingStatusController);
+router.post(
+  "/update-booking-status",
+  requireSignIn,
+  isProvider,
+  updateBookingStatusController
+);
 
 //confirm email
 router.get("/confirm/:token", confirmEmailController);

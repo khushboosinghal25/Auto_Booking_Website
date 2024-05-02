@@ -294,23 +294,26 @@ export const providerRegisterController = async (req, res) => {
   }
 };
 
-export const licenseController = async(req,res) =>{
+export const licenseController = async (req, res) => {
   try {
     const providerId = req.params.providerId;
     const provider = await ProviderModel.findById(providerId);
 
     if (!provider || !provider.license || !provider.license.data) {
-      return res.status(404).json({ message: 'License file not found' });
+      return res.status(404).json({ message: "License file not found" });
     }
 
-    res.set('Content-Type', 'application/pdf');
-    res.set('Content-Disposition', `attachment; filename=${provider.license.filename}`);
+    res.set("Content-Type", "application/pdf");
+    res.set(
+      "Content-Disposition",
+      `attachment; filename=${provider.license.filename}`
+    );
     res.send(provider.license.data);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: "Internal server error" });
   }
-}
+};
 
 export const providerLoginController = async (req, res) => {
   try {
@@ -536,9 +539,9 @@ export const getSelectedProvidersController = async (req, res) => {
     } else if (source === "College Main Gate") {
       // Group destinations when source is "College Main Gate"
       const groups = {
-        1: ["Maqsudan", "Bus Stand", "Railway Station"],
+        1: ["Maqsudan", "Bus Stand", "Railway Station", "MBD Mall"],
         2: ["Maqsudan", "PAP Chowk"],
-        3: ["Maqsudan", "Devi Talab Mandir", "Jyoti Chowk"],
+        3: ["Maqsudan", "Devi Talab Mandir", "Jyoti Chowk", "MBD Mall"],
         4: ["Bidhipur", "Kartarpur"],
       };
 
@@ -555,7 +558,6 @@ export const getSelectedProvidersController = async (req, res) => {
           $lte: moment(time, "HH:mm").add(1, "hours").format("HH:mm"),
         },
       });
-      
 
       // Filter based on previous bookings and destination groups
       const filteredProvidersList = filteredProviders.filter((provider) => {
@@ -572,15 +574,18 @@ export const getSelectedProvidersController = async (req, res) => {
           return bookingDestinationGroup === destinationGroup;
         });
 
-         // Exclude providers with bookings at the same date and time but destination is "College \"
-         const hasDifferentSourceBookings = diffprevBookings.some((booking) => {
+        // Exclude providers with bookings at the same date and time but destination is "College \"
+        const hasDifferentSourceBookings = diffprevBookings.some((booking) => {
           const isSameProvider =
             booking.providerId.toString() === provider._id.toString();
           const isDifferentSource = booking.destination === "College Main Gate";
           return isSameProvider && isDifferentSource;
         });
 
-        return (!hasPreviousBookings || previousBookingInSameGroup) && !hasDifferentSourceBookings;
+        return (
+          (!hasPreviousBookings || previousBookingInSameGroup) &&
+          !hasDifferentSourceBookings
+        );
       });
 
       return res.json({ success: true, data: filteredProvidersList });
@@ -915,7 +920,11 @@ export const setTimeController = async (req, res) => {
       });
     }
 
-    const provider = await ProviderModel.findByIdAndUpdate(userId, { timings }, { new: true });
+    const provider = await ProviderModel.findByIdAndUpdate(
+      userId,
+      { timings },
+      { new: true }
+    );
 
     if (!provider) {
       return res.status(404).json({
@@ -1097,23 +1106,23 @@ export const providerBookingController = async (req, res) => {
 
 // get all bookings
 
-export const getAllBookingsController = async(req,res) =>{
+export const getAllBookingsController = async (req, res) => {
   try {
     const bookings = await BookingModel.find({});
     res.status(200).send({
-      success:true,
-      message:"All bookings list",
-      data:bookings,
-    })
+      success: true,
+      message: "All bookings list",
+      data: bookings,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).send({
-      success:false,
-      message:"Error in getting all bookings",
+      success: false,
+      message: "Error in getting all bookings",
       error,
-    })
+    });
   }
-}
+};
 
 // set provider rating
 
@@ -1172,21 +1181,21 @@ export const setProviderRatingController = async (req, res) => {
 
 //cancel booking
 
-export const cancelBookingController = async(req,res) =>{
+export const cancelBookingController = async (req, res) => {
   try {
-      const bookingId = req.body.bookingId;
-     const booking = await BookingModel.findById(bookingId);
-    
-     if(!booking){
+    const bookingId = req.body.bookingId;
+    const booking = await BookingModel.findById(bookingId);
+
+    if (!booking) {
       return res.status(404).json({
-        success:false,
-        message:"Booking not found",
-      })
-     }
+        success: false,
+        message: "Booking not found",
+      });
+    }
 
-     const providerId = booking.providerId;
+    const providerId = booking.providerId;
 
-     const user = await ProviderModel.findOne({
+    const user = await ProviderModel.findOne({
       _id: providerId,
     });
     user.notification.push({
@@ -1197,35 +1206,37 @@ export const cancelBookingController = async(req,res) =>{
     await user.save();
     await BookingModel.findByIdAndDelete(bookingId);
     res.status(200).send({
-      success:true,
-      message:"Booking cancelled successfully",
+      success: true,
+      message: "Booking cancelled successfully",
     });
-    
   } catch (error) {
     console.log(error);
     res.status(500).send({
-      success:false,
-      message:"Error in cancelling booking",
+      success: false,
+      message: "Error in cancelling booking",
       error,
-    })
+    });
   }
-}
+};
 
-
-export const updateBookingStatusController  = async(req,res) =>{
+export const updateBookingStatusController = async (req, res) => {
   try {
-    const {bookingId,status} = req.body;
+    const { bookingId, status } = req.body;
     const booking = await BookingModel.findById(bookingId);
 
-    const updatedBooking = await BookingModel.findByIdAndUpdate(bookingId,{status},{new:true})
+    const updatedBooking = await BookingModel.findByIdAndUpdate(
+      bookingId,
+      { status },
+      { new: true }
+    );
 
-    if(!updatedBooking){
+    if (!updatedBooking) {
       return res.status(404).send({
-        success:false,
-        message:"Booking not found",
-      })
+        success: false,
+        message: "Booking not found",
+      });
     }
-    
+
     const user = await studentModel.findOne({
       _id: booking.userId,
     });
@@ -1237,17 +1248,16 @@ export const updateBookingStatusController  = async(req,res) =>{
     await user.save();
 
     res.status(200).send({
-      success:true,
-      message:"Booking status updated successfully",
+      success: true,
+      message: "Booking status updated successfully",
       updatedBooking,
     });
-
   } catch (error) {
     console.log(error);
     res.status(500).send({
-      success:false,
-      message:"Error in updatring status",
+      success: false,
+      message: "Error in updatring status",
       error,
-    })
+    });
   }
-}
+};
