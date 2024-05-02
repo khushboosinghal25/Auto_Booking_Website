@@ -17,7 +17,7 @@ const AdminMenu = () => {
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light " >
         <div className="container">
-          <NavLink to="/dashboard/admin/students" className="navbar-brand">
+          <NavLink to="" className="navbar-brand">
             Admin Panel
           </NavLink>
           <button

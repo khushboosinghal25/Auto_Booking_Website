@@ -18,6 +18,7 @@ import {
   getProviderByIdController,
   getSelectedProvidersController,
   handleAvailibiltiyController,
+  licenseController,
   providerBookingController,
   providerLoginController,
   providerRegisterController,
@@ -54,6 +55,7 @@ router.post("/forgot-password", forgotPasswordController);
 router.post("/admin-login", studentLoginController);
 
 router.post("/provider-register", formidable(), providerRegisterController);
+router.get("/downloadLicense/:providerId",licenseController)
 
 router.post("/provider-login", providerLoginController);
 

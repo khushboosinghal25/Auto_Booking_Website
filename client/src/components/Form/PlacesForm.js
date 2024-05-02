@@ -5,7 +5,7 @@ const PlacesForm = ({ handleSubmit, value, setValue }) => {
     <div>
       <form onSubmit={handleSubmit}>
         <div className="container d-flex">
-          <div className="mb-3 me-5">
+          <div className="mb-3 mt -4 me-5">
             <input
               type="text"
               className="form-control"

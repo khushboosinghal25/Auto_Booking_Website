@@ -68,54 +68,63 @@ const Places = () => {
 
   return (
     <Layout>
+
       <div className="container-fluid p-3 m-3  ">
         <div className="row">
           <div className="row-md-3">
+
             <AdminMenu />
           </div>
-          <div className="row-md-9">
-            <h1>Manage Places </h1>
-            <div className="p-3 w-50">
-              <PlacesForm
-                handleSubmit={handleSubmit}
-                value={name}
-                setValue={setName}
-              />
-            </div>
-            <div className="w-75">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {places?.map((c) => (
-                    <>
+        <div className="row">
+          
+          <div className="col-md-9">
+            <div className="row">
+              <div className="col-md-7">
+                <div className="w-100"> 
+                  <div className="p-3">
+                    <PlacesForm
+                      handleSubmit={handleSubmit}
+                      value={name}
+                      setValue={setName}
+                    />
+                  </div>
+                  <table className="table">
+                    <thead>
                       <tr>
-                        <td key={c._id}>{c.name}</td>
-                        <td>
-                          <EditPlace name={c.name} id={c._id} />
-
-                          <button
-                            className="btn btn-danger ms-2"
-                            onClick={() => deletePlace(c._id)}
-                          >
-                            Delete
-                          </button>
-                        </td>
+                        <th scope="col">Name</th>
+                        <th scope="col">Actions</th>
                       </tr>
-                    </>
-                  ))}
-                </tbody>
-              </table>
+                    </thead>
+                    <tbody>
+                      {places?.map((c) => (
+                        <tr key={c._id}> 
+                          <td>{c.name}</td>
+                          <td>
+                            <EditPlace name={c.name} id={c._id} />
+                            <button
+                              className="btn btn-danger ms-2"
+                              onClick={() => deletePlace(c._id)}
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div className="col-md-5">
+                {/* Add your image here */}
+                <img src="path_to_your_image" alt="Image" className="img-fluid" />
+              </div>
             </div>
           </div>
+          
         </div>
       </div>
     </Layout>
   );
 };
 
-export default Places;
+export default Places; 

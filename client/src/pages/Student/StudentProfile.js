@@ -62,9 +62,11 @@ const StudentProfile = () => {
     <Layout>
       <div className="p-3 m-3 profile-container">
         <div className="row d-flex justify-content-center mt-5">
+
           <div className="col-md-4">
             <div className="form-container rs-form-container ">
               <h1 className="title text-center">PROFILE</h1>
+
               <form onSubmit={handleSubmit}>
                 <div className="mb-3 input-mb6">
                   <input

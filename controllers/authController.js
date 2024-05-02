@@ -294,6 +294,24 @@ export const providerRegisterController = async (req, res) => {
   }
 };
 
+export const licenseController = async(req,res) =>{
+  try {
+    const providerId = req.params.providerId;
+    const provider = await ProviderModel.findById(providerId);
+
+    if (!provider || !provider.license || !provider.license.data) {
+      return res.status(404).json({ message: 'License file not found' });
+    }
+
+    res.set('Content-Type', 'application/pdf');
+    res.set('Content-Disposition', `attachment; filename=${provider.license.filename}`);
+    res.send(provider.license.data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
 export const providerLoginController = async (req, res) => {
   try {
     const { email, password } = req.body;
