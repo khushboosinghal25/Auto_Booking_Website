@@ -12,7 +12,7 @@ const ProviderList = ({ provider, onSelect, isSelected }) => {
       onClick={handleSelect}
       hoverable
       style={{
-        border: isSelected ? "2px solid rgb(64, 131, 172)" : "2px solid rgb(164, 131, 172)",
+        border: isSelected ? "2px solid #000" : "2px solid rgb(200, 250, 172)",
         margin: "7px",
       }}
     >

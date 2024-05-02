@@ -3,6 +3,7 @@ import Layout from "../../components/Layout/Layout";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import rightImg from '../styles/autoWale.jpg'
 
 const ProviderRegister = () => {
   const [name, setName] = useState("");
@@ -13,6 +14,7 @@ const ProviderRegister = () => {
   const [capacity, setCapacity] = useState("");
   const [answer, setAnswer] = useState("");
   const [license, setLicense] = useState(null);
+  const [showPassword,setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
@@ -20,7 +22,9 @@ const ProviderRegister = () => {
     const file = e.target.files[0];
     setLicense(file);
   };
-
+  const togglePasswordVisibility = () =>{
+    setShowPassword(!showPassword)
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -53,13 +57,13 @@ const ProviderRegister = () => {
 
   return (
     <Layout>
-      <section className="m-1">
+      <section className="m-4 ">
         <div className="container ">
-          <div className="row d-flex justify-content-center  ">
+          <div className="row d-flex justify-content-center align-itmes-center ">
             <div >
-              <div className="card text-black" >
-                <div className="card-body p-md-5">
-                  <div className="row ">
+              <div className=" text-black" >
+                <div>
+                  <div className="row">
                     <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                       <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
                         Provider Register
@@ -140,9 +144,9 @@ const ProviderRegister = () => {
                         </div>
                         <div className="d-flex flex-row align-items-center mb-4">
                           <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
-                          <div className="form-outline flex-fill mb-0">
+                          <div className="form-outline flex-fill position-relative mb-0">
                             <input
-                              type="password"
+                              type={showPassword ? "text" : "password"} // Toggle input type
                               name="password"
                               id="password"
                               className="form-control"
@@ -150,10 +154,15 @@ const ProviderRegister = () => {
                               value={password}
                               onChange={(e) => setPassword(e.target.value)}
                             />
+                            <i
+                              className={`fas ${showPassword ? "fa-eye-slash" : "fa-eye"} password-icon position-absolute end-0 top-50 translate-middle-y`}
+                              onClick={togglePasswordVisibility}
+                              style={{ cursor: "pointer" }}
+                            ></i>
                           </div>
                         </div>
 
-                        <div className="mb-4">
+                        <div className="mb-3">
                           <div className="d-flex flex-row align-items-center">
                             <i className="fas fa-question-circle fa-lg me-3 fa-fw"></i>
                             <div className="form-outline flex-fill mb-0">
@@ -198,12 +207,9 @@ const ProviderRegister = () => {
                         </div>
                       </form>
                     </div>
-                    <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-                      <img
-                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                        className="img-fluid"
-                        alt=""
-                      />
+                    <div className="col-md-10 col-lg-6 col-xl-6 d-flex justify-content-center align-items-center order-1 order-lg-2">
+                    <img src={rightImg} style={{borderRadius:'60px'}} className="img-fluid" alt='' />
+
                     </div>
                   </div>
                 </div>

@@ -4,6 +4,7 @@ import { Select } from "antd";
 import axios from "axios";
 import toast from "react-hot-toast";
 import placesData from "./places.json";
+
 const { Option } = Select;
 
 const Pricing = () => {
@@ -108,6 +109,7 @@ const Pricing = () => {
             <p>Search Something...</p>
           )}
         </div>
+       
       </div>
     </Layout>
   );

@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAuth } from "../../context/auth";
+import rightImg from '../styles/studentLogin.jpg'
 
 const StudentLogin = () => {
   const [email, setEmail] = useState("");
@@ -88,12 +89,8 @@ const StudentLogin = () => {
                 </p>
               </form>
             </div>
-            <div className="col-md-6 col-lg-6 col-xl-6">
-              <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
-                className="img-fluid"
-                alt=""
-              />
+            <div className="row-md-5 col-lg-6 row-xl-5">
+              <img src={rightImg} style={{borderRadius:'60px'}} className="img-fluid" alt='' />
             </div>
           </div>
         </div>

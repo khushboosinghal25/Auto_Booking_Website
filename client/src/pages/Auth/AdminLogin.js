@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../context/auth';
-
+import rightImg from '../styles/loginAdmin.jpeg'
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -43,7 +43,7 @@ const AdminLogin = () => {
   return (
     <Layout >
       <section  >
-        <div className="container py-5 h-100">
+        <div className="container  ">
           <div className="row d-flex align-items-center justify-content-center h-100">
             <div className="col-md-6 col-lg-6 col-xl-5 offset-xl-1  p-5 rounded">
               <form onSubmit={handleSubmit}>
@@ -83,8 +83,8 @@ const AdminLogin = () => {
                 </p>
               </form>
             </div>
-            <div className="col-md-6 col-lg-6 col-xl-6">
-              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" className="img-fluid" alt='' />
+            <div className="col-md-6 col-lg-6 col-xl-6 justify-content-center align-items-center">
+              <img src={rightImg} className="img-fluid" alt='' />
             </div>
           </div>
         </div>

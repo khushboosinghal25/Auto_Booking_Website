@@ -3,6 +3,7 @@ import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import rightImg from '../styles/studentLogin.jpg'
 
 const StudentRegister = () => {
   const [name, setName] = useState("");
@@ -100,11 +101,11 @@ const StudentRegister = () => {
 
   return (
     <Layout>
-      <section className="m-1 " >
+      <section className=" " >
         <div className="container">
           <div className="row d-flex justify-content-center align-items-center">
             <div>
-              <div className="card text-black">
+              <div className=" text-black">
                 <div className="card-body p-md-5">
                   <div className="row justify-content-center">
                     <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
@@ -261,13 +262,9 @@ const StudentRegister = () => {
                         </div> 
                       </form>
                     </div>
-                    <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-                      <img
-                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                        className="img-fluid"
-                        alt=""
-                      />
-                    </div>
+                    <div className="row-md-5 col-lg-6 row-xl-5 justify-content-center align-items-center  order-1 order-lg-2">
+              <img src={rightImg} style={{borderRadius:'60px'}} className="img-fluid" alt='' />
+            </div>
                   </div>
                 </div>
               </div>

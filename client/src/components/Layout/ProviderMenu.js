@@ -3,33 +3,40 @@ import { NavLink } from "react-router-dom";
 
 const ProviderMenu = () => {
   return (
-    <>
-      <div className="text-center">
-        <div className="list-group">
-          <h4>Provider Panel</h4>
-
+    <div className="container">
+      <ul className="nav nav-tabs">
+        <li className="nav-item">
           <NavLink
+            exact
             to="/dashboard/provider/provider-bookings"
-            className="list-group-item list-group-item-action"
+            className="nav-link"
+            activeClassName="active"
           >
             Bookings
           </NavLink>
+        </li>
+        <li className="nav-item">
           <NavLink
+            exact
             to="/provider/profile"
-            className="list-group-item list-group-item-action"
+            className="nav-link"
+            activeClassName="active"
           >
             Profile
           </NavLink>
-
+        </li>
+        <li className="nav-item">
           <NavLink
+            exact
             to="/dashboard/provider/set-time"
-            className="list-group-item list-group-item-action"
+            className="nav-link"
+            activeClassName="active"
           >
             Set your Availability
           </NavLink>
-        </div>
-      </div>
-    </>
+        </li>
+      </ul>
+    </div>
   );
 };
 

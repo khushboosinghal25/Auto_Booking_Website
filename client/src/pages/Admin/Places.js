@@ -68,7 +68,7 @@ const Places = () => {
 
   return (
     <Layout>
-      <div className="container-fluid p-3 m-3">
+      <div className="container-fluid p-3 m-3  ">
         <div className="row">
           <div className="row-md-3">
             <AdminMenu />

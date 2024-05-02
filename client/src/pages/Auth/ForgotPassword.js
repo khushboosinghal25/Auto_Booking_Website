@@ -3,6 +3,7 @@ import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate, useLocation } from "react-router-dom";
+import rightImg from '../styles/forgotPassword.jpeg'
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -37,22 +38,18 @@ const ForgotPassword = () => {
 
   return (
     <Layout>
-      <section className="vh-80" >
+      <section className="vh-50">
         <div className="container py-5">
-          <div className="row justify-content-center" >
-            <div className="col-md-6" >
-              <div className="card">
+          <div className="row justify-content-center">
+            <div className="col-md-6">
+              <div className="">
                 <div className="card-body">
-                  
                   <form onSubmit={handleSubmit}>
                     <div>
-
-                                  
-                  <h1 className="card-title mb-4  px-4 ">Reset account password</h1>
+                      <h1 className=" mb-5 mt-5 px-4">Reset account password</h1>
                     </div>
-                    <div className="mb-3">
-                    <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
-
+                    <div className="mb-3 input-mb3">
+                      <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
                       <label htmlFor="email" className="form-label">
                         Your email
                       </label>
@@ -66,10 +63,9 @@ const ForgotPassword = () => {
                         required
                       />
                     </div>
-                    <div className="mb-3">
-                    <i className="fas fa-question-circle fa-lg me-3 fa-fw"></i>
-
-                    <label htmlFor="favourite sports" className="form-label">
+                    <div className="mb-3 input-mb3">
+                      <i className="fas fa-question-circle fa-lg me-3 fa-fw"></i>
+                      <label htmlFor="favourite sports" className="form-label">
                         Favourite Sports
                       </label>
                       <input
@@ -82,9 +78,8 @@ const ForgotPassword = () => {
                         required
                       />
                     </div>
-                    <div className="mb-3 ">
-                    <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
-
+                    <div className="mb-3 input-mb3">
+                      <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                       <label htmlFor="password" className="form-label">
                         New Password
                       </label>
@@ -98,16 +93,17 @@ const ForgotPassword = () => {
                         required
                       />
                     </div>
-                    
-                    <div class="form-group">
-                <button class="btn btn-success float-end"
-                        type="submit">
-                     Update
-                </button>
-            </div>
+                    <div className="form-group">
+                      <button className="btn btn-success float-end" type="submit">
+                        Update
+                      </button>
+                    </div>
                   </form>
                 </div>
               </div>
+            </div>
+            <div className="col d-flex justify-content-center align-items-center">
+              <img src={rightImg} className="img-fluid" alt='' />
             </div>
           </div>
         </div>

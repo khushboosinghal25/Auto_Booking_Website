@@ -66,12 +66,12 @@
 }
 
 .electrified-title {
-    letter-spacing: -1px;
+    letter-spacing: 0px;
 }
 
 .electrified-title.black {
-    color: #000000;
-    text-shadow: 1.152px 1.152px 0 #fff, 1.728px 1.728px 0 #92c83e;
+    color: #000;
+    text-shadow: 1.152px 1.152px 0 #ff0, 1.728px 1.728px 0 #f2c8ff;
 }
 
 .font-48 {
@@ -211,9 +211,56 @@ p {
 .search-container {
     font-size: 1.25rem;
     padding: 50px;
-    background-color: rgb(250, 255, 255);
+    background-color: rgb(250, 255, 250);
 }
-
+.booking-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-title {
+    padding: 10px;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .card-body {
+    padding: 10px;
+  }
+  
+  .booking-actions {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .btn-success {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
+  .btn-dark {
+    background-color: #343a40;
+    color: #fff;
+  }
+  
+  .btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  
 .addSe {
     display: flex;
     width: 1300px;
@@ -266,13 +313,13 @@ p {
     animation: name2 16s linear infinite;
 }
 
-.rs-card-boddy {
+.rs-card-body {
     color: green;
     font-size: 1rem;
 }
 
 .rs-card-text-c {
-    color: purple;
+    color: black;
 }
 
 .techS {
@@ -307,7 +354,7 @@ p {
 }
 
 .rs-form-container {
-    padding: 20px;
+    padding: 50px;
 }
 
 .rs-stdt-menu {
@@ -359,9 +406,10 @@ p {
 
 .pricing-form {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-around;
-    padding: 50px;
+    padding: 150px;
+    margin-top: 45px;
+
 }
 
 .p-f-i {
@@ -386,12 +434,12 @@ p {
 
 .providers-container {
     text-align: center;
-    padding: 20px;
+    padding: 0px;
   }
   
   .providers-header {
     font-size: 24px;
-    color: #333;
+    color: #000;
   }
   
   .providers-list {
