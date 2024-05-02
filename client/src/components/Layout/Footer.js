@@ -27,7 +27,7 @@ function Footer() {
             >
               <path
                 fill="none"
-                stroke="#F44336"
+                stroke="#98fb98"
                 stroke-width="4"
                 stroke-miterlimit="10"
                 d="M7,20v-8c0-2.2,1.8-4,4-4h14c1.2,0,2.4,0.6,3.2,1.6 L35,18"
@@ -37,7 +37,7 @@ function Footer() {
                 <circle cx="13" cy="37" r="5"></circle>
               </g>
               <path
-                fill="#F44336"
+                fill="#98fb98"
                 d="M40.2,17L33,14H7c-1.2,0-2,0.8-2,2v10c0,1.2,0.8,2,2,2h1c0-2.8,2.2-5,5-5s5,2.2,5,5h12c0-2.8,2.2-5,5-5 s5,2.2,5,5h1c1.2,0,2-0.8,2-2v-5.2C43,19.2,41.8,17.6,40.2,17z"
               ></path>
               <g fill="#546E7A">

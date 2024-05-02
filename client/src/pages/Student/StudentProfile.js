@@ -4,6 +4,7 @@ import axios from "axios";
 import { useAuth } from "../../context/auth";
 import StudentMenu from "../../components/Layout/StudentMenu";
 import toast from "react-hot-toast";
+import rightImg from '../styles/studentProfile.jpeg'
 
 const StudentProfile = () => {
   const [auth, setAuth] = useAuth();
@@ -61,49 +62,46 @@ const StudentProfile = () => {
     <Layout>
       <div className="p-3 m-3 profile-container">
         <div className="row d-flex justify-content-center mt-5">
-          
-          <div className="col-md-4 profile-box">
-            <div className="form-container rs-form-container">
-              <h3 className="mb-4 title text-center">YOUR PROFILE</h3>
+
+          <div className="col-md-4">
+            <div className="form-container rs-form-container ">
+              <h1 className="title text-center">PROFILE</h1>
+
               <form onSubmit={handleSubmit}>
-                <div className="mb-3 input-mb3">
+                <div className="mb-3 input-mb6">
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="form-control rs-from-control"
-                    id="exampleInputEmail1"
                     placeholder="Enter Your Name"
                     autoFocus
                   />
                 </div>
-                <div className="mb-3 input-mb3">
+                <div className="mb-3 input-mb6">
                   <input
                     type="email"
                     value={email}
                     className="form-control rs-from-control"
-                    id="exampleInputEmail1"
                     placeholder="Enter Your Email "
                     disabled
                   />
                 </div>
-                <div className="mb-3 input-mb3">
+                <div className="mb-3 input-mb6">
                   <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="form-control rs-from-control"
-                    id="exampleInputPassword1"
                     placeholder="Enter Your Password"
                   />
                 </div>
-                <div className="mb-3 input-mb3">
+                <div className="mb-3 input-mb6">
                   <input
                     type="text"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     className="form-control rs-from-control"
-                    id="exampleInputEmail1"
                     placeholder="Enter Your Phone"
                   />
                 </div>
@@ -112,6 +110,11 @@ const StudentProfile = () => {
                   UPDATE
                 </button>
               </form>
+            </div>
+          </div>
+          <div className="col-md-4">
+            <div className="contact-right " >
+              <img src={rightImg} style={{borderRadius:"500px"}} alt="" />
             </div>
           </div>
         </div>

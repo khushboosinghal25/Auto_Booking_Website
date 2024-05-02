@@ -5,6 +5,7 @@ import { Form, TimePicker, message } from "antd";
 import { useAuth } from "../context/auth";
 import axios from "axios";
 import moment from "moment";
+import rightImg from "./styles/setAvailabilitytimings.jpg";
 
 const ProviderSetTime = () => {
   const [auth, setAuth] = useAuth();
@@ -57,13 +58,12 @@ const ProviderSetTime = () => {
     <Layout>
       <div className="container-fluid p-3 m-3">
         <div className="row">
-          <div className="col-md-3">
+          <div className="row-md-3">
             <ProviderMenu />
           </div>
-          <div className="col-md-5 ">
-          <h1 className="title mr-5 mt-3">Set Availability Timings</h1>
-            <div className="form-container justify-center p-5 mt-5">
-              
+          <div className="col-md-5 m-5 " >
+            <h1 className="title mr-5 mt-5">Set Availability Timings</h1>
+            <div className="form-container justify-center p-2 mt-5 m-5">
               <Form
                 layout="vertical"
                 onFinish={handleFinish}
@@ -72,26 +72,30 @@ const ProviderSetTime = () => {
                   endTime: timings[1],
                 }}
               >
-                <div className="center d-flex justify-center mr-4 ml-4">
-                  
-                <Form.Item label="Start Time" name="startTime" required style={{ marginRight: '100px' }}>
-                  <TimePicker
-                    format="HH:mm"
-                    onChange={(time) => setTimings([time, timings[1]])}
-                  />
-                </Form.Item>
-       
-                <Form.Item label="End Time" name="endTime" required>
-                  <TimePicker
-                    format="HH:mm"
-                    onChange={(time) => setTimings([timings[0], time])}
-                  />
-                </Form.Item>
+                <div className="center d-flex justify-center mr-4 ml-4" >
+                  <Form.Item label="Start Time" name="startTime" required style={{ marginRight: '100px' }}>
+                    <TimePicker
+                      format="HH:mm"
+                      onChange={(time) => setTimings([time, timings[1]])}
+                    />
+                  </Form.Item>
+                  <Form.Item label="End Time" name="endTime" required>
+                    <TimePicker
+                      format="HH:mm"
+                      onChange={(time) => setTimings([timings[0], time])}
+                    />
+                  </Form.Item>
                 </div>
-                <button type="submit" className="btn btn-success float-end ">
+                <button type="submit" className="btn btn-success float-end">
                   UPDATE
                 </button>
               </Form>
+            </div>
+            
+          </div>
+          <div className="col-md-6 d-flex justify-content-center align-items-center">
+            <div className="contact-right">
+              <img src={rightImg} style={{borderRadius:"50px"}} alt="" />
             </div>
           </div>
         </div>

@@ -190,7 +190,7 @@ const HomePage = () => {
           {providers && providers.length > 0 ? (
             <div className="providers-container">
 <h3 className="electrified-title font-48 mar-bot-50 fw-500 black"> Service Providers</h3>
-              <div className="electrified-title fw-500 providers-list d-flex justify-content-between ">
+              <div className="electrified-title fw-500 providers-list  ">
                 {providers.slice(0, 6).map((provider) => (
                   <ProviderList
                     key={provider._id}

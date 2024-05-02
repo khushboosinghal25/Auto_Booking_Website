@@ -17,7 +17,7 @@ function Contact() {
                 <input type="email" name="email" placeholder="Your email" className="contact-inputs" required />
                 <textarea name="message" className="contact-inputs" placeholder="Your message" required></textarea>
                 <input type="hidden" name="redirect" value="https://web3forms.com/success" />
-                <button className='buttonSubmit' type="submit">Submit <img src={arrowIcon} alt="" /></button>
+                <button className='buttonSubmit' style={{background:'#2E8B57'}} type="submit">Submit <img src={arrowIcon} alt="" /></button>
             </form>
             <div className="contact-right">
                 <img src={rightImg }alt="" />

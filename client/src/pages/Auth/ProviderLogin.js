@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useNavigate,useLocation, Link } from 'react-router-dom'
 import toast from "react-hot-toast"
 import { useAuth } from '../../context/auth' 
-
+import rightImg from '../styles/autoWale.jpg'
 const ProviderLogin = () => {
 
   const [email,setEmail] = useState("")
@@ -46,7 +46,7 @@ const ProviderLogin = () => {
   return (
     <Layout>
         <main className=" bg-white">
-        <div className="container py-5 h-100">
+        <div className="container py-5 h-90">
           <div className="row d-flex align-items-center justify-content-center h-100">
             <div className="col-md-6 col-lg-6 col-xl-5 offset-xl-1 bg-white p-5 rounded">
               <form onSubmit={handleSubmit}>
@@ -79,15 +79,15 @@ const ProviderLogin = () => {
                   />
                 </div>
                 <br/>
-                <button type="submit" className="btn btn-primary btn-block justify-center py-64">Login</button>
+                <button type="submit" className="btn btn-primary mt-3 btn-block justify-center ">Login</button>
                 <p className="mt-3">Don't have an account? <Link to="/provider-register">Create an Account</Link></p>
                 <p className="mt-3" style={{textDecoration:'none'  }}>{" "}
                   <Link to="/forgot-password">Forgot Password</Link>
                 </p>
               </form>
             </div>
-            <div className="col-md-6 col-lg-6 col-xl-6">
-              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" className="img-fluid" alt='' />
+            <div className="col-md-5 col-lg-6 col-xl-5">
+              <img src={rightImg} style={{borderRadius:'60px'}} className="img-fluid" alt='' />
             </div>
           </div>
         </div>

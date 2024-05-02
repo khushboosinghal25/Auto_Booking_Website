@@ -131,14 +131,14 @@ const ProviderBookings = () => {
 
   return (
     <Layout>
-      <div className="container-fluid p-3 m-3">
+      <div className="container-fluid p-3 m-1">
         <div className="row">
-          <div className="col-md-3">
+          <div className="row-md-4">
             <ProviderMenu />
           </div>
-          <div className="col-md-9">
+          <div className="row-md-5">
             <div className="form-container ">
-              <h1 className="text-center">Provider Bookings</h1>
+              <h1 className="text-center p-2 underline">Provider Bookings</h1>
               <Table columns={columns} dataSource={bookings} />
             </div>
           </div>

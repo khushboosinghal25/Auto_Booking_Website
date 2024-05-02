@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
-import { useAuth } from "../../context/auth";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useAuth } from "../../context/auth";
+import { useNavigate } from "react-router-dom";
 import ProviderMenu from "../../components/Layout/ProviderMenu";
+import rightImg from "../styles/autoWale.jpg";
 
 const ProviderProfile = () => {
   const [auth, setAuth] = useAuth();
@@ -13,6 +15,8 @@ const ProviderProfile = () => {
   const [phone, setPhone] = useState("");
   const [capacity, setCapacity] = useState("");
   const [autonumber, setAutoNumber] = useState("");
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const { email, name, phone, capacity, autonumber } = auth?.user;
@@ -38,28 +42,22 @@ const ProviderProfile = () => {
         }
       );
 
-      console.log("Response data:", data);
-
       if (data?.error) {
         toast.error(data.error);
       } else if (data?.updatedUser) {
-        console.log("Updating auth state and local storage:", data.updatedUser);
         setAuth((prevAuth) => ({ ...prevAuth, user: data.updatedUser }));
-
-        // Use setTimeout with 0ms delay to simulate asynchronous behavior
-        setTimeout(() => {
-          let ls = localStorage.getItem("auth");
-          ls = JSON.parse(ls);
-          ls.user = data.updatedUser;
-          localStorage.setItem("auth", JSON.stringify(ls));
-          console.log("Local storage updated successfully");
-        }, 0);
-
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            ...localStorage.getItem("auth"),
+            user: data.updatedUser,
+          })
+        );
         toast.success("Profile Updated Successfully");
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong 1");
+      toast.error("Something went wrong");
     }
   };
 
@@ -67,81 +65,113 @@ const ProviderProfile = () => {
     <Layout>
       <div className="container-fluid p-3 m-3">
         <div className="row">
-          <div className="col-md-3">
+          <div className="col-md-6">
             <ProviderMenu />
-          </div>
-          <div className="col-md-5">
-            <div className="form-container ">
+            <div className="p-5">
+              <h1 className="mb-4 text-center">Your Profile</h1>
               <form onSubmit={handleSubmit}>
-                <h1 className="title text-center">Your Profile</h1>
                 <div className="mb-3">
+                  <i className="fas fa-user fa-lg me-3 fa-fw"></i>
+                  <label htmlFor="name" className="form-label">
+                    Name
+                  </label>
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="form-control"
-                    id="exampleInputEmail1"
                     placeholder="Enter Your Name"
                     autoFocus
                   />
                 </div>
                 <div className="mb-3">
+                  <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                  <label htmlFor="email" className="form-label">
+                    Your email
+                  </label>
                   <input
                     type="email"
                     value={email}
                     className="form-control"
-                    id="exampleInputEmail1"
-                    placeholder="Enter Your Email "
+                    placeholder="Enter Your Email"
                     disabled
                   />
                 </div>
-                <div className="mb-3">
+                <div className="mb-3 ">
+                  <i className="fas fa-lock fa-lg me-3 fa-fw "></i>
+                  <label htmlFor="password" className="form-label">
+                    Password
+                  </label>
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="form-control"
-                    id="exampleInputPassword1"
                     placeholder="Enter Your Password"
+                    
                   />
+                  {/* <button
+                    type="button"
+                    className="btn btn-link input-group-text"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <i className="fas fa-eye-slash"></i> // Icon for hiding password
+                    ) : (
+                      <i className="fas fa-eye"></i> // Icon for showing password
+                    )}
+                  </button> */}
                 </div>
                 <div className="mb-3">
+                  <i className="fas fa-phone fa-lg me-3 fa-fw"></i>
+                  <label htmlFor="password" className="form-label">
+                    Mobile no
+                  </label>
                   <input
                     type="text"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     className="form-control"
-                    id="exampleInputEmail1"
                     placeholder="Enter Your Phone"
                   />
                 </div>
-
                 <div className="mb-3">
+                  <i className="fas fa-chart-pie fa-lg me-3 fa-fw"></i>
+                  <label htmlFor="capacity" className="form-label">
+                    Capacity
+                  </label>
                   <input
                     type="number"
                     value={capacity}
                     onChange={(e) => setCapacity(e.target.value)}
                     className="form-control"
-                    id="exampleInputEmail1"
                     placeholder="Enter Your Capacity"
                   />
                 </div>
-
                 <div className="mb-3">
+                  <i className="fas fa-car fa-lg me-3 fa-fw"></i>
+                  <label htmlFor="password" className="form-label">
+                    Auto number
+                  </label>
                   <input
                     type="text"
                     value={autonumber}
                     onChange={(e) => setAutoNumber(e.target.value)}
                     className="form-control"
-                    id="exampleInputEmail1"
-                    placeholder="Enter Your Auto number"
+                    placeholder="Enter Your Auto Number"
                   />
                 </div>
-
-                <button type="submit" className="btn btn-success float-end">
-                  UPDATE
-                </button>
+                <div className="">
+                  <button type="submit" className="btn btn-success float-end">
+                    UPDATE
+                  </button>
+                </div>
               </form>
+            </div>
+          </div>
+          <div className="col-md-6 d-flex justify-content-center align-items-center">
+            <div className="contact-right">
+              <img src={rightImg} alt="" />
             </div>
           </div>
         </div>
