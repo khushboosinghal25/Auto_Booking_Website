@@ -14,28 +14,11 @@
   }
 
   .provider-info{
+    text-decoration:dashed;
     text-align: end;
+    margin-left: 200px;
   }
   
   .provider-info p {
     margin-bottom: 5px;
   }
-  
-  .booking-actions {
-    text-align: center;
-  }
-  
-  .booking-actions button {
-    background-color: #343a40;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .booking-actions button:hover {
-    background-color: #212529;
-  }
-  

@@ -7,6 +7,7 @@ import { message } from "antd";
 import priceData from "./places.json";
 import moment from "moment";
 import "./styles/BookingPageStyles.css";
+import rightImg from './styles/bookingPage.jpg'
 
 const BookingPage = () => {
   const { source, destination, providerId, date, time } = useParams();
@@ -110,45 +111,52 @@ const BookingPage = () => {
 
   return (
     <Layout>
-      <div className="booking-container">
-        <div className="booking-details">
-          <h4>Booking Details</h4>
-          <p>Source: {source}</p>
-          <p>Destination: {destination}</p>
-          <p>Price: {price}</p>
-          <p>Date: {date}</p>
-          <p>Time: {time}</p>
-        </div>
+      <div className="contact-container  m-3">
+        <div className="row-md-8 p-5">
+          <div className="contact-left-title">
+            <h4>Booking Details</h4>
+            <p>Source: {source}</p>
+            <p>Destination: {destination}</p>
+            <p>Price: {price}</p>
+            <p>Date: {date}</p>
+            <p>Time: {time}</p>
+          </div>
 
-        {provider && (
-          <div className="provider-info">
-            <h4>Provider details</h4>
-            <p>Provider Name: {provider.name}</p>
-            <p>Auto Number: {provider.autonumber}</p>
-            <p>Email Id : {provider.email}</p>
+          {provider && (
+            <div className="provider-info ">
+              <h4>Provider details</h4>
+              <p>Provider Name: {provider.name}</p>
+              <p>Auto Number: {provider.autonumber}</p>
+              <p>Email Id : {provider.email}</p>
 
-            {provider.status !== "approved" && (
-              <div>He is Not an Approved Service Provider</div>
+              {provider.status !== "approved" && (
+                <div>He is Not an Approved Service Provider</div>
+              )}
+            </div>
+          )}
+
+          <div className="float-center">
+            {bookingConfirmed ? (
+              <button className="btn btn-success mt-3"
+                onClick={() => navigate('/dashboard/student/student-bookings')}
+              >
+                Check Details
+              </button>
+            ) : (
+              <button
+                className="btn btn-success mt-2 "
+                onClick={handleBooking}
+                disabled={bookingInProgress}
+              >
+                {bookingInProgress ? "Booking in Progress..." : "Book Now"}
+              </button>
             )}
           </div>
-        )}
-
-        <div className="booking-actions">
-          {bookingConfirmed ? (
-            <button className="btn btn-success mt-2"
-            onClick={() => navigate('/dashboard/student/student-bookings')}
-            >
-              Check Details
-            </button>
-          ) : (
-            <button
-              className="btn btn-dark mt-2"
-              onClick={handleBooking}
-              disabled={bookingInProgress}
-            >
-              {bookingInProgress ? "Booking in Progress..." : "Book Now"}
-            </button>
-          )}
+        </div>
+        <div className="col-md-4">
+          <div className="contact-right float-end">
+            <img src={rightImg} style={{ borderRadius: "500px" }} alt="" />
+          </div>
         </div>
       </div>
     </Layout>
