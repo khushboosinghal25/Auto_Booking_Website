@@ -13,11 +13,13 @@ const AdminDashboard = () => {
           <div className="col-md-6">
             
             <div className="d-flex justify-content-center">
-              <div className="card w-100 p-3 mt-5">
-                <div className="card-body">
-                  <h3 className="card-title">Admin Name: {auth?.user?.name}</h3>
+              <div className="card w-100 p-3 mt-5 d-flex justify-center">
+                <div className="card-body justify-center">
+                  {/* <h3 className="card-title">Admin Name: {auth?.user?.name}</h3>
                   <h3 className="card-title">Admin Email: {auth?.user?.email}</h3>
-                  <h3 className="card-title">Admin Contact: {auth?.user?.phone}</h3>
+                  <h3 className="card-title">Admin Contact: {auth?.user?.phone}</h3> */}
+
+                <h3>Welcome to your dashboard</h3>
                 </div>
               </div>
             </div>
