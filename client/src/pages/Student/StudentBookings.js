@@ -189,7 +189,7 @@ const StudentBookings = () => {
       <div className="container-fluid p-3 m-3">
         <div className="row">
         
-            <div className="form-container ">
+            <div className="form-container  ">
               <h1 className="d-flex text-center justify-center">Your Bookings</h1>
               <Table columns={columns} dataSource={bookings} />
             </div>
