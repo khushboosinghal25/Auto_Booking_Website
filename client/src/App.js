@@ -52,14 +52,12 @@ function App() {
         <Route path="admin/profile" element={<AdminProfile />} />
 
         <Route path="/dashboard" element={<AdminRoute />} >
-
           <Route path='admin' element={<AdminDashboard />} />
-         
           <Route path="admin/students" element={<Students />} />
           <Route path="admin/providers" element={<Providers />} />
           <Route path="admin/places" element={<Places />} />
-           <Route path="admin/blocked-users" element={<BlockedUsers />} />
-           <Route path="admin/bookings" element={<Bookings />} />
+          <Route path="admin/blocked-users" element={<BlockedUsers />} />
+          <Route path="admin/bookings" element={<Bookings />} />
         </Route>
 
         <Route path="/dashboard" element={<StudentRoute />}>

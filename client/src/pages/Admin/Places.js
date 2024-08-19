@@ -5,7 +5,6 @@ import PlacesForm from "../../components/Form/PlacesForm";
 import toast from "react-hot-toast";
 import axios from "axios";
 import EditPlace from "../../components/Form/EditPlace";
-import rightImg from "../styles/places.jpg";
 
 const Places = () => {
   const [name, setName] = useState("");

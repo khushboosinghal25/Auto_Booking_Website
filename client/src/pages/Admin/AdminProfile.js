@@ -3,25 +3,22 @@ import Layout from '../../components/Layout/Layout';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import AdminMenu from '../../components/Layout/AdminMenu';
+import { useAuth } from '../../context/auth';
 
 const AdminProfile = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
+  const [auth, setAuth]  = useAuth();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
 
-  useEffect(() => {
-    // Fetch user data from API or context
-    // For simplicity, I'm setting some mock data
-    const userData = {
-      name: 'Admin Name',
-      email: 'admin@example.com',
-      phone: '1234567890',
-    };
-    setName(userData.name);
-    setEmail(userData.email);
-    setPhone(userData.phone);
-  }, []);
+  useEffect(() =>{
+    const {email,name,phone} = auth?.user
+    setName(name)
+    setPhone(phone)
+    setEmail(email)
+
+},[auth?.user])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,7 +35,17 @@ const AdminProfile = () => {
       if (data?.error) {
         toast.error(data.error);
       } else if (data?.updatedUser) {
-        // Update user data in state or context
+        console.log("Updating auth state and local storage:", data.updatedUser);
+
+        setAuth((prevAuth) => ({ ...prevAuth, user: data.updatedUser }));
+        setTimeout(() => {
+          let ls = localStorage.getItem("auth");
+          ls = JSON.parse(ls);
+          ls.user = data.updatedUser;
+          localStorage.setItem('auth', JSON.stringify(ls));
+          console.log("Local storage updated successfully");
+        }, 0);
+
         toast.success('Profile Updated Successfully');
       }
     } catch (error) {
